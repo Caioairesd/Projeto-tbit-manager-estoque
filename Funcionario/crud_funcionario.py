@@ -9,12 +9,12 @@ def get_connection():
         database = MYSQL_DATABASE,
     )
 
-def fazer_login_funcionario(nome, DataDeNascimento, DataDeAdmissao, Cidade, CPF, UF, Telefone, Email, Usuario, Senha):
+def fazer_login_funcionario(nome, DataDeNascimento, DataDeAdmissao,  CPF, Cidade, UF, Telefone, Email, Usuario, Senha):
 
     conn = get_connection()
     cursor = conn.cursor()
-    query = "insert usuario(nome, telefone, email, usuario, senha) VALUES(%s, %s, %s, %s, %s)"
-    cursor.execute(query, (nome, DataDeNascimento, DataDeAdmissao, Cidade, CPF, UF, Telefone, Email, Usuario, Senha))
+    query = "insert INTO funcionario(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario ,cpf_funcionario, cidade_funcionario, estado_funcionario , telefone_funcionario, email_funcionario, usuario_funcionario,senha_funcionario) VALUES(%s, %s, %s, %s, %s,%s,%s,%s,%s,%s)"
+    cursor.execute(query, (nome, DataDeNascimento, DataDeAdmissao, CPF, Cidade, UF, Telefone, Email, Usuario, Senha))
     conn.commit()
     cursor.close()
     conn.close()
