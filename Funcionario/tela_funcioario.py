@@ -8,8 +8,9 @@ from tkinter import*
 class CRUDfuncioario:
     def __init__(self, root):
         self.root = root 
-        self.root.title ("CRUD FUNCIONARIO")
+        self.root.title ("CRUD FUNCIONARIO                                                                                                                                                                       TerraBytes")
         self.root.geometry ("900x700")
+        self.root.resizable(width= False, height=False)
         #self.root['bg'] = "gray"
 
 
@@ -69,15 +70,15 @@ class CRUDfuncioario:
         Senha = self.Senha_entry.get()
 
         #fazendo a mensagem de criado ou não criado o funcionario
-        if nome and DataDeNascimento and DataDeAdmissao and Cidade and CPF and UF and Telefone and Email and Usuario and Senha:
-            fazer_login_funcionario(nome, DataDeNascimento, DataDeAdmissao, Cidade, CPF, UF, Telefone, Email, Usuario, Senha)
+        if nome and DataDeNascimento and DataDeAdmissao and CPF and Cidade and UF and Telefone and Email and Usuario and Senha:
+            fazer_login_funcionario(nome, DataDeNascimento, DataDeAdmissao,  CPF, Cidade, UF , Telefone, Email, Usuario, Senha)
             self.nome_entry.delete(0,tk.END)
             self.Data_de_nascimento_entry.delete(0,tk.END)
             self.Data_de_Admissao_entry.delete(0,tk.END)
             self.CPF_entry.delete(0,tk.END)
             self.Cidade_entry.delete(0,tk.END)
             self.UF_entry.delete(0,tk.END)
-            self.Estado_entry.delete(0,tk.END)
+
             self.Telefone_entry.delete(0,tk.END)
             self.Email_entry.delete(0,tk.END)
             self.Usuario_entry.delete(0,tk.END)
@@ -85,6 +86,8 @@ class CRUDfuncioario:
             messagebox.showinfo("Success", "Funcionario criado com Sucesso")
         else:
             messagebox.showerror("Error", "Todos os campos são obrigatorios")
+
+
 
 
 if __name__ == "__main__":

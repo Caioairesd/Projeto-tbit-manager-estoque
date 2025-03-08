@@ -13,7 +13,7 @@ def fazer_login_funcionario(nome, DataDeNascimento, DataDeAdmissao,  CPF, Cidade
 
     conn = get_connection()
     cursor = conn.cursor()
-    query = "insert usuario(nome_funcionario, data_nascimento_funcionario,data_admissao_funcionario ,cpf_funcionario, cidade_funcionario,estado_funcionario , telefone_funcionario, email_funcionario, usuario_funcionario,senha_funcionario) VALUES(%s, %s, %s, %s, %s,%s,%s,%s,%s,%s)"
+    query = "insert INTO funcionario(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario ,cpf_funcionario, cidade_funcionario, estado_funcionario , telefone_funcionario, email_funcionario, usuario_funcionario,senha_funcionario) VALUES(%s, %s, %s, %s, %s,%s,%s,%s,%s,%s)"
     cursor.execute(query, (nome, DataDeNascimento, DataDeAdmissao, CPF, Cidade, UF, Telefone, Email, Usuario, Senha))
     conn.commit()
     cursor.close()
