@@ -17,6 +17,16 @@ def registrar(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornece
     cursor.close()
     conn.close()
 
+def buscar():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM tbit_db"
+    cursor.execute(query)
+    result = cursor.close()
+    conn.close()
+    return result
+
+
 
 
 
