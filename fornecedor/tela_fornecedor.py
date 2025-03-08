@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from db_fornecedor import registrar_fornecedor
+from db_fornecedor import registrar
 
 class crud_fornecedor:
 
@@ -18,7 +18,7 @@ class crud_fornecedor:
 
     def create_widgets(self):
         #Criação de labels
-        tk.Button(self.root,text="Cadastrar",command=create_fornecedor,width=15,height=1).place(x=50,y=180)
+        tk.Button(self.root,text="Cadastrar",width=15,height=1,command=self.create_fornecedor).place(x=50,y=180)
 
         #botao_alterar_fornecedor = tk.Button(self.root,text="Alterar",width=20,height=2).place(x=375,y=200)
         #botao_excluir_fornecedor = tk.Button(self.root,text="Excluir",width=20,height=2).place(x=375,y=300)
@@ -31,12 +31,19 @@ class crud_fornecedor:
         tk.Label(self.root,text="Cidade:").place(x=15,y=30)
         tk.Label(self.root,text="País:").place(x=15,y=0)
 
-        self.fornecedor_entry = tk.Entry(self.root).place(x=100,y=150)
-        self.marca_entry = tk.Entry(self.root).place(x=100,y=120)
-        self.email_entry = tk.Entry(self.root).place(x=100,y=90)
-        self.telefone_entry = tk.Entry(self.root).place(x=100,y=60)
-        self.cidade_entry = tk.Entry(self.root).place(x=100,y=30)
-        self.pais_entry = tk.Entry(self.root).place(x=100,y=0)
+        self.fornecedor_entry = tk.Entry(self.root)
+        self.marca_entry = tk.Entry(self.root)
+        self.email_entry = tk.Entry(self.root)
+        self.telefone_entry = tk.Entry(self.root)
+        self.cidade_entry = tk.Entry(self.root)
+        self.pais_entry = tk.Entry(self.root)
+
+        self.fornecedor_entry.place(x=100,y=150)
+        self.marca_entry.place(x=100,y=120)
+        self.email_entry.place(x=100,y=90)
+        self.telefone_entry.place(x=100,y=60)
+        self.cidade_entry.place(x=100,y=30)
+        self.pais_entry.place(x=100,y=0)
 
     def create_fornecedor(self):
         nome_fornecedor = self.fornecedor_entry.get()
@@ -45,9 +52,10 @@ class crud_fornecedor:
         telefone_fornecedor = self.telefone_entry.get()
         cidade_fornecedor = self.cidade_entry.get()
         pais_fornecedor = self.pais_entry.get()
+
         
         if nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
-            registrar_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
+            registrar(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
             self.fornecedor_entry.delete(0,tk.END)
             self.marca_entry.delete(0,tk.END)
             self.email_entry.delete(0,tk.END)
