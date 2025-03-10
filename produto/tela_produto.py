@@ -2,7 +2,7 @@
 from tkinter import * 
 from tkinter import messagebox
 from tkinter import ttk
-from db_produto import registrar_produto, atualizar_produto, pesquisar_produto
+from db_produto import registrar_produto, atualizar_produto, pesquisar_produto, deletar_produto
 
 # Criando classe principal, que carrega a janela e tudo o que há nela
 class crud_produtos:
@@ -31,7 +31,7 @@ class crud_produtos:
         # Botoes que ficam na parte de cima do layout, carrega as funcoes
         Button(frame_botoes, text="Cadastrar produto", command=self.registrar_no_banco, width=18, height=1).grid(row=2, column=2)
         Button(frame_botoes, text="Alterar produto", width=18, height=1).grid(row=2, column=4)
-        Button(frame_botoes, text="Deletar produto", width=18, height=1).grid(row=2, column=6)
+        Button(frame_botoes, text="Deletar produto", command=self.deletar_do_banco, width=18, height=1).grid(row=2, column=6)
         Button(frame_botoes, text="Pesquisar produto", command=self.pesquisar_no_banco, width=18, height=1).grid(row=2, column=8)
         
         # Criando frame que carrega itens de cadastro
@@ -88,7 +88,7 @@ class crud_produtos:
             messagebox.showerror("Error", "Todos os campos são obrigatorios")
 
     def alterar_no_Banco(self):
-        nome_produto = self.box_nome.get().title()
+        nome_produto = self.box_nome.get()
         descricao_produto = self.box_descricao.get()
         quantidade_produto = self.box_quantidade.get()
         valor_produto = self.box_valor.get()
@@ -106,12 +106,22 @@ class crud_produtos:
             messagebox.showerror("Error", "Todos os campos são obrigatorios")
 
     def pesquisar_no_banco(self):
-            try:
-                nome = self.box_nome.get().title()
-                result = pesquisar_produto(nome)
-                self.text_area.insert(END, result)
-            except:
+            produtos = pesquisar_produto(self.box_nome.get())
+
+            if produtos:
+                for produto in produtos:
+                    self.text_area.insert(END, f"ID:{produto[0]}, Nome:{produto[1]}, Descricao:{produto[2]}, Quantidade:{produto[3]}, Preço:{produto[4]}\n")
+            else:
                 messagebox.showerror("Error", "Campo 'Nome' não preenchido ou Produto não encontrado!")
+    
+    def deletar_do_banco(self):
+        produto = self.box_nome.get()
+        if produto:
+            deletar_produto(produto)
+            self.box_nome.delete(0, END)
+            messagebox.showinfo("Success", "Usuario excluido com sucesso!")
+        else:
+            messagebox.showerror("Error", "ID do usuario é obrigatorio!")
 
 if __name__ == "__main__":
     root = Tk()

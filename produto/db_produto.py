@@ -32,12 +32,22 @@ def atualizar_produto(nome, descricao, quantidade, valor):
 def pesquisar_produto(nome):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "SELECT %s FROM produto"
+    query = "SELECT * FROM produto WHERE nome_produto LIKE %s"
     
-    busca = cursor.execute(query, (nome))
+    cursor.execute(query, (nome))
+    busca = cursor.fetchall()
 
     conn.commit()
     cursor.close()
     conn.close()
 
     return busca
+
+def deletar_produto(produto):
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "DELETE FROM produto WHERE nome_produto LIKE %s"
+    cursor.execute(query, (produto,))
+    conn.commit()
+    cursor.close()
+    conn.close()
