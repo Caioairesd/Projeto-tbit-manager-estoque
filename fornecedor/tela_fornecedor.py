@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from db_fornecedor import registrar
+from db_fornecedor import register_fornecedor
 
 class crud_fornecedor:
 
@@ -55,7 +55,7 @@ class crud_fornecedor:
 
         
         if nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
-            registrar(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
+            register_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
             self.fornecedor_entry.delete(0,tk.END)
             self.marca_entry.delete(0,tk.END)
             self.email_entry.delete(0,tk.END)

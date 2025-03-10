@@ -8,7 +8,7 @@ def get_connection():
     password = MYSQL_PASSWORD,
     database = MYSQL_DATABASE)
 
-def registrar(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
+def register_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
     query = "insert fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)VALUES(%s,%s,%s,%s,%s,%s)"
@@ -17,7 +17,7 @@ def registrar(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornece
     cursor.close()
     conn.close()
 
-def buscar():
+def read_fornecedor():
     conn = get_connection()
     cursor = conn.cursor()
     query = "SELECT * FROM tbit_db"
@@ -25,6 +25,23 @@ def buscar():
     result = cursor.close()
     conn.close()
     return result
+
+def update_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "UPDATE tbit_db SET nome_fornecedor = %s,marca_fornecedor = %s,email_fornecedor = %s,telefone_fornecedor = %s,cidade_fornecedor = %s,pais_fornecedor = %s WHERE id_fornecedor = %s"
+    cursor.execute(query,(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor))
+    conn.commit()
+    cursor.close()
+
+def delete_fornecedor(id_fornecedor):
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "DELETE FROM fornecedor WHERE id_fornecedor = %s"
+    cursor.execute(query,(id_fornecedor))
+    conn.commit()
+    cursor.close()
+    
 
 
 
