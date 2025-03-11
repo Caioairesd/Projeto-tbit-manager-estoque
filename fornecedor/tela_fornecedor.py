@@ -18,18 +18,19 @@ class crud_fornecedor:
 
     def create_widgets(self):
         #Criação de labels
-        tk.Button(self.root,text="Cadastrar",width=15,height=1,command=self.create_fornecedor).place(x=50,y=180)
+        tk.Button(self.root,text="Cadastrar",width=15,height=1,command=self.create_fornecedor).place(x=50,y=240)
 
         #botao_alterar_fornecedor = tk.Button(self.root,text="Alterar",width=20,height=2).place(x=375,y=200)
         #botao_excluir_fornecedor = tk.Button(self.root,text="Excluir",width=20,height=2).place(x=375,y=300)
         #botao_listar_fornecedor = tk.Button(self.root,text="Pesquisar fornecedor",width=20,height=2).place(x=375,y=400)
         
-        tk.Label(self.root,text="Fornecedor:").place(x=15,y=150)
-        tk.Label(self.root,text="Marca:").place(x=15,y=120)
-        tk.Label(self.root,text="Email:").place(x=15,y=90)
-        tk.Label(self.root,text="Telefone:").place(x=15,y=60)
-        tk.Label(self.root,text="Cidade:").place(x=15,y=30)
-        tk.Label(self.root,text="País:").place(x=15,y=0)
+        tk.Label(self.root,text="Fornecedor:").place(x=15,y=0)
+        tk.Label(self.root,text="Marca:").place(x=15,y=30)
+        tk.Label(self.root,text="Email:").place(x=15,y=60)
+        tk.Label(self.root,text="Telefone:").place(x=15,y=90)
+        tk.Label(self.root,text="Cidade:").place(x=15,y=120)
+        tk.Label(self.root,text="País:").place(x=15,y=150)
+        tk.Label(self.root,text="ID:").place(x=15,y=180)
 
         self.fornecedor_entry = tk.Entry(self.root)
         self.marca_entry = tk.Entry(self.root)
@@ -37,16 +38,18 @@ class crud_fornecedor:
         self.telefone_entry = tk.Entry(self.root)
         self.cidade_entry = tk.Entry(self.root)
         self.pais_entry = tk.Entry(self.root)
+        self.id_fornecedor_entrty = tk.Entry(self.root)
 
-        self.fornecedor_entry.place(x=100,y=150)
-        self.marca_entry.place(x=100,y=120)
-        self.email_entry.place(x=100,y=90)
-        self.telefone_entry.place(x=100,y=60)
-        self.cidade_entry.place(x=100,y=30)
-        self.pais_entry.place(x=100,y=0)
+        self.fornecedor_entry.place(x=100,y=0)
+        self.marca_entry.place(x=100,y=30)
+        self.email_entry.place(x=100,y=60)
+        self.telefone_entry.place(x=100,y=90)
+        self.cidade_entry.place(x=100,y=120)
+        self.pais_entry.place(x=100,y=150)
+        self.id_fornecedor_entrty.place(x=100,y=180)
 
         self.search_area = tk.Text(self.root,height=10,width=80)
-        self.search_area.place(x=50,y=200 )
+        self.search_area.place(x=135,y=300)
 
     def create_fornecedor(self):
         nome_fornecedor = self.fornecedor_entry.get()
@@ -55,7 +58,7 @@ class crud_fornecedor:
         telefone_fornecedor = self.telefone_entry.get()
         cidade_fornecedor = self.cidade_entry.get()
         pais_fornecedor = self.pais_entry.get()
-
+        id_fornecedor = self.id_fornecedor_entrty.get()
         
         if nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
             register_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
@@ -65,6 +68,7 @@ class crud_fornecedor:
             self.telefone_entry.delete(0,tk.END)
             self.cidade_entry.delete(0,tk.END)
             self.pais_entry.delete(0,tk.END)
+            self.id_fornecedor_entrty.delete(0,tk.END)
 
             messagebox.showinfo("Sucesso","Fornecedor cadastrado com sucesso!")
 
@@ -74,8 +78,8 @@ class crud_fornecedor:
     def read_fornecedor(self):
         fornecedores = read_fornecedor()
         self.search_area.delete(1.0,tk.END)
-        for fornecedor in fornecedores:
-            self.search_area.insert(tk.END,F'')
+        for id_fornecedor in fornecedores:
+            self.search_area.insert(tk.END,f"ID: {id_fornecedor[0]},Fornecedor: {nome_fornecedor[1]},Marca:{marca_fornecedor[2]},Email:{email_fornecedor[3]},Telefone:{telefone_fornecedor[4]},Cidade:{cidade_fornecedor[5]},Cidade:{pais_fornecedor[6]}\n")
         
 
 
