@@ -33,12 +33,13 @@ class crud_produtos:
         Button(frame_botoes, text="Alterar produto", command=self.alterar_no_banco, width=18, height=1).grid(row=2, column=4) # Botao para alterar produto
         Button(frame_botoes, text="Deletar produto", command=self.deletar_do_banco, width=18, height=1).grid(row=2, column=6) # Botao para deletar produto
         Button(frame_botoes, text="Listar produtos", command=self.listar_do_banco, width=18, height=1).grid(row=2, column=8) # Botao para listar produtos
-
-        Button(frame_cadastrar, text="Pesquisar produto", command=self.pesquisar_produto_especifico, width=15, height=1).grid(row=2, column=3) # botao para pesqusiar um produto especifico
         
         # Criando frame que carrega itens de cadastro
         frame_cadastrar = Frame(self.root, width=900, height=300)
         frame_cadastrar.grid(row=2)
+
+        # Botao para pesqusiar um produto especifico
+        Button(frame_cadastrar, text="Pesquisar produto", command=self.pesquisar_produto_especifico, width=15, height=1).grid(row=2, column=3) 
 
         # Labels vazios para divisoes
         Label(frame_cadastrar, text="", height=1).grid(row=1)
