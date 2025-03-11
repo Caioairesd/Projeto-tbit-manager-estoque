@@ -1,98 +1,99 @@
 import tkinter as tk
 from tkinter import messagebox
 from crud_funcionario import fazer_login_funcionario
-from tkinter import*
+from tkinter import *
 
-
-
-class CRUDfuncioario:
+class CRUDfuncionario:
     def __init__(self, root):
-        self.root = root 
-        self.root.title ("CRUD FUNCIONARIO                                                                                                                                                                       TerraBytes")
-        self.root.geometry ("900x700")
-        self.root.resizable(width= False, height=False)
-        #self.root['bg'] = "gray"
-
-
-
-
+        self.root = root
+        self.root.title("CRUD FUNCIONARIO                                                                                                                                                                       TerraBytes")
+        self.root.geometry("900x700")
+        self.root.resizable(width=False, height=False)
+        
        
+        self.root.config(bg="lightgray")
+
         self.criar_funcionario()
+
     def criar_funcionario(self):
-        tk.Label(self.root,text= "Nome: ").place(x= 0, y= 0)
-        tk.Label(self.root,text= "Data de Nascimento: ").place(x= 0, y= 30)
-        tk.Label(self.root,text= "Data de admissão: ").place(x= 0, y= 60)
-        tk.Label(self.root,text= "CPF: ").place(x= 0, y= 90)
-        tk.Label(self.root,text= "Cidade: ").place(x= 0, y= 120)
-        tk.Label(self.root,text= "Estado: ").place(x= 0, y= 150)
-        tk.Label(self.root,text= "Telefone: ").place(x= 0, y= 180)
-        tk.Label(self.root,text= "Email: ").place(x= 0, y= 210)
-        tk.Label(self.root,text= "Usuario: ").place(x= 0, y= 240)
-        tk.Label(self.root,text= "Senha: ").place(x= 0, y= 270)
+        #Labels com o texto e sem fundo
+        tk.Label(self.root, text="Nome:", bg="lightgray").place(x=30, y=20)
+        tk.Label(self.root, text="Data de Nascimento:", bg="lightgray").place(x=30, y=60)
+        tk.Label(self.root, text="Data de admissão:", bg="lightgray").place(x=30, y=100)
+        tk.Label(self.root, text="CPF:", bg="lightgray").place(x=30, y=140)
+        tk.Label(self.root, text="Cidade:", bg="lightgray").place(x=30, y=180)
+        tk.Label(self.root, text="Estado:", bg="lightgray").place(x=30, y=220)
+        tk.Label(self.root, text="Telefone:", bg="lightgray").place(x=30, y=260)
+        tk.Label(self.root, text="Email:", bg="lightgray").place(x=30, y=300)
+        tk.Label(self.root, text="Usuario:", bg="lightgray").place(x=30, y=340)
+        tk.Label(self.root, text="Senha:", bg="lightgray").place(x=30, y=380)
+        tk.Label(self.root, text="Confirmar Senha:", bg="lightgray").place(x=30, y=420)
 
-      
+        # Caixas cinza escuro 
+        self.nome_entry = tk.Entry(self.root, bg="darkgray")
+        self.Data_de_nascimento_entry = tk.Entry(self.root, bg="darkgray")
+        self.Data_de_Admissao_entry = tk.Entry(self.root, bg="darkgray")
+        self.CPF_entry = tk.Entry(self.root, bg="darkgray")
+        self.Cidade_entry = tk.Entry(self.root, bg="darkgray")
+        self.UF_entry = tk.Entry(self.root, bg="darkgray")
+        self.Telefone_entry = tk.Entry(self.root, bg="darkgray")
+        self.Email_entry = tk.Entry(self.root, bg="darkgray")
+        self.Usuario_entry = tk.Entry(self.root, bg="darkgray")
+        self.Senha_entry = tk.Entry(self.root, bg="darkgray", show="*") 
+        self.Confirmar_Senha_entry = tk.Entry(self.root, bg="darkgray", show="*") 
+        
+        #caixas de texto
+        self.nome_entry.place(x=180, y=20, width=250)
+        self.Data_de_nascimento_entry.place(x=180, y=60, width=250)
+        self.Data_de_Admissao_entry.place(x=180, y=100, width=250)
+        self.CPF_entry.place(x=180, y=140, width=250)
+        self.Cidade_entry.place(x=180, y=180, width=250)
+        self.UF_entry.place(x=180, y=220, width=250)
+        self.Telefone_entry.place(x=180, y=260, width=250)
+        self.Email_entry.place(x=180, y=300, width=250)
+        self.Usuario_entry.place(x=180, y=340, width=250)
+        self.Senha_entry.place(x=180, y=380, width=250)
+        self.Confirmar_Senha_entry.place(x=180, y=420, width=250)
 
-        self.nome_entry = tk.Entry(self.root)
-        self.Data_de_nascimento_entry = tk.Entry(self.root)
-        self.Data_de_Admissao_entry = tk.Entry(self.root)
-        self.CPF_entry = tk.Entry(self.root)
-        self.Cidade_entry = tk.Entry(self.root)
-        self.UF_entry = tk.Entry(self.root)
+        # Botão de login
+        tk.Button(self.root, text="FAZER LOGIN", command=self.fazer_login_funcionario).place(x=30, y=460)
 
-        self.Telefone_entry = tk.Entry(self.root)
-        self.Email_entry = tk.Entry(self.root)
-        self.Usuario_entry = tk.Entry(self.root)
-        self.Senha_entry = tk.Entry(self.root)
-
-        self.nome_entry.place(x= 50, y= 0, width= "150")
-        self.Data_de_nascimento_entry.place(x= 120, y= 30, width= "100")
-        self.Data_de_Admissao_entry.place(x= 110, y= 60, width= "110")
-        self.CPF_entry.place(x= 50, y= 90, width= "100")
-        self.Cidade_entry.place(x= 50, y= 120,width= "100")
-        self.UF_entry.place(x= 50, y= 150, width= "100")
-        self.Telefone_entry.place(x= 55, y= 180, width= "95")
-        self.Email_entry.place(x= 50, y= 210, width= "100")
-        self.Usuario_entry.place(x= 50, y= 240, width= "100")
-        self.Senha_entry.place(x= 50, y= 270, width= "100")
-
-        tk.Button(self.root, text= "FAZER LOGIN", command = self.fazer_login_funcionario).place(x= 0, y= 300)
-      
-    def fazer_login_funcionario (self):
+    def fazer_login_funcionario(self):
         nome = self.nome_entry.get()
-        DataDeNascimento= self.Data_de_nascimento_entry.get()
+        DataDeNascimento = self.Data_de_nascimento_entry.get()
         DataDeAdmissao = self.Data_de_Admissao_entry.get()
         CPF = self.CPF_entry.get()
         Cidade = self.Cidade_entry.get()
         UF = self.UF_entry.get()
-        Telefone= self.Telefone_entry.get()
-        Email= self.Email_entry.get()
+        Telefone = self.Telefone_entry.get()
+        Email = self.Email_entry.get()
         Usuario = self.Usuario_entry.get()
         Senha = self.Senha_entry.get()
+        Confirmar_Senha = self.Confirmar_Senha_entry.get()
 
-        #fazendo a mensagem de criado ou não criado o funcionario
-        if nome and DataDeNascimento and DataDeAdmissao and CPF and Cidade and UF and Telefone and Email and Usuario and Senha:
-            fazer_login_funcionario(nome, DataDeNascimento, DataDeAdmissao,  CPF, Cidade, UF , Telefone, Email, Usuario, Senha)
-            self.nome_entry.delete(0,tk.END)
-            self.Data_de_nascimento_entry.delete(0,tk.END)
-            self.Data_de_Admissao_entry.delete(0,tk.END)
-            self.CPF_entry.delete(0,tk.END)
-            self.Cidade_entry.delete(0,tk.END)
-            self.UF_entry.delete(0,tk.END)
-
-            self.Telefone_entry.delete(0,tk.END)
-            self.Email_entry.delete(0,tk.END)
-            self.Usuario_entry.delete(0,tk.END)
-            self.Senha_entry.delete(0,tk.END)
-            messagebox.showinfo("Success", "Funcionario criado com Sucesso")
+       
+        if nome and DataDeNascimento and DataDeAdmissao and CPF and Cidade and UF and Telefone and Email and Usuario and Senha and Confirmar_Senha:
+            if Senha == Confirmar_Senha: 
+                fazer_login_funcionario(nome, DataDeNascimento, DataDeAdmissao, CPF, Cidade, UF, Telefone, Email, Usuario, Senha)
+                self.nome_entry.delete(0, tk.END)
+                self.Data_de_nascimento_entry.delete(0, tk.END)
+                self.Data_de_Admissao_entry.delete(0, tk.END)
+                self.CPF_entry.delete(0, tk.END)
+                self.Cidade_entry.delete(0, tk.END)
+                self.UF_entry.delete(0, tk.END)
+                self.Telefone_entry.delete(0, tk.END)
+                self.Email_entry.delete(0, tk.END)
+                self.Usuario_entry.delete(0, tk.END)
+                self.Senha_entry.delete(0, tk.END)
+                self.Confirmar_Senha_entry.delete(0, tk.END)
+                messagebox.showinfo("Success", "Funcionario criado com Sucesso")
+            else:
+                messagebox.showerror("Error", "As senhas não coincidem")
         else:
-            messagebox.showerror("Error", "Todos os campos são obrigatorios")
-
-
+            messagebox.showerror("Error", "Todos os campos são obrigatórios")
 
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = CRUDfuncioario(root)
+    app = CRUDfuncionario(root)
     root.mainloop()
-
-
