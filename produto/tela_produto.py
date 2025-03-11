@@ -38,39 +38,41 @@ class crud_produtos:
         frame_cadastrar = Frame(self.root, width=900, height=300)
         frame_cadastrar.grid(row=2)
 
-        # Botao para pesqusiar um produto especifico
-        Button(frame_cadastrar, text="Pesquisar produto", command=self.pesquisar_produto_especifico, width=15, height=1).grid(row=2, column=3) 
+         
 
         # Labels vazios para divisoes
-        Label(frame_cadastrar, text="", height=1).grid(row=1)
-        Label(frame_cadastrar, text="", height=1).grid(row=3)
-        Label(frame_cadastrar, text="", height=1).grid(row=5)
-        Label(frame_cadastrar, text="", height=1).grid(row=7)
-        Label(frame_cadastrar, text="", height=1).grid(row=9)
-        Label(frame_cadastrar, text="", height=1).grid(row=11)
+        Label(frame_cadastrar, text="", height=2).grid(row=2)
+        Label(frame_cadastrar, text="", height=1).grid(row=4)
+        Label(frame_cadastrar, text="", height=1).grid(row=6)
+        Label(frame_cadastrar, text="", height=1).grid(row=8)
+        Label(frame_cadastrar, text="", height=1).grid(row=10)
+        Label(frame_cadastrar, text="", height=1).grid(row=12)
 
-        self.box_pesquisar = Entry(frame_botoes, width=40)
-        self.box_pesquisar.grid(row=2, column=2)
+        # Botao para pesqusiar um produto especifico
+        Button(frame_cadastrar, text="Pesquisar produto", command=self.pesquisar_produto_especifico, width=18, height=2).grid(row=1, column=3, rowspan=1)
+
+        self.box_pesquisar = Entry(frame_cadastrar, width=40)
+        self.box_pesquisar.grid(row=1, column=1, columnspan=2)
 
         # Label e entry para 'nome' do produto
-        Label(frame_cadastrar, text="Nome do Produto:").grid(row=2, column=1)
+        Label(frame_cadastrar, text="Nome do Produto:").grid(row=3, column=1)
         self.box_nome = Entry(frame_cadastrar, width=25)
-        self.box_nome.grid(row=2, column=3)
+        self.box_nome.grid(row=3, column=3)
 
         # Label e entry para 'descricao' do produto
-        Label(frame_cadastrar, text="Descrição do Produto:").grid(row=4, column=1)
+        Label(frame_cadastrar, text="Descrição do Produto:").grid(row=5, column=1)
         self.box_descricao = Entry(frame_cadastrar, width=25)
-        self.box_descricao.grid(row=4, column=3)
+        self.box_descricao.grid(row=5, column=3)
 
         # Label e entry para 'quantidade' do produto
-        Label(frame_cadastrar, text="Quantidade do Produto:").grid(row=6, column=1)
+        Label(frame_cadastrar, text="Quantidade do Produto:").grid(row=7, column=1)
         self.box_quantidade = Entry(frame_cadastrar, width=25)
-        self.box_quantidade.grid(row=6, column=3)
+        self.box_quantidade.grid(row=7, column=3)
 
         # Label e entry para 'valor' do produto
-        Label(frame_cadastrar, text="Valor do Produto:").grid(row=8, column=1)
+        Label(frame_cadastrar, text="Valor do Produto:").grid(row=9, column=1)
         self.box_valor = Entry(frame_cadastrar, width=25)
-        self.box_valor.grid(row=8, column=3)
+        self.box_valor.grid(row=9, column=3)
 
         # Frame usado para carregar o 'text_area'
         frame_text_area = Frame(self.root, width=900, height=200)
