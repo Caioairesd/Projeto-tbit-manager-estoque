@@ -1,7 +1,7 @@
 from tkinter import * 
 from tkinter import messagebox
 from tkinter import ttk 
-from db import tbit_db
+from database import tbit_db
 
 janela = Tk()
 janela.title("TBit Manager                                                                                                                                                                                 by TerraBytes") 
