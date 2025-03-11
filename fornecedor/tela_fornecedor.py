@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from db_fornecedor import register_fornecedor
+from db_fornecedor import register_fornecedor,read_fornecedor,update_fornecedor,delete_fornecedor
 
 class crud_fornecedor:
 
@@ -45,6 +45,9 @@ class crud_fornecedor:
         self.cidade_entry.place(x=100,y=30)
         self.pais_entry.place(x=100,y=0)
 
+        self.search_area = tk.Text(self.root,height=10,width=80)
+        self.search_area.place(x=50,y=200 )
+
     def create_fornecedor(self):
         nome_fornecedor = self.fornecedor_entry.get()
         marca_fornecedor = self.marca_entry.get()
@@ -68,6 +71,12 @@ class crud_fornecedor:
         else:
 
             messagebox.showerror("Erro","Todos os campos são obrigatórios!")
+    def read_fornecedor(self):
+        fornecedores = read_fornecedor()
+        self.search_area.delete(1.0,tk.END)
+        for fornecedor in fornecedores:
+            self.search_area.insert(tk.END,F'')
+        
 
 
 
