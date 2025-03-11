@@ -22,32 +22,42 @@ def registrar_produto(nome, descricao, quantidade, valor):
 def atualizar_produto(nome, descricao, quantidade, valor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "UPDATE produto SET nome_produto = %s, descricao_produto = %s, quantidade_produto = %s, valor_produto = %s"
-    cursor.execute(query, (nome, descricao, quantidade, valor))
+    query = "UPDATE produto SET nome_produto = %s, descricao_produto = %s, quantidade_produto = %s, valor_produto = %s WHERE nome_produto LIKE %s"
+    cursor.execute(query, (nome, descricao, quantidade, valor, nome))
 
     conn.commit()
     cursor.close()
     conn.close()
 
-def pesquisar_produto(nome):
+def listar_produtos():
     conn = get_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM produto WHERE nome_produto LIKE %s"
-    
-    cursor.execute(query, (nome))
+    query = "SELECT * FROM produto"
+    cursor.execute(query)
     busca = cursor.fetchall()
-
     conn.commit()
     cursor.close()
     conn.close()
 
     return busca
 
-def deletar_produto(produto):
+def deletar_produto(produto_requisitado):
     conn = get_connection()
     cursor = conn.cursor()
     query = "DELETE FROM produto WHERE nome_produto LIKE %s"
-    cursor.execute(query, (produto,))
+    cursor.execute(query, (produto_requisitado,))
     conn.commit()
     cursor.close()
     conn.close()
+
+def pesquisar_produto(nome_requisitado):
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM produto WHERE nome_produto LIKE %s"
+    cursor.execute(query, (nome_requisitado))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return 
