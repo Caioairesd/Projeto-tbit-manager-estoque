@@ -4,7 +4,7 @@ MYSQL_USER = 'root'
 MYSQL_PASSWORD = ''
 MYSQL_DATABASE = 'tbit_db'
 
-class tbit_db:
+class tbit_db():
     def __init__(self):
         
         self.conn = mysql.connector.connect(
@@ -73,7 +73,7 @@ class tbit_db:
         self.cursor.execute('UPDATE fornecedor SET nome_fornecedor = %s, marca_fornecedor = %s, email_fornecedor = %s, telefone_fornecedor = %s, cidade_fornecedor = %s, pais_fornecedor = %s WHERE id_fornecedor = %s', (nome_fornecedor, marca_fornecedor, email_fornecedor, telefone_fornecedor, cidade_fornecedor, pais_fornecedor, id_fornecedor))
 
     def delete_fornecedor(self, id_fornecedor):
-        self.cursor.execute('DELETE FROM fornecedor WHERE id_fornecedor = %s', (id_fornecedor))
+        self.cursor.execute('DELETE FROM fornecedor WHERE id_fornecedor = %s', (id_fornecedor,))
         self.conn.commit()
 
     def create_funcionario(self, nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario):
@@ -88,7 +88,7 @@ class tbit_db:
         self.cursor.execute('UPDATE funcionario SET nome_funcionario = %s, data_nascimento_funcionario = %s, data_admissao_funcionario = %s, cpf_funcionario = %s, cidade_funcionario = %s, estado_funcionario = %s, telefone_funcionario = %s, email_funcionario = %s, usuario_funcionario = %s, senha_funcionario = %s WHERE id_funcionario = %s', (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, id_funcionario))
 
     def delete_funcionario(self, id_funcionario):
-        self.cursor.execute('DELETE FROM funcionario WHERE id_funcionario = %s', (id_funcionario))
+        self.cursor.execute('DELETE FROM funcionario WHERE id_funcionario = %s', (id_funcionario,))
         self.conn.commit()
 
     def create_produto(self, nome_produto, descricao_produto, quantidade_produto, valor_produto, fornecedor_produto):
@@ -103,7 +103,7 @@ class tbit_db:
         self.cursor.execute('UPDATE produto SET nome_produto = %s, descricao_produto = %s, quantidade_produto = %s, valor_produto = %s, fornecedor_produto = %s WHERE id_produto = %s', (nome_produto, descricao_produto, quantidade_produto, valor_produto, fornecedor_produto, id_produto))
 
     def delete_produto(self, id_produto):
-        self.cursor.execute('DELETE FROM produto WHERE id_produto = %s', (id_produto))
+        self.cursor.execute('DELETE FROM produto WHERE id_produto = %s', (id_produto,))
         self.conn.commit()
     
     def __del__(self):
