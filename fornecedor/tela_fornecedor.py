@@ -20,9 +20,9 @@ class crud_fornecedor:
         #Criação de labels
         tk.Button(self.root,text="Cadastrar",width=15,height=1,command=self.create_fornecedor).place(x=50,y=240)
 
-        #botao_alterar_fornecedor = tk.Button(self.root,text="Alterar",width=20,height=2).place(x=375,y=200)
-        #botao_excluir_fornecedor = tk.Button(self.root,text="Excluir",width=20,height=2).place(x=375,y=300)
-        #botao_listar_fornecedor = tk.Button(self.root,text="Pesquisar fornecedor",width=20,height=2).place(x=375,y=400)
+        tk.Button(self.root,text="Alterar",width=15,height=1,command=self.update_fornecedor).place(x=250,y=240)
+        tk.Button(self.root,text="Excluir",width=15,height=1,command=self.delete_fornecedor).place(x=500,y=240)
+        tk.Button(self.root,text="Pesquisar",width=15,height=1,command=self.read_fornecedor).place(x=750,y=240)
         
         tk.Label(self.root,text="Fornecedor:").place(x=15,y=0)
         tk.Label(self.root,text="Marca:").place(x=15,y=30)
@@ -38,7 +38,7 @@ class crud_fornecedor:
         self.telefone_entry = tk.Entry(self.root)
         self.cidade_entry = tk.Entry(self.root)
         self.pais_entry = tk.Entry(self.root)
-        self.id_fornecedor_entrty = tk.Entry(self.root)
+        self.id_fornecedor_entry = tk.Entry(self.root)
 
         self.fornecedor_entry.place(x=100,y=0)
         self.marca_entry.place(x=100,y=30)
@@ -46,7 +46,7 @@ class crud_fornecedor:
         self.telefone_entry.place(x=100,y=90)
         self.cidade_entry.place(x=100,y=120)
         self.pais_entry.place(x=100,y=150)
-        self.id_fornecedor_entrty.place(x=100,y=180)
+        self.id_fornecedor_entry.place(x=100,y=180)
 
         self.search_area = tk.Text(self.root,height=10,width=80)
         self.search_area.place(x=135,y=300)
@@ -58,7 +58,7 @@ class crud_fornecedor:
         telefone_fornecedor = self.telefone_entry.get()
         cidade_fornecedor = self.cidade_entry.get()
         pais_fornecedor = self.pais_entry.get()
-        id_fornecedor = self.id_fornecedor_entrty.get()
+       
         
         if nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
             register_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
@@ -68,7 +68,7 @@ class crud_fornecedor:
             self.telefone_entry.delete(0,tk.END)
             self.cidade_entry.delete(0,tk.END)
             self.pais_entry.delete(0,tk.END)
-            self.id_fornecedor_entrty.delete(0,tk.END)
+            self.id_fornecedor_entry.delete(0,tk.END)
 
             messagebox.showinfo("Sucesso","Fornecedor cadastrado com sucesso!")
 
@@ -76,10 +76,46 @@ class crud_fornecedor:
 
             messagebox.showerror("Erro","Todos os campos são obrigatórios!")
     def read_fornecedor(self):
+        
         fornecedores = read_fornecedor()
         self.search_area.delete(1.0,tk.END)
-        for id_fornecedor in fornecedores:
-            self.search_area.insert(tk.END,f"ID: {id_fornecedor[0]},Fornecedor: {nome_fornecedor[1]},Marca:{marca_fornecedor[2]},Email:{email_fornecedor[3]},Telefone:{telefone_fornecedor[4]},Cidade:{cidade_fornecedor[5]},Cidade:{pais_fornecedor[6]}\n")
+
+        for fornecedor in fornecedores:
+                    self.search_area.insert(tk.END,f"ID: {fornecedor[0]},Fornecedor: {fornecedor[1]},Marca:{fornecedor[2]},Email:{fornecedor[3]},Telefone:{fornecedor[4]},Cidade:{fornecedor[5]},Cidade:{fornecedor[6]}\n")
+                        
+       
+
+    def update_fornecedor(self):
+        id_fornecedor = self.id_fornecedor_entry.get() 
+        nome_fornecedor=self.fornecedor_entry.get()
+        marca_fornecedor =self.marca_entry.get()        
+        email_fornecedor =self.email_entry.get()
+        telefone_fornecedor =self.telefone_entry.get()
+        cidade_fornecedor =self.cidade_entry.get()
+        pais_fornecedor = self.pais_entry.get()
+        
+        if  id_fornecedor and nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
+            update_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor)
+            self.fornecedor_entry.delete(0,tk.END)
+            self.marca_entry.delete(0,tk.END)
+            self.email_entry.delete(0,tk.END)
+            self.telefone_entry.delete(0,tk.END)
+            self.cidade_entry.delete(0,tk.END)
+            self.pais_entry.delete(0,tk.END)
+            
+            messagebox.showinfo("Sucess","informações alteradas com sucesso!")
+        else:
+            messagebox.showerror("ERROR","Todos os campos são obrigatórios!")
+    def delete_fornecedor(self):
+        id_fornecedor = self.id_fornecedor_entry.get()
+        if id_fornecedor:
+            delete_fornecedor(id_fornecedor)
+
+            self.id_fornecedor_entry.delete(0,tk.END)
+            messagebox.showinfo("Sucesso","Fornecedor deletado com sucesso!")
+        else:
+            messagebox.showerror("Erro","ID do fornecedor é obrigatório!")
+        
         
 
 

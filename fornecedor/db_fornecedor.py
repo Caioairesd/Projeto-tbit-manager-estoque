@@ -20,17 +20,17 @@ def register_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefo
 def read_fornecedor():
     conn = get_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM tbit_db"
+    query = "SELECT * FROM fornecedor"
     cursor.execute(query)
-    result = cursor.close()
+    result = cursor.fetchall()
     conn.close()
     return result
 
-def update_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
+def update_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "UPDATE tbit_db SET nome_fornecedor = %s,marca_fornecedor = %s,email_fornecedor = %s,telefone_fornecedor = %s,cidade_fornecedor = %s,pais_fornecedor = %s WHERE id_fornecedor = %s"
-    cursor.execute(query,(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor))
+    query = "UPDATE fornecedor SET nome_fornecedor = %s,marca_fornecedor = %s,email_fornecedor = %s,telefone_fornecedor = %s,cidade_fornecedor = %s,pais_fornecedor = %s WHERE id_fornecedor = %s"
+    cursor.execute(query,(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor))
     conn.commit()
     cursor.close()
 
@@ -38,7 +38,7 @@ def delete_fornecedor(id_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
     query = "DELETE FROM fornecedor WHERE id_fornecedor = %s"
-    cursor.execute(query,(id_fornecedor))
+    cursor.execute(query,(id_fornecedor,))
     conn.commit()
     cursor.close()
     
