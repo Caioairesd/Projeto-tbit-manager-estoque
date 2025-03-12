@@ -44,7 +44,7 @@ def listar_produtos():
 def deletar_produto(produto_requisitado):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "DELETE FROM produto WHERE nome_produto LIKE %s"
+    query = "DELETE FROM produto WHERE nome_produto = %s"
     cursor.execute(query, (produto_requisitado,))
     conn.commit()
     cursor.close()
@@ -53,11 +53,11 @@ def deletar_produto(produto_requisitado):
 def pesquisar_produto(nome_requisitado):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM produto WHERE nome_produto LIKE %s"
-    cursor.execute(query, (nome_requisitado))
-
+    query = "SELECT * FROM produto WHERE nome_produto = %s"
+    cursor.execute(query, (nome_requisitado,))
+    busca = cursor.fetchone()
     conn.commit()
     cursor.close()
     conn.close()
 
-    return 
+    return busca

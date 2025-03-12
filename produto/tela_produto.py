@@ -38,8 +38,6 @@ class crud_produtos:
         frame_cadastrar = Frame(self.root, width=900, height=300)
         frame_cadastrar.grid(row=2)
 
-         
-
         # Labels vazios para divisoes
         Label(frame_cadastrar, text="", height=2).grid(row=2)
         Label(frame_cadastrar, text="", height=1).grid(row=4)
@@ -49,7 +47,7 @@ class crud_produtos:
         Label(frame_cadastrar, text="", height=1).grid(row=12)
 
         # Botao para pesqusiar um produto especifico
-        Button(frame_cadastrar, text="Pesquisar produto", command=self.pesquisar_produto_especifico, width=18, height=2).grid(row=1, column=3, rowspan=1)
+        Button(frame_cadastrar, text="Pesquisar produto \ne autopreencher", command=self.pesquisar_produto_especifico, width=18, height=2).grid(row=1, column=3, rowspan=1)
 
         self.box_pesquisar = Entry(frame_cadastrar, width=40)
         self.box_pesquisar.grid(row=1, column=1, columnspan=2)
@@ -85,19 +83,17 @@ class crud_produtos:
         self.text_area = Text(frame_text_area,height=13,width=100)
         self.text_area.grid(row=2,column=2,columnspan=5)
 
+    # Método usado quando o botao 'Cadastrar' é clicado
     def registrar_no_banco(self):
-        nome_produto = self.box_nome.get().title()
-        descricao_produto = self.box_descricao.get()
-        quantidade_produto = self.box_quantidade.get()
-        valor_produto = self.box_valor.get()
+        nome_produto = self.box_nome.get().title() # Pega o valor que esta dentro da box de nome
+        descricao_produto = self.box_descricao.get() # Pega o valor que esta dentro da box de descricao
+        quantidade_produto = self.box_quantidade.get() # Pega o valor que esta dentro da box de quantidade
+        valor_produto = self.box_valor.get() # Pega o valor que esta dentro da box de valor
 
-        if nome_produto and descricao_produto and quantidade_produto and valor_produto:
-            registrar_produto(nome_produto, descricao_produto, quantidade_produto, valor_produto)
+        if nome_produto and descricao_produto and quantidade_produto and valor_produto: # Verifica se todas as variaveis carregam um valor diferente de nulo
+            registrar_produto(nome_produto, descricao_produto, quantidade_produto, valor_produto) # Executa o metodo que se conecta com o banco
 
-            self.box_nome.delete(0, END)
-            self.box_descricao.delete(0, END)
-            self.box_quantidade.delete(0, END)
-            self.box_valor.delete(0, END)
+            self.limpar_campos() # Executa o metodo que limpa os bancos
 
             messagebox.showinfo("Sucesso", "Produto cadastrado com sucesso!")
         else:
@@ -112,10 +108,7 @@ class crud_produtos:
         if nome_produto and descricao_produto and quantidade_produto and valor_produto:
             atualizar_produto(nome_produto, descricao_produto, quantidade_produto, valor_produto)
 
-            self.box_nome.delete(0, END)
-            self.box_descricao.delete(0, END)
-            self.box_quantidade.delete(0, END)
-            self.box_valor.delete(0, END)
+            self.limpar_campos()
 
             messagebox.showinfo("Sucesso", "Produto atualizado com sucesso!")
         else:
@@ -126,7 +119,7 @@ class crud_produtos:
             self.text_area.delete(1.0, END)
 
             for produto in produtos:
-                self.text_area.insert(END, f"\nNome: {produto[1]}, Descrição: {produto[2]}, Quantidade: {produto[3]}, Valor: {produto[4]}\n")
+                self.text_area.insert(END, f"-Nome: {produto[1]}, Descrição: {produto[2]}, Quantidade: {produto[3]}, Valor: {produto[4]}\n")
     
     def deletar_do_banco(self):
         produto = self.box_nome.get()
@@ -139,9 +132,31 @@ class crud_produtos:
 
     def pesquisar_produto_especifico(self):
         pesquisa = self.box_pesquisar.get().title()
+        self.box_pesquisar.delete(0, END)
 
-        pesquisar_produto(pesquisa)
+        if pesquisa:
+            produto_retornado = pesquisar_produto(pesquisa)
+
+            if produto_retornado:
+                messagebox.showinfo("Success", f"Produto '{produto_retornado[1]}' encontrado com sucesso, verifique a caixa de texto!")
+                self.text_area.delete(1.0, END)
+                self.text_area.insert(END, f"Nome: {produto_retornado[1]}, Descrição: {produto_retornado[2]}, Quantidade: {produto_retornado[3]}, Valor: {produto_retornado[4]}")
+                
+                self.box_nome.insert(0, produto_retornado[1])
+                self.box_descricao.insert(0, produto_retornado[2])
+                self.box_quantidade.insert(0, produto_retornado[3])
+                self.box_valor.insert(0, produto_retornado[4])
+
+            else:
+                messagebox.showerror("Error", "Produto não encontrado ou não cadastrado!")
+        else:
+            messagebox.showerror("Error", "Campo 'Pesquisar' não preenchido!")
         
+    def limpar_campos(self):
+        self.box_nome.delete(0, END)
+        self.box_descricao.delete(0, END)
+        self.box_quantidade.delete(0, END)
+        self.box_valor.delete(0, END)    
 
 if __name__ == "__main__":
     root = Tk()
