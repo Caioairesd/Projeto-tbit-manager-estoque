@@ -18,10 +18,32 @@ def login_funcionario(nome, Data_de_nascimento,  Data_de_admissao,  CPF, Cidade,
     conn.commit()
     cursor.close()
     conn.close()
+
 def editar_funcionario():
     conn = get_connection()
     cursor = conn.cursor()
     query = "SELECT * FROM funcionario"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return result
+
+def excluir_funcionario ():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "DELETE FROM funcionario WHERE id_funcionario = %s"
+    cursor.execute(query, (id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def buscar_funcionario():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM usuario"
     cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()

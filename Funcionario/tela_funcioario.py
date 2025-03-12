@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
-from crud_funcionario import login_funcionario, editar_funcionario
+from crud_funcionario import login_funcionario, editar_funcionario, excluir_funcionario, buscar_funcionario
 from tkinter import *
+
 
 class CRUDfuncionario:
     def __init__(self, root):
@@ -136,23 +137,23 @@ class CRUDfuncionario:
         tk.Button(self.root, text="EXCLUIR", command=self.excluir_funcionario).place(x=180, y=460)
 
 
+        self.text_area = tk.Text(self.root, height = 10, width=80)
     def buscar_funcionario (self):
         tk.Button(self.root, text="BUSCAR", command=self.excluir_funcionario).place(x=245, y=460)
         tk.Label(self.root, text="ID:", bg="lightgray").place(x=310, y=463)
         self.id_entry = tk.Entry(self.root, bg="darkgray")
         self.id_entry.place(x=330, y=465, width=50)
 
-     
-        users = ()
+        funcionarios = buscar_funcionario()
         self.text_area.delete(1.0, tk.END)   
-        for user in users:
+        for user in funcionarios:
             self.text_area.insert(tk.END,f"ID:{user [0]}, Nome: {user [1]}, telefone: {user[2]},email:{user[3]}\n"  ) 
        
-       
+    
 
 
 
-  
+
 
 
 
