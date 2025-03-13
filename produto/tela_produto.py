@@ -48,7 +48,7 @@ class tela_produto:
         Label(frame_cadastrar, text="", height=1).grid(row=12)
 
         # Botao para pesqusiar um produto especifico
-        Button(frame_cadastrar, text="Pesquisar produto \ne autopreencher", command=self.pesquisar_produto_especifico, width=18, height=2).grid(row=1, column=3, rowspan=1)
+        Button(frame_cadastrar, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=25, height=2).grid(row=1, column=3, rowspan=1)
 
         # Entry usado para pesquisar de forma individual
         self.box_pesquisar = Entry(frame_cadastrar, width=40)
@@ -151,6 +151,7 @@ class tela_produto:
     def pesquisar_produto_especifico(self):
         pesquisa = self.box_pesquisar.get().title()
         self.box_pesquisar.delete(0, END)
+        self.limpar_campos()
 
         if pesquisa:
             produto_retornado = pesquisar_produto(pesquisa)
@@ -167,6 +168,8 @@ class tela_produto:
 
             else:
                 messagebox.showerror("Error", "Produto não encontrado ou não cadastrado!")
+                self.limpar_campos()
+                self.listar_do_banco()
         else:
             messagebox.showerror("Error", "Campo 'Pesquisar' não preenchido!")
         
