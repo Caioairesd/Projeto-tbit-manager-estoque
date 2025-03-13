@@ -50,11 +50,11 @@ def deletar_produto(produto_requisitado):
     cursor.close()
     conn.close()
 
-def pesquisar_produto(nome_requisitado):
+def pesquisar_produto(produto_requisitado):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM produto WHERE nome_produto = %s"
-    cursor.execute(query, (nome_requisitado,))
+    query = "SELECT * FROM produto WHERE nome_produto = %s OR id_produto = %s"
+    cursor.execute(query, (produto_requisitado, produto_requisitado,))
     busca = cursor.fetchone()
     conn.commit()
     cursor.close()
