@@ -17,7 +17,7 @@ def register_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefo
     cursor.close()
     conn.close()
 
-def read_fornecedor():
+def listar_fornecedor_db():
     conn = get_connection()
     cursor = conn.cursor()
     query = "SELECT * FROM fornecedor"
@@ -25,6 +25,18 @@ def read_fornecedor():
     result = cursor.fetchall()
     conn.close()
     return result
+
+def pesquisar_fornecedor_db(id_solicitado):
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM fornecedor WHERE id_fornecedor =%s"
+    cursor.execute(query,(id_solicitado,))
+    busca = cursor.fetchone()
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return busca
+
 
 def update_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor):
     conn = get_connection()
@@ -41,6 +53,7 @@ def delete_fornecedor(id_fornecedor):
     cursor.execute(query,(id_fornecedor,))
     conn.commit()
     cursor.close()
+
     
 
 
