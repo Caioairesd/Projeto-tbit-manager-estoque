@@ -22,12 +22,12 @@ class crud_fornecedor:
 
         #Criação de botões
         tk.Button(self.root,text="Cadastrar",width=15,height=1,command=self.create_fornecedor).place(x=50,y=240)
-
         tk.Button(self.root,text="Alterar",width=15,height=1,command=self.update_fornecedor).place(x=250,y=240)
         tk.Button(self.root,text="Excluir",width=15,height=1,command=self.delete_fornecedor).place(x=500,y=240)
-       
-        tk.Button(self.root,text="pesquisar e inserir dados",width=30,height=1,command=self.pesquisar_fornecedor).place(x=135,y=415)
-
+        tk.Button(self.root,text="Pesquisar e inserir dados",width=30,height=1,command=self.pesquisar_fornecedor).place(x=135,y=415)
+        tk.Button(self.root,text="Cancelar",width=15,height=1,command=self.cancelar_operacao).place(x=750,y=240)
+        
+        #Criação de labels
         tk.Label(self.root,text="Fornecedor:").place(x=15,y=0)
         tk.Label(self.root,text="Marca:").place(x=15,y=30)
         tk.Label(self.root,text="Email:").place(x=15,y=60)
@@ -57,10 +57,14 @@ class crud_fornecedor:
         self.id_fornecedor_entry.place(x=100,y=180)
         self.pesquisar_entry.place(x=360,y=417)
 
+        #Criação da área de texto responsável por exibir informações dos fornecedores
         self.search_area = tk.Text(self.root,height=15,width=80)
         self.search_area.place(x=135,y=450)
 
+    #função responsável por criar um fornecedor 
     def create_fornecedor(self):
+        
+        #variáveis recebem o valor inserido no campo de texto
         nome_fornecedor = self.fornecedor_entry.get()
         marca_fornecedor = self.marca_fornecedor_entry.get()
         email_fornecedor = self.email_fornecedor_entry.get()
@@ -68,17 +72,14 @@ class crud_fornecedor:
         cidade_fornecedor = self.cidade_fornecedor_entry.get()
         pais_fornecedor = self.pais_fornecedor_entry.get()
        
-        
+        #Condicional responsável por acionar função do banco de dados
         if nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
             register_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
-            self.fornecedor_entry.delete(0,tk.END)
-            self.marca_fornecedor_entry.delete(0,tk.END)
-            self.email_fornecedor_entry.delete(0,tk.END)
-            self.telefone_fornecedor_entry.delete(0,tk.END)
-            self.cidade_fornecedor_entry.delete(0,tk.END)
-            self.pais_fornecedor_entry.delete(0,tk.END)
-            self.id_fornecedor_entry.delete(0,tk.END)
 
+            #Chama a função de limpar campos de texto
+            self.limpar_campos()
+
+            #Chama a função de listar para poder atualizar a lista de fornecederores exibida
             self.listar_fornecedor()
 
             messagebox.showinfo("Sucesso","Fornecedor cadastrado com sucesso!")
@@ -86,7 +87,8 @@ class crud_fornecedor:
         else:
 
             messagebox.showerror("Erro","Todos os campos são obrigatórios!")
-
+    
+    #função responsável por exibir/listar os fornecedores cadastrados no banco de dados          
     def listar_fornecedor(self):
         
         fornecedores = listar_fornecedor_db()
@@ -95,12 +97,16 @@ class crud_fornecedor:
         for fornecedor in fornecedores:
                     self.search_area.insert(tk.END,f"ID: {fornecedor[0]},Fornecedor: {fornecedor[1]},Marca:{fornecedor[2]},Email:{fornecedor[3]},Telefone:{fornecedor[4]},Cidade:{fornecedor[5]},Cidade:{fornecedor[6]}\n")
 
+    #função responsável por exibir e setar os valores relacionados ao id ou nome inserido ao usuário
+    # como não realizamos ainda a máteria de banco de dados não é possível vincular tabela.         
     def pesquisar_fornecedor(self):         
-       
+        
+        #pesquisa recebe valor inserido no campo de texto de id
         pesquisa = self.pesquisar_entry.get()
 
         self.pesquisar_entry.delete(0,tk.END)
 
+            
         if pesquisa:
 
             id_solicitado = pesquisar_fornecedor_db(pesquisa)
@@ -109,9 +115,13 @@ class crud_fornecedor:
 
                 
                 messagebox.showinfo("Sucesso!","{}Fornecedor encontrado com sucesso!\nVerifique a caixa de texto".format(id_solicitado))
+                #Retira de exibição os fornecedores cadastrados deixando somente o pesquisado           
                 self.search_area.delete(1.0,tk.END)
+
+                #Insere os dados do fornecedor pesquisado no campo de exibição
                 self.search_area.insert(tk.END,f"ID: {id_solicitado[0]},id_solicitado: {id_solicitado[1]},Marca:{id_solicitado[2]},Email:{id_solicitado[3]},Telefone:{id_solicitado[4]},Cidade:{id_solicitado[5]},Cidade:{id_solicitado[6]}\n")
 
+                #Insere os dados do fornecedor pesquisado nos campos de texto para possível edição  
                 self.id_fornecedor_entry.insert(0,id_solicitado[0])
                 self.fornecedor_entry.insert(0,id_solicitado[1])
                 self.marca_fornecedor_entry.insert(0,id_solicitado[2])
@@ -124,8 +134,10 @@ class crud_fornecedor:
         else:
             messagebox.showerror("Erro","Campo de pesquisa deve estar preenchido!")
 
-
+    #Função responsável por atualizar os dados dos fornecedores cadastrados
     def update_fornecedor(self):
+
+        #variáveis recebem os dados inseridos nos campos de textos
         id_fornecedor = self.id_fornecedor_entry.get() 
         nome_fornecedor=self.fornecedor_entry.get()
         marca_fornecedor =self.marca_fornecedor_entry.get()        
@@ -136,31 +148,55 @@ class crud_fornecedor:
         
         if  id_fornecedor and nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
             update_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor)
-            self.fornecedor_entry.delete(0,tk.END)
-            self.marca_fornecedor_entry.delete(0,tk.END)
-            self.email_fornecedor_entry.delete(0,tk.END)
-            self.telefone_fornecedor_entry.delete(0,tk.END)
-            self.cidade_fornecedor_entry.delete(0,tk.END)
-            self.pais_fornecedor_entry.delete(0,tk.END)
-
-            self.listar_fornecedor()
             
             messagebox.showinfo("Sucess","informações alteradas com sucesso!")
         else:
             messagebox.showerror("ERROR","Todos os campos são obrigatórios!")
 
+        #Chama a função de limpar campos de texto
+        self.limpar_campos()
+
+        #Chama a função de listar para poder atualizar a lista de fornecederores exibida
+        self.listar_fornecedor()
+
+    #Função responsável por deletar os fornecedores
     def delete_fornecedor(self):
+
+        #variáveis recebem os dados inseridos nos campos de textos
         id_fornecedor = self.id_fornecedor_entry.get()
-        if id_fornecedor:
-            delete_fornecedor(id_fornecedor)
+        confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse formecedor?")
+        if confirmacao  == True:
+            if id_fornecedor:
+                delete_fornecedor(id_fornecedor)
 
-            self.id_fornecedor_entry.delete(0,tk.END)
+                self.id_fornecedor_entry.delete(0,tk.END)
+                self.listar_fornecedor()
+                messagebox.showinfo("Sucesso","Fornecedor deletado com sucesso!")
+            else:
+                messagebox.showerror("Erro","ID do fornecedor é obrigatório!")
+
+            #Função responsável por limpar os campos de texto
+    def limpar_campos(self):
+        self.fornecedor_entry.delete(0,tk.END)
+        self.marca_fornecedor_entry.delete(0,tk.END)
+        self.email_fornecedor_entry.delete(0,tk.END)
+        self.telefone_fornecedor_entry.delete(0,tk.END)
+        self.cidade_fornecedor_entry.delete(0,tk.END)
+        self.pais_fornecedor_entry.delete(0,tk.END)
+        self.id_fornecedor_entry.delete(0,tk.END)
+
+    #Função responsável por cancelar a operação
+    def cancelar_operacao(self):
+
+        confirmacao = messagebox.askyesno("Confirmação de cancelamento","Você realmente deseja cancelar a operação?")
+
+        if confirmacao == True:
+            
+            self.limpar_campos()
             self.listar_fornecedor()
-            messagebox.showinfo("Sucesso","Fornecedor deletado com sucesso!")
-        else:
-            messagebox.showerror("Erro","ID do fornecedor é obrigatório!")
 
-    
+
+        
           
 
 if __name__ == "__main__":

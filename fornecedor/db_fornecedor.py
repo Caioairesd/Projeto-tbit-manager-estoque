@@ -29,8 +29,8 @@ def listar_fornecedor_db():
 def pesquisar_fornecedor_db(id_solicitado):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM fornecedor WHERE id_fornecedor =%s"
-    cursor.execute(query,(id_solicitado,))
+    query = "SELECT * FROM fornecedor WHERE id_fornecedor =%s OR nome_fornecedor =%s"
+    cursor.execute(query,(id_solicitado,id_solicitado))
     busca = cursor.fetchone()
     conn.commit()
     cursor.close()
@@ -55,9 +55,4 @@ def delete_fornecedor(id_fornecedor):
     cursor.close()
 
     
-
-
-
-
-
 
