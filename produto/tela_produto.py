@@ -9,10 +9,10 @@ class tela_produto:
     # Construtor da classe, carrega as informações básicas de carregamento
     def __init__(self, root):
         # Definições da janela
-        self.root = root
-        self.root.title("TBit Manager - Produtos")
-        self.root.resizable(width=False, height=False)
-        self.root.geometry("900x750")
+        self.root_produto = root
+        self.root_produto.title("TBit Manager - Produtos")
+        self.root_produto.resizable(width=False, height=False)
+        self.root_produto.geometry("900x750")
     
         # Carrega os widgets da tela
         self.criando_widgets()
@@ -21,7 +21,7 @@ class tela_produto:
 
     def criando_widgets(self):
         # Frame que carrega os botoes
-        frame_botoes = Frame(self.root, width=900, height=250)
+        frame_botoes = Frame(self.root_produto, width=900, height=250)
         frame_botoes.grid(row=1)
 
         # Labels vazios para divisoes
@@ -36,7 +36,7 @@ class tela_produto:
         Button(frame_botoes, text="Deletar produto", command=self.deletar_do_banco, width=18, height=1).grid(row=2, column=6) # Botao para deletar produto
         
         # Criando frame que carrega itens de cadastro
-        frame_cadastrar = Frame(self.root, width=900, height=300)
+        frame_cadastrar = Frame(self.root_produto, width=900, height=300)
         frame_cadastrar.grid(row=2)
 
         # Labels vazios para divisoes
@@ -75,7 +75,7 @@ class tela_produto:
         self.box_valor.grid(row=9, column=3)
 
         # Area de texto que aparece os dados e informações pedidos
-        frame_text_area = Frame(self.root, width=900, height=200)
+        frame_text_area = Frame(self.root_produto, width=900, height=200)
         frame_text_area.grid(row=3)
 
         # Labels vazios para divisoes
@@ -97,32 +97,35 @@ class tela_produto:
 
             self.limpar_campos() # Executa o metodo que limpa os bancos
 
-            messagebox.showinfo("Sucesso", "Produto cadastrado com sucesso!")
+            messagebox.showinfo("Sucesso", "Produto cadastrado com sucesso!") # Mensagem lançada na tela do usuario
 
-            self.listar_do_banco()
+            self.listar_do_banco() # Lista novamente todos os itens presentes na tabela 'produto'
         else:
-            messagebox.showerror("Error", "Todos os campos são obrigatorios")
+            messagebox.showerror("Error", "Todos os campos são obrigatorios") # Mensagem lançada na tela do usuario
 
     def alterar_no_banco(self):
-        nome_produto = self.box_nome.get()
-        descricao_produto = self.box_descricao.get()
-        quantidade_produto = self.box_quantidade.get()
-        valor_produto = self.box_valor.get()
+        nome_produto = self.box_nome.get() # Resgata as informações que estão dentro da box 'Nome'
+        descricao_produto = self.box_descricao.get() # Resgata as informações que estão dentro da box 'Descricao'
+        quantidade_produto = self.box_quantidade.get() # Resgata as informações que estão dentro da box 'Quantidade'
+        valor_produto = self.box_valor.get(
 
-        if nome_produto and descricao_produto and quantidade_produto and valor_produto:
-            confirmacao = messagebox.askyesno("Confirmação", f"Você realmente deseja alterar as informações de '{nome_produto}'?")
+        ) # Resgata as informações que estão dentro da box 'Valor'
 
-            if confirmacao == True:
-                atualizar_produto(nome_produto, descricao_produto, quantidade_produto, valor_produto)
-                self.limpar_campos()
-                messagebox.showinfo("Sucesso", "Produto atualizado com sucesso!")
-                self.listar_do_banco()
-                self.box_nome.delete(0, END)
+        if nome_produto and descricao_produto and quantidade_produto and valor_produto: # Verifica se alguma variavel esta vazia
+            confirmacao = messagebox.askyesno("Confirmação", f"Você realmente deseja alterar as informações de '{nome_produto}'?") # Mensagem lançada na tela do usuario que recebe 'True' ou 'False'
+
+            if confirmacao == True: # Verifica se o cliente clicou 'Sim'
+                atualizar_produto(nome_produto, descricao_produto, quantidade_produto, valor_produto) # Chama o metodo atualizar_produto, que faz conexao com o banco
+                self.limpar_campos() # Metodo usado para limpar os campos
+                messagebox.showinfo("Sucesso", "Produto atualizado com sucesso!") # Mensagem lançada na tela do usuario
+                self.listar_do_banco() # Lista novamente todos os itens presentes na tabela 'produto'
+                self.box_nome.delete(0, END) 
             else:
-                messagebox.showinfo("Cancelado", "Operação de alteração cancelada!")
+                messagebox.showinfo("Cancelado", "Operação de alteração cancelada!") # Mensagem lançada na tela do usuario
         else:
-            messagebox.showerror("Error", "Todos os campos são obrigatorios")
+            messagebox.showerror("Error", "Todos os campos são obrigatorios") # Mensagem lançada na tela do usuario
 
+    # Metodo usado para resgatar todos os itens presentes no banco
     def listar_do_banco(self):
             produtos = listar_produtos()
             self.text_area.delete(1.0, END)
@@ -140,8 +143,8 @@ class tela_produto:
                 self.box_nome.delete(0, END)
                 messagebox.showinfo("Success", "Produto excluido com sucesso!")
 
-                self.listar_do_banco()
-                self.limpar_campos()
+                self.listar_do_banco() # Lista novamente todos os itens presentes na tabela 'produto'
+                self.limpar_campos() # Metodo usado para limpar os campos
             
             else:
                 messagebox.showinfo("Cancelado", "Processo de exclusão cancelada!")
@@ -151,7 +154,7 @@ class tela_produto:
     def pesquisar_produto_especifico(self):
         pesquisa = self.box_pesquisar.get().title()
         self.box_pesquisar.delete(0, END)
-        self.limpar_campos()
+        self.limpar_campos() # Metodo usado para limpar os campos
 
         if pesquisa:
             produto_retornado = pesquisar_produto(pesquisa)
@@ -161,25 +164,35 @@ class tela_produto:
                 self.text_area.delete(1.0, END)
                 self.text_area.insert(END, f"ID: {produto_retornado[0]} | Nome: {produto_retornado[1]} | Descrição: {produto_retornado[2]} | Quantidade: {produto_retornado[3]} | Valor: {produto_retornado[4]}")
                 
-                self.box_nome.insert(0, produto_retornado[1])
-                self.box_descricao.insert(0, produto_retornado[2])
-                self.box_quantidade.insert(0, produto_retornado[3])
-                self.box_valor.insert(0, produto_retornado[4])
+                self.box_nome.insert(0, produto_retornado[1]) # Retorna as informações recebidas na caixa 'Nome'
+                self.box_descricao.insert(0, produto_retornado[2]) # Retorna as informações recebidas na caixa 'Descricao'
+                self.box_quantidade.insert(0, produto_retornado[3]) # Retorna as informações recebidas na caixa 'Quantidade'
+                self.box_valor.insert(0, produto_retornado[4]) # Retorna as informações recebidas na caixa 'Valor'
 
             else:
                 messagebox.showerror("Error", "Produto não encontrado ou não cadastrado!")
-                self.limpar_campos()
-                self.listar_do_banco()
+                self.limpar_campos() # Metodo usado para limpar os campos
+                self.listar_do_banco() # Lista novamente todos os itens presentes na tabela 'produto'
         else:
             messagebox.showerror("Error", "Campo 'Pesquisar' não preenchido!")
         
+    # Metodo que reseta tudo ao padrao
+    def cancelar_operacao(self):
+        confirmacao = messagebox.askyesno("Confirmação", "Você desejar mesmo cancelar a opreção?") # Janela de sim ou nao para confirmacao
+        if confirmacao == True: # Verifica se o cliente clicou em 'sim'
+            messagebox.showinfo("Cancelado", "Operação cancelada!")
+            self.limpar_campos()
+            self.listar_do_banco()
+    
+    # Metodo que limpa os campos
     def limpar_campos(self):
         self.box_nome.delete(0, END)
         self.box_descricao.delete(0, END)
         self.box_quantidade.delete(0, END)
         self.box_valor.delete(0, END)    
 
+# Chama a funcao principal e coloca o programa para rodar
 if __name__ == "__main__":
-    root = Tk()
-    app = tela_produto(root)
-    root.mainloop()
+    root_produto = Tk()
+    app = tela_produto(root_produto)
+    root_produto.mainloop()
