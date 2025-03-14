@@ -24,7 +24,7 @@ class crud_fornecedor:
         tk.Button(self.root,text="Cadastrar",width=15,height=1,command=self.create_fornecedor).place(x=50,y=240)
         tk.Button(self.root,text="Alterar",width=15,height=1,command=self.update_fornecedor).place(x=250,y=240)
         tk.Button(self.root,text="Excluir",width=15,height=1,command=self.delete_fornecedor).place(x=500,y=240)
-        tk.Button(self.root,text="Pesquisar e inserir dados",width=30,height=1,command=self.pesquisar_fornecedor).place(x=135,y=415)
+        tk.Button(self.root,text="Pesquisar e inserir dados\n(Nome ou ID)",width=30,height=2,command=self.pesquisar_fornecedor).place(x=135,y=415)
         tk.Button(self.root,text="Cancelar",width=15,height=1,command=self.cancelar_operacao).place(x=750,y=240)
         
         #Criação de labels
@@ -55,11 +55,11 @@ class crud_fornecedor:
         self.cidade_fornecedor_entry.place(x=100,y=120)
         self.pais_fornecedor_entry.place(x=100,y=150)
         self.id_fornecedor_entry.place(x=100,y=180)
-        self.pesquisar_entry.place(x=360,y=417)
+        self.pesquisar_entry.place(x=360,y=425,width=300,height=25)
 
         #Criação da área de texto responsável por exibir informações dos fornecedores
         self.search_area = tk.Text(self.root,height=15,width=80)
-        self.search_area.place(x=135,y=450)
+        self.search_area.place(x=135,y=460)
 
     #função responsável por criar um fornecedor 
     def create_fornecedor(self):
