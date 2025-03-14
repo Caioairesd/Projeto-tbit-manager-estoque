@@ -1,16 +1,16 @@
 # Importacoes necessarias
 from tkinter import * 
 from tkinter import messagebox
-from db_produto import registrar_produto, atualizar_produto, listar_produtos, deletar_produto, pesquisar_produto
+from db_produto import atualizar_produto, listar_produtos, deletar_produto, pesquisar_produto
 
 # Criando classe principal, que carrega a janela e tudo o que há nela
-class tela_produto:
+class tela_produto_admin:
 
     # Construtor da classe, carrega as informações básicas de carregamento
     def __init__(self, root):
         # Definições da janela
         self.root_produto = root
-        self.root_produto.title("TBit Manager - Produtos")
+        self.root_produto.title("TBit Manager - Produtos - Administrador")
         self.root_produto.resizable(width=False, height=False)
         self.root_produto.geometry("900x750")
     
@@ -31,9 +31,8 @@ class tela_produto:
         Label(frame_botoes, text="", width=7).grid(row=5, column=5)
         
         # Botoes que ficam na parte de cima do layout, carrega as funcoes
-        Button(frame_botoes, text="Cadastrar produto", command=self.registrar_no_banco, width=18, height=1).grid(row=2, column=2) # Botao para cadastrar produto
-        Button(frame_botoes, text="Alterar produto", command=self.alterar_no_banco, width=18, height=1).grid(row=2, column=4) # Botao para alterar produto
-        Button(frame_botoes, text="Deletar produto", command=self.deletar_do_banco, width=18, height=1).grid(row=2, column=6) # Botao para deletar produto
+        Button(frame_botoes, text="Alterar produto", command=self.alterar_no_banco, width=18, height=1).grid(row=2, column=2) # Botao para alterar produto
+        Button(frame_botoes, text="Deletar produto", command=self.deletar_do_banco, width=18, height=1).grid(row=2, column=4) # Botao para deletar produto
         
         # Criando frame que carrega itens de cadastro
         frame_cadastrar = Frame(self.root_produto, width=900, height=300)
@@ -46,6 +45,13 @@ class tela_produto:
         Label(frame_cadastrar, text="", height=1).grid(row=8)
         Label(frame_cadastrar, text="", height=1).grid(row=10)
         Label(frame_cadastrar, text="", height=1).grid(row=12)
+
+        # Botao para pesqusiar um produto especifico
+        Button(frame_cadastrar, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=25, height=2).grid(row=1, column=3, rowspan=1)
+
+        # Entry usado para pesquisar de forma individual
+        self.box_pesquisar = Entry(frame_cadastrar, width=40)
+        self.box_pesquisar.grid(row=1, column=1, columnspan=2)
 
         # Label e entry para 'nome' do produto
         Label(frame_cadastrar, text="Nome do Produto:").grid(row=3, column=1)
@@ -68,41 +74,15 @@ class tela_produto:
         self.box_valor.grid(row=9, column=3)
 
         # Area de texto que aparece os dados e informações pedidos
-        frame_text_area = Frame(self.root_produto, width=900, height=250)
+        frame_text_area = Frame(self.root_produto, width=900, height=200)
         frame_text_area.grid(row=3)
 
-        # Botao para pesqusiar um produto especifico
-        Button(frame_text_area, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=25, height=2).grid(row=1, column=3, rowspan=1)
-
-        # Entry usado para pesquisar de forma individual
-        self.box_pesquisar = Entry(frame_text_area, width=55)
-        self.box_pesquisar.grid(row=1, column=1, columnspan=2)
-
         # Labels vazios para divisoes
-        Label(frame_text_area, text="", width=5).grid(column=1, row=1)
-        Label(frame_text_area, text="", width=35).grid(column=4, row=1)
+        Label(frame_text_area, text="", width=5).grid(column=1)
 
         # Text area usado para retornar dados ja existentes
         self.text_area = Text(frame_text_area, width=100, height=16)
         self.text_area.grid(row=2,column=2,columnspan=5)
-
-    # Método usado quando o botao 'Cadastrar' é clicado
-    def registrar_no_banco(self):
-        nome_produto = self.box_nome.get().title() # Pega o valor que esta dentro da box de nome
-        descricao_produto = self.box_descricao.get() # Pega o valor que esta dentro da box de descricao
-        quantidade_produto = self.box_quantidade.get() # Pega o valor que esta dentro da box de quantidade
-        valor_produto = self.box_valor.get() # Pega o valor que esta dentro da box de valor
-
-        if nome_produto and descricao_produto and quantidade_produto and valor_produto: # Verifica se todas as variaveis carregam um valor diferente de nulo
-            registrar_produto(nome_produto, descricao_produto, quantidade_produto, valor_produto) # Executa o metodo que se conecta com o banco
-
-            self.limpar_campos() # Executa o metodo que limpa os bancos
-
-            messagebox.showinfo("Sucesso", "Produto cadastrado com sucesso!") # Mensagem lançada na tela do usuario
-
-            self.listar_do_banco() # Lista novamente todos os itens presentes na tabela 'produto'
-        else:
-            messagebox.showerror("Error", "Todos os campos são obrigatorios") # Mensagem lançada na tela do usuario
 
     def alterar_no_banco(self):
         nome_produto = self.box_nome.get() # Resgata as informações que estão dentro da box 'Nome'
@@ -195,5 +175,5 @@ class tela_produto:
 # Chama a funcao principal e coloca o programa para rodar
 if __name__ == "__main__":
     root_produto = Tk()
-    app = tela_produto(root_produto)
+    app = tela_produto_admin(root_produto)
     root_produto.mainloop()
