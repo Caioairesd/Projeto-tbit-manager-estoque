@@ -47,13 +47,6 @@ class tela_produto:
         Label(frame_cadastrar, text="", height=1).grid(row=10)
         Label(frame_cadastrar, text="", height=1).grid(row=12)
 
-        # Botao para pesqusiar um produto especifico
-        Button(frame_cadastrar, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=25, height=2).grid(row=1, column=3, rowspan=1)
-
-        # Entry usado para pesquisar de forma individual
-        self.box_pesquisar = Entry(frame_cadastrar, width=40)
-        self.box_pesquisar.grid(row=1, column=1, columnspan=2)
-
         # Label e entry para 'nome' do produto
         Label(frame_cadastrar, text="Nome do Produto:").grid(row=3, column=1)
         self.box_nome = Entry(frame_cadastrar, width=25)
@@ -75,11 +68,19 @@ class tela_produto:
         self.box_valor.grid(row=9, column=3)
 
         # Area de texto que aparece os dados e informações pedidos
-        frame_text_area = Frame(self.root_produto, width=900, height=200)
+        frame_text_area = Frame(self.root_produto, width=900, height=250)
         frame_text_area.grid(row=3)
 
+        # Botao para pesqusiar um produto especifico
+        Button(frame_text_area, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=25, height=2).grid(row=1, column=3, rowspan=1)
+
+        # Entry usado para pesquisar de forma individual
+        self.box_pesquisar = Entry(frame_text_area, width=55)
+        self.box_pesquisar.grid(row=1, column=1, columnspan=2)
+
         # Labels vazios para divisoes
-        Label(frame_text_area, text="", width=5).grid(column=1)
+        Label(frame_text_area, text="", width=5).grid(column=1, row=1)
+        Label(frame_text_area, text="", width=35).grid(column=4, row=1)
 
         # Text area usado para retornar dados ja existentes
         self.text_area = Text(frame_text_area, width=100, height=16)
