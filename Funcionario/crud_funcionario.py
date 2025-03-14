@@ -1,6 +1,7 @@
 import mysql.connector
 from Config import MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE
 
+
 def get_connection():
     return mysql.connector.connect(
         host = MYSQL_HOST,
@@ -33,12 +34,16 @@ def buscar_funcionario(id_funcionario):
 def editar_funcionario(nome, Data_de_nascimento, Data_de_admissao, CPF, Cidade, UF, Telefone, Email, Usuario, Senha, funcionario_id):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "UPDATE funcionario SET nome = %s,  Data_de_nascimento = %s , Data_de_admissao=%s, CPF=%s, Cidade=%s, UF=%s, Telefone=%s, Email=%s, Usuario=%s, Senha=%s WHERE id_funcionario = %s"
+<<<<<<< Updated upstream
+    query = "UPDATE funcionario SET nome = %s,  Data_de_nascimento =%s , Data_de_admissao=%s, CPF=%s, Cidade=%s, UF=%s, Telefone=%s, Email=%s, Usuario=%s, Senha=%s WHERE id_funcionario = %s"
+=======
+    query = "UPDATE funcionario SET nome = %s,  Data_de_nascimento = %d,%b,%r Data_de_admissao=%%Y-%m-%d, CPF=%s, Cidade=%s, UF=%s, Telefone=%s, Email=%s, Usuario=%s, Senha=%s WHERE id_funcionario = %s"
+>>>>>>> Stashed changes
     cursor.execute(query, (nome, Data_de_nascimento, Data_de_admissao, CPF, Cidade, UF, Telefone, Email, Usuario, Senha, funcionario_id))
     conn.commit()
     cursor.close()
-    conn.close()
-  
+
+
 def excluir_funcionario (funcionario_id):
 
     conn = get_connection()
@@ -48,4 +53,13 @@ def excluir_funcionario (funcionario_id):
     conn.commit()
     cursor.close()
     conn.close()
+
+def listar_funcionarios_crud():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM funcionario"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    conn.close()
+    return result
 

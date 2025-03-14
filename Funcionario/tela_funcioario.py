@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
-from crud_funcionario import login_funcionario,excluir_funcionario, editar_funcionario, buscar_funcionario
+from crud_funcionario import login_funcionario,excluir_funcionario, editar_funcionario, buscar_funcionario, listar_funcionarios_crud
 from tkinter import *
+
 
 
 class CRUDfuncionario:
@@ -33,6 +34,7 @@ class CRUDfuncionario:
         tk.Label(self.root, text="Email:", bg="lightgray").place(x=30, y=300)
         tk.Label(self.root, text="Usuario:", bg="lightgray").place(x=30, y=340)
         tk.Label(self.root, text="Senha:", bg="lightgray").place(x=30, y=380)
+        tk.Label(self.root, text= "ID:", bg = "lightgray").place(x= 450, y= 18)
         
 
         
@@ -49,6 +51,8 @@ class CRUDfuncionario:
         self.Email_entry = tk.Entry(self.root, bg="darkgray")
         self.Usuario_entry = tk.Entry(self.root, bg="darkgray")
         self.Senha_entry = tk.Entry(self.root, bg="darkgray", show="*") 
+        self.buscar_entry = tk.Entry(self.root, bg = "darkgray")
+        self.exibir_id_entry = tk.Entry(self.root, bg = "darkgray")
 
 
         #caixas de texto
@@ -63,20 +67,28 @@ class CRUDfuncionario:
         self.Email_entry.place(x=180, y=300, width=250)
         self.Usuario_entry.place(x=180, y=340, width=250)
         self.Senha_entry.place(x=180, y=380, width=250)
+        self.buscar_entry.place(x=310, y=423, width= 70)
+        self.exibir_id_entry.place(x= 470, y=20, width= 50)
+        
 
 
-        tk.Label(self.root, text="ID:", bg="lightgray").place(x=290, y=463)
+        tk.Label(self.root, text="ID:", bg="lightgray").place(x=290, y=420)
         self.funcionario_id_entry = tk.Entry(self.root, bg="darkgray")
-        self.funcionario_id_entry.place(x=310, y=465, width=70 )
+        
 
         #botôes de funcões
-        tk.Button(self.root, text="CRIAR", command=self.login_funcionario).place(x=30, y=460)
-        tk.Button(self.root, text="EXCLUIR", command=self.excluir_funcionario).place(x=90, y=460)
-        tk.Button(self.root, text="EDITAR", command=self.editar_funcionario).place(x=160, y=460)
-        tk.Button(self.root, text="BUSCAR", command=self.buscar_funcionario).place(x=225, y=460)
+        tk.Button(self.root, text= "CANCELAR", command= self.cancelar).place(x=450, y= 420)
+        tk.Button(self.root, text="CRIAR", command=self.login_funcionario).place(x=30, y=420)
+        tk.Button(self.root, text="EXCLUIR", command=self.excluir_funcionario).place(x=90, y=420)
+        tk.Button(self.root, text="EDITAR", command=self.editar_funcionario).place(x=160, y=420)
+        tk.Button(self.root, text="BUSCAR", command=self.buscar_funcionario ).place(x=225, y=420)
+
+        self.text_area = tk.Text(self.root,height=10,width=105,bg="lightgray" )
+        self.text_area.place(x=30,y=480)
 
     def login_funcionario(self):
 
+     
         nome = self.nome_entry.get()
         Data_de_nascimento = self.Data_de_nascimento_entry.get()
         Data_de_admissao = self.Data_de_Admissao_entry.get()
@@ -87,6 +99,7 @@ class CRUDfuncionario:
         Email = self.Email_entry.get()
         Usuario = self.Usuario_entry.get()
         Senha = self.Senha_entry.get()
+      
         if nome and Data_de_nascimento and Data_de_admissao and CPF and Cidade and UF and Telefone and Email and Usuario and Senha :
            
             login_funcionario(nome, Data_de_nascimento, Data_de_admissao, CPF, Cidade, UF, Telefone, Email, Usuario, Senha) 
@@ -100,14 +113,15 @@ class CRUDfuncionario:
             self.Email_entry.delete(0, tk.END)
             self.Usuario_entry.delete(0, tk.END)
             self.Senha_entry.delete(0, tk.END)
+            self.exibir_id_entry.delete(0, tk.END)
 
             messagebox.showinfo("Success", "Funcionario criado com Sucesso")
            
         else:
             messagebox.showerror("Error", "Todos os campos são obrigatórios")
+    
+    
 
-
-        
     def editar_funcionario(self):
 
         
@@ -135,12 +149,15 @@ class CRUDfuncionario:
             self.Email_entry.delete(0,tk.END)
             self.Senha_entry.delete(0,tk.END)
             self.funcionario_id_entry.delete(0,tk.END)
+            self.Senha_entry.delete(0,tk.END)
+
+            self.listar_funcionarios()
 
             messagebox.showinfo("Sucess", "Funcionario atualizado com sucesso")
         else:
             messagebox.showerror("Error", "ID do funcioonario é obrigatorio")
         
-
+        
     def excluir_funcionario(self):
         funcioanrio_id = self.funcionario_id_entry.get()
         if funcioanrio_id:
@@ -149,13 +166,43 @@ class CRUDfuncionario:
             messagebox.showinfo ("Sucess", "Funcionario excluido com sucesso!")
         else:
             messagebox.showerror ("Error", "ID do funcioonario é obrigatorio")
+
+
+    def listar_funcionarios(self):
+        funcionarios = listar_funcionarios_crud()
+        self.text_area.delete(1.0,tk.END)
+        for funcionario in funcionarios:
+            self.text_area.insert(tk.END,f"ID:{funcionario [0]}, nome: {funcionario [1]}, Data_de_nascimento: {funcionario[2]},Data_de_admissao:{funcionario[3]}, CPF:{funcionario[4]}, Cidade:{funcionario[5]}, UF:{funcionario[6]}, Telefone:{funcionario[7]}, Email:{funcionario[8]}, Usuario: {funcionario[9]}\n"  )    
+    
     def buscar_funcionario (self):
-        self.text_area = tk.Text(self.root, height = 10, width=100,  bg="lightgray")
-        self.text_area.place(x= 30, y= 500 )
-        id = self.funcionario_id_entry.get()
-        funcionario = buscar_funcionario(id)
-        self.text_area.delete(1.0, tk.END)   
-        self.text_area.insert(tk.END,f"ID:{funcionario [0]}, nome: {funcionario [1]}, Data_de_nascimento: {funcionario[2]},Data_de_admissao:{funcionario[3]}, CPF:{funcionario[4]}, Cidade:{funcionario[5]}, UF:{funcionario[6]}, Telefone:{funcionario[7]}, Email:{funcionario[8]}, Usuario: {funcionario[9]}\n"  ) 
+        busca= self.buscar_entry.get()
+        self.buscar_entry.delete(0,tk.END)  
+
+        if busca:
+            id_solicitado = buscar_funcionario(busca)
+            if id_solicitado:
+               
+                messagebox.showinfo ("Sucess", "funcionaro {}  encontrado com sucesso!".format(id_solicitado))
+                self.text_area.delete(1.0, tk.END)   
+                self.text_area.insert(tk.END,f"ID:{id_solicitado [0]}, Nome: {id_solicitado [1]}, Data_de_nascimento: {id_solicitado[2]},Data_de_admissao:{id_solicitado[3]}, CPF:{id_solicitado[4]}, Cidade:{id_solicitado[5]}, UF:{id_solicitado[6]}, Telefone:{id_solicitado[7]}, Email:{id_solicitado[8]}, Usuario: {id_solicitado[9]}\n"  ) 
+                
+                self.funcionario_id_entry.insert(0,id_solicitado[0])
+                self.nome_entry.insert(0,id_solicitado[1])
+                self.Data_de_nascimento_entry.insert(0,id_solicitado[2])
+                self.Data_de_Admissao_entry.insert(0,id_solicitado[3])
+                self.CPF_entry.insert(0,id_solicitado[4])
+                self.Cidade_entry.insert(0,id_solicitado[5])
+                self.UF_entry.insert(0,id_solicitado[6])
+                self.Telefone_entry.insert(0,id_solicitado[7])
+                self.Email_entry.insert(0,id_solicitado[8])
+                self.Senha_entry.insert(0,id_solicitado[9])
+                
+
+            else:   
+                 messagebox.showerror ("Sucess", "funcionaro não encontrado")
+        else:
+             messagebox.showerror("Error","Todos os compos são obreigatorios")
+        self.listar_funcionarios()
 
     def limpar_campos(self):
         self.nome_entry.delete(0,tk.END)
@@ -168,6 +215,24 @@ class CRUDfuncionario:
         self.Email_entry.delete(0,tk.END) 
         self.Usuario_entry.delete(0,tk.END) 
         self.Senha_entry.delete(0,tk.END) 
+
+    def cancelar (self): 
+        
+        self.nome_entry.delete(0,tk.END)
+        self.Data_de_nascimento_entry.delete(0,tk.END)
+        self.Data_de_Admissao_entry.delete(0,tk.END) 
+        self.CPF_entry.delete(0,tk.END) 
+        self.Cidade_entry.delete(0,tk.END)
+        self.UF_entry.delete(0,tk.END) 
+        self.Telefone_entry.delete(0,tk.END) 
+        self.Email_entry.delete(0,tk.END) 
+        self.Usuario_entry.delete(0,tk.END) 
+        self.Senha_entry.delete(0,tk.END) 
+
+
+
+
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = CRUDfuncionario(root)
