@@ -10,7 +10,7 @@ class tela_produto_admin:
     def __init__(self, root):
         # Definições da janela
         self.root_produto = root
-        self.root_produto.title("TBit Manager - Produtos")
+        self.root_produto.title("TBit Manager - Produtos - Administrador")
         self.root_produto.resizable(width=False, height=False)
         self.root_produto.geometry("900x750")
     
