@@ -4,7 +4,7 @@ from tkinter import messagebox
 from db_produto import atualizar_produto, listar_produtos, deletar_produto, pesquisar_produto
 
 # Criando classe principal, que carrega a janela e tudo o que há nela
-class tela_produto_adm:
+class tela_produto_admin:
 
     # Construtor da classe, carrega as informações básicas de carregamento
     def __init__(self, root):
@@ -175,5 +175,5 @@ class tela_produto_adm:
 # Chama a funcao principal e coloca o programa para rodar
 if __name__ == "__main__":
     root_produto = Tk()
-    app = tela_produto_adm(root_produto)
+    app = tela_produto_admin(root_produto)
     root_produto.mainloop()
