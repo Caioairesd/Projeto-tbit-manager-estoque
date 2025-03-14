@@ -8,7 +8,7 @@ def get_connection():
     password = MYSQL_PASSWORD,
     database = MYSQL_DATABASE)
 
-def registrar(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
+def register_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
     query = "insert fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)VALUES(%s,%s,%s,%s,%s,%s)"
@@ -17,17 +17,42 @@ def registrar(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornece
     cursor.close()
     conn.close()
 
-def buscar():
+def listar_fornecedor_db():
     conn = get_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM tbit_db"
+    query = "SELECT * FROM fornecedor"
     cursor.execute(query)
-    result = cursor.close()
+    result = cursor.fetchall()
     conn.close()
     return result
 
+def pesquisar_fornecedor_db(id_solicitado):
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM fornecedor WHERE id_fornecedor =%s OR nome_fornecedor =%s"
+    cursor.execute(query,(id_solicitado,id_solicitado))
+    busca = cursor.fetchone()
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return busca
 
 
+def update_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor):
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "UPDATE fornecedor SET nome_fornecedor = %s,marca_fornecedor = %s,email_fornecedor = %s,telefone_fornecedor = %s,cidade_fornecedor = %s,pais_fornecedor = %s WHERE id_fornecedor = %s"
+    cursor.execute(query,(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor))
+    conn.commit()
+    cursor.close()
 
+def delete_fornecedor(id_fornecedor):
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "DELETE FROM fornecedor WHERE id_fornecedor = %s"
+    cursor.execute(query,(id_fornecedor,))
+    conn.commit()
+    cursor.close()
 
+    
 
