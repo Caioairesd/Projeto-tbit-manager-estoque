@@ -2,13 +2,13 @@ import tkinter as tk
 from tkinter import messagebox
 from db_fornecedor import register_fornecedor,listar_fornecedor_db,update_fornecedor,delete_fornecedor,pesquisar_fornecedor_db
 
-class crud_fornecedor:
+class tela_fornecedor_user:
 
     def __init__(self,root):
         self.root = root
 
         #Define os parâmetros de interface da janela
-        self.root.geometry("900x750")
+        self.root.geometry("900x700")
         self.root.title("TBit Manager - Menu Fornecedor")
         #self.root.configure(background="white")
         self.root.resizable(width=False,height=False)
@@ -21,20 +21,21 @@ class crud_fornecedor:
         #Criação de labels
 
         #Criação de botões
-        tk.Button(self.root,text="Cadastrar",width=15,height=1,command=self.create_fornecedor).place(x=50,y=240)
-        tk.Button(self.root,text="Alterar",width=15,height=1,command=self.update_fornecedor).place(x=250,y=240)
-        tk.Button(self.root,text="Excluir",width=15,height=1,command=self.delete_fornecedor).place(x=500,y=240)
-        tk.Button(self.root,text="Pesquisar e inserir dados\n(Nome ou ID)",width=30,height=2,command=self.pesquisar_fornecedor).place(x=135,y=415)
-        tk.Button(self.root,text="Cancelar",width=15,height=1,command=self.cancelar_operacao).place(x=750,y=240)
+        tk.Button(self.root,text="Cadastrar",width=15,height=1,command=self.create_fornecedor).place(x=160,y=280)
+        tk.Button(self.root,text="Alterar",width=15,height=1,command=self.update_fornecedor).place(x=320,y=280)
+        tk.Button(self.root,text="Excluir",width=15,height=1,command=self.delete_fornecedor).place(x=480,y=280)
+        tk.Button(self.root,text="Cancelar",width=15,height=1,command=self.cancelar_operacao).place(x=640,y=280)
+        tk.Button(self.root,text="Pesquisar e inserir dados\n(Nome ou ID)",width=30,height=2,command=self.pesquisar_fornecedor).place(x=135,y=355)
+        
         
         #Criação de labels
-        tk.Label(self.root,text="Fornecedor:").place(x=15,y=0)
-        tk.Label(self.root,text="Marca:").place(x=15,y=30)
-        tk.Label(self.root,text="Email:").place(x=15,y=60)
-        tk.Label(self.root,text="Telefone:").place(x=15,y=90)
-        tk.Label(self.root,text="Cidade:").place(x=15,y=120)
-        tk.Label(self.root,text="País:").place(x=15,y=150)
-        tk.Label(self.root,text="ID:").place(x=15,y=180)
+        tk.Label(self.root,text="Fornecedor:").place(x=300,y=30)
+        tk.Label(self.root,text="Marca:").place(x=300,y=60)
+        tk.Label(self.root,text="Email:").place(x=300,y=90)
+        tk.Label(self.root,text="Telefone:").place(x=300,y=120)
+        tk.Label(self.root,text="Cidade:").place(x=300,y=150)
+        tk.Label(self.root,text="País:").place(x=300,y=180)
+        tk.Label(self.root,text="ID:").place(x=300,y=210)
 
 
         #Criação de campos de entrada de dados
@@ -48,18 +49,18 @@ class crud_fornecedor:
         self.pesquisar_entry = tk.Entry(self.root,width=40)
 
         #Definindo localização dos campos na tela
-        self.fornecedor_entry.place(x=100,y=0)
-        self.marca_fornecedor_entry.place(x=100,y=30)
-        self.email_fornecedor_entry.place(x=100,y=60)
-        self.telefone_fornecedor_entry.place(x=100,y=90)
-        self.cidade_fornecedor_entry.place(x=100,y=120)
-        self.pais_fornecedor_entry.place(x=100,y=150)
-        self.id_fornecedor_entry.place(x=100,y=180)
-        self.pesquisar_entry.place(x=360,y=425,width=300,height=25)
+        self.fornecedor_entry.place(x=400,y=30)
+        self.marca_fornecedor_entry.place(x=400,y=60)
+        self.email_fornecedor_entry.place(x=400,y=90)
+        self.telefone_fornecedor_entry.place(x=400,y=120)
+        self.cidade_fornecedor_entry.place(x=400,y=150)
+        self.pais_fornecedor_entry.place(x=400,y=180)
+        self.id_fornecedor_entry.place(x=400,y=210)
+        self.pesquisar_entry.place(x=360,y=360,width=300,height=30)
 
         #Criação da área de texto responsável por exibir informações dos fornecedores
         self.search_area = tk.Text(self.root,height=15,width=80)
-        self.search_area.place(x=135,y=460)
+        self.search_area.place(x=135,y=400)
 
     #função responsável por criar um fornecedor 
     def create_fornecedor(self):
@@ -201,5 +202,5 @@ class crud_fornecedor:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = crud_fornecedor(root)
+    app = tela_fornecedor_user(root)
     root.mainloop()
