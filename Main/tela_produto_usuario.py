@@ -28,27 +28,27 @@ class tela_produto:
         Button(self.root_produto, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=30, height=2).place(x=135, y=355)
 
         # Labels usados para identificar as caixas de texto e seus posicionamentos
-        Label(self.root_produto, text="Nome do Produto:").place(x=300, y=30)
-        Label(self.root_produto, text="Descrição do Produto:").place(x=300, y=60)
-        Label(self.root_produto, text="Quantidade do Produto:").place(x=300, y=90)
-        Label(self.root_produto, text="Valor do Produto:").place(x=300, y=120)
+        Label(self.root_produto, text="Nome do Produto:").place(x=280, y=30)
+        Label(self.root_produto, text="Descrição do Produto:").place(x=280, y=60)
+        Label(self.root_produto, text="Quantidade do Produto:").place(x=280, y=90)
+        Label(self.root_produto, text="Valor do Produto:").place(x=280, y=120)
 
         # Entrys usados para o usuario digitar e seus posicionamentos
         # Entry 'nome do produto'
         self.box_nome = Entry(self.root_produto, width=25)
-        self.box_nome.place(x=400, y=30)
+        self.box_nome.place(x=420, y=30)
 
         # Entry 'descrição do produto'
         self.box_descricao = Entry(self.root_produto, width=25)
-        self.box_descricao.place(x=400, y=60)
+        self.box_descricao.place(x=420, y=60)
 
         # Entry 'quantidade do produto'
         self.box_quantidade = Entry(self.root_produto, width=25)
-        self.box_quantidade.place(x=400, y=90)
+        self.box_quantidade.place(x=420, y=90)
 
         # Entry 'valor do produto'
         self.box_valor = Entry(self.root_produto, width=25)
-        self.box_valor.place(x=400, y=120)
+        self.box_valor.place(x=420, y=120)
         
         # Entry usado para pesquisar de forma individual
         self.box_pesquisar = Entry(self.root_produto, width=40)
