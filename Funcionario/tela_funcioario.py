@@ -25,7 +25,7 @@ class CRUDfuncionario:
         tk.Label(self.root, text="Email:", bg="lightgray").place(x=30, y=300)
         tk.Label(self.root, text="Usuario:", bg="lightgray").place(x=30, y=340)
         tk.Label(self.root, text="Senha:", bg="lightgray").place(x=30, y=380)
-        tk.Label(self.root, text= "ID:", bg = "lightgray").place(x= 450, y= 18)
+        
 
         # Caixas cinza escuro
         self.nome_entry  = tk.Entry(self.root, bg="darkgray")
@@ -53,9 +53,9 @@ class CRUDfuncionario:
         self.Usuario_entry.place(x=180, y=340, width=250)
         self.Senha_entry.place(x=180, y=380, width=250)
         self.buscar_entry.place(x=310, y=423, width=70)
-        self.exibir_id_entry.place(x=470, y=20, width=50)
+        
 
-        tk.Label(self.root, text="ID:", bg="lightgray").place(x=290, y=420)
+        tk.Label(self.root, text="id:", bg="lightgray").place(x=290, y=420)
         self.funcionario_id_entry = tk.Entry(self.root, bg="darkgray")
 
         # Botões de funções
@@ -79,6 +79,7 @@ class CRUDfuncionario:
         Email = self.Email_entry.get()
         Usuario = self.Usuario_entry.get()
         Senha = self.Senha_entry.get()
+        
 
         if nome and Data_de_nascimento and Data_de_admissao and CPF and Cidade and UF and Telefone and Email and Usuario and Senha:
             login_funcionario(nome, Data_de_nascimento, Data_de_admissao, CPF, Cidade, UF, Telefone, Email, Usuario, Senha)
@@ -91,7 +92,7 @@ class CRUDfuncionario:
         funcionarios = listar_funcionarios_crud()
         self.text_area.delete(1.0, tk.END)
         for funcionario in funcionarios:
-            self.text_area.insert(tk.END, f"ID:{funcionario[0]}, Nome: {funcionario[1]}, Data de Nascimento: {funcionario[2]}, Data de Admissão: {funcionario[3]}, CPF: {funcionario[4]}, Cidade: {funcionario[5]}, UF: {funcionario[6]}, Telefone: {funcionario[7]}, Email: {funcionario[8]}, Usuario: {funcionario[9]}, Senha: {funcionario[10]}\n")
+            self.text_area.insert(tk.END, f"id:{funcionario[0]}, Nome: {funcionario[1]}, Data de Nascimento: {funcionario[2]}, Data de Admissão: {funcionario[3]}, CPF: {funcionario[4]}, Cidade: {funcionario[5]}, UF: {funcionario[6]}, Telefone: {funcionario[7]}, Email: {funcionario[8]}, Usuario: {funcionario[9]}, Senha: {funcionario[10]}\n")
 
     def buscar_funcionario(self):
         busca = self.buscar_entry.get()
@@ -119,7 +120,8 @@ class CRUDfuncionario:
                 self.Email_entry.insert(0, id_solicitado[8])
                 self.Usuario_entry.insert(0, id_solicitado[9])
                 self.Senha_entry.insert(0, id_solicitado[10])
-
+                self.funcionario_id_entry.insert(0, id_solicitado[11])
+     
             else:
                 messagebox.showerror("Erro", "Funcionário não encontrado")
         else:
