@@ -7,6 +7,8 @@ class menu_admin:
 #        self.create_widget()
         self.root.geometry("900x700")
         self.root.resizable( width = False, height = False)
+
+        tk.Button(text="Teste").place(x=100,y=34)
         pass
 
 if __name__ == '__main__':
