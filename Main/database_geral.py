@@ -5,9 +5,6 @@ MYSQL_USER = 'root'
 MYSQL_PASSWORD = 'root'
 MYSQL_DATABASE = 'tbit_db'
 
-
-import mysql.connector
-
 class tbit_db:
     def __init__(self):
         self.conn = mysql.connector.connect(
@@ -22,8 +19,8 @@ class tbit_db:
             self.cursor.execute("USE tbit_db;")
 
             comandos_sql = [
-                "DROP TABLE IF EXISTS fornecedor;",
-                """CREATE TABLE fornecedor (
+                
+                """CREATE TABLE IF NOT EXISTS fornecedor (
                     id_fornecedor INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     nome_fornecedor TEXT,
                     marca_fornecedor TEXT,
@@ -32,8 +29,8 @@ class tbit_db:
                     cidade_fornecedor TEXT,
                     pais_fornecedor TEXT
                 );""",
-                "DROP TABLE IF EXISTS funcionario;",
-                """CREATE TABLE funcionario (
+                
+                """CREATE TABLE IF NOT EXISTS funcionario (
                     id_funcionario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     nome_funcionario TEXT,
                     data_nascimento_funcionario DATE DEFAULT NULL,
@@ -46,8 +43,8 @@ class tbit_db:
                     usuario_funcionario TEXT,
                     senha_funcionario TEXT
                 );""",
-                "DROP TABLE IF EXISTS produto;",
-                """CREATE TABLE produto (
+                
+                """CREATE TABLE IF NOT EXISTS produto (
                     id_produto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     nome_produto TEXT,
                     descricao_produto TEXT,
@@ -181,3 +178,15 @@ def pesquisar_produto(produto_requisitado):
     conn.close()
 
     return busca
+
+# funções da tabela  funcionario
+
+def registrar_funcionario(nome, DataDeNascimento, DataDeAdmissao,  CPF, Cidade, UF, Telefone, Email, Usuario, Senha):
+
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "insert INTO funcionario(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario ,cpf_funcionario, cidade_funcionario, estado_funcionario , telefone_funcionario, email_funcionario, usuario_funcionario,senha_funcionario) VALUES(%s, %s, %s, %s, %s,%s,%s,%s,%s,%s)"
+    cursor.execute(query, (nome, DataDeNascimento, DataDeAdmissao, CPF, Cidade, UF, Telefone, Email, Usuario, Senha))
+    conn.commit()
+    cursor.close()
+    conn.close()

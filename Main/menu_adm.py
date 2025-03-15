@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import *
 from tela_fornecedor_admin import tela_fornecedor_admin
 from tela_produto_admin import tela_produto_admin
+from tela_funcioario import tela_funcionario
+
 class menu_admin:
     def __init__(self,root):
         self.root = root
@@ -11,7 +13,7 @@ class menu_admin:
         self.root.resizable( width = False, height = False)
 
     def create_widget(self):
-        registrar_button = tk.Button(text='Registrar Funcionario', width=20)
+        registrar_button = tk.Button(text='Registrar Funcionario', width=20, command= tela_funcionario)
         registrar_button.place(x=125, y=80)
 
         fornecedor_button = tk.Button(text='Fornecedores', width=20, command= tela_fornecedor_admin)
