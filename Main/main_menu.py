@@ -63,21 +63,8 @@ class login_menu:
             if verify_login:
                   
                 messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado. Bem Vindo!")
-                self.root.destroy()
-                self.abrir_menu_user()
 
-            else:
-                messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema!")
-
-     
-
-    def abrir_menu_admin(self):
-        janela_admin = tk.Tk()  
-        app = menu_admin(janela_admin) 
-
-    def abrir_menu_user(self):
-        janela_user = tk.Tk()
-        app = menu_user(janela_user)
+ 
         
 
     
