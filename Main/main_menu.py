@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import *
-from database import tbit_db
+from tela_login.database_geral import tbit_db
 from menu_adm import *
 from menu_user import *
 

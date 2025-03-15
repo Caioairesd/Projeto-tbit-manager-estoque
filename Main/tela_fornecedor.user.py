@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from db_fornecedor import register_fornecedor,listar_fornecedor_db,update_fornecedor,delete_fornecedor,pesquisar_fornecedor_db
+from database_geral import register_fornecedor,listar_fornecedor_db,update_fornecedor,delete_fornecedor,pesquisar_fornecedor_db
 
 class tela_fornecedor_user:
 

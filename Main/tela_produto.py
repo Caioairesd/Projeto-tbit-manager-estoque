@@ -1,7 +1,7 @@
 # Importacoes necessarias
 from tkinter import * 
 from tkinter import messagebox
-from db_produto import registrar_produto, atualizar_produto, listar_produtos, deletar_produto, pesquisar_produto
+from database_geral import registrar_produto, atualizar_produto, listar_produtos, deletar_produto, pesquisar_produto
 
 # Criando classe principal, que carrega a janela e tudo o que há nela
 class tela_produto:
