@@ -46,15 +46,20 @@ class login_menu:
         usuario = self.usuario_entry.get()
         senha = self.senha_entry.get()
 
-        try: 
-            if usuario == 'ADM' and senha == '2025':
-                self.root.destroy()  
-                self.abrir_menu_admin()
-
-        except:    
+        
+        if usuario == 'ADM' and senha == '2025':
+                
+            self.root.destroy()  
+            self.abrir_menu_admin()
+            return
+        
+        try:
             database = tbit_db()
-            database.cursor.execute('SELECT * FROM funcionario WHERE nome_funcionario = %s AND senha_funcionario = %s', (usuario, senha))
+            database.cursor.execute('SELECT * FROM funcionario WHERE usuario_funcionario = %s AND senha_funcionario = %s', (usuario, senha,))
+            
+
             verify_login = database.cursor.fetchone()
+
         
             if verify_login:
                   
@@ -65,14 +70,16 @@ class login_menu:
 
             else:
                 messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema!")
-
-
+               
+        except Exception as e:
+            messagebox.showerror(title="Erro", message=f"Ocorreu um erro: {str(e)}")
+    
     def abrir_menu_admin(self):
         janela_admin = tk.Tk()  
         app = menu_admin(janela_admin) 
 
     def abrir_menu_user(self):
-        janela_user = tk.Tk()
+        janela_user = tk.Toplevel(self.root)
         app = menu_usuario(janela_user)
         
 
