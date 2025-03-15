@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import *
-from tela_login.database_geral import tbit_db
+from database_geral import tbit_db
 from menu_adm import *
 from menu_user import *
 
@@ -52,7 +52,7 @@ class login_menu:
 
         except:    
             database = tbit_db()
-            database.cursor.execute('SELECT * FROM usuario WHERE usuario = %s AND senha = %s', (usuario, senha))
+            database.cursor.execute('SELECT * FROM funcionario WHERE nome_funcionario = %s AND senha_funcionario = %s', (usuario, senha))
             verify_login = database.cursor.fetchone()
 
             if verify_login:
