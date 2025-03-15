@@ -3,7 +3,7 @@ from tkinter import messagebox
 from tkinter import *
 from database_geral import tbit_db
 from menu_adm import menu_admin
-from menu_user import *
+from menu_user import menu_usuario
 
 class login_menu:
     def __init__(self,root):
@@ -55,16 +55,25 @@ class login_menu:
             database = tbit_db()
             database.cursor.execute('SELECT * FROM funcionario WHERE nome_funcionario = %s AND senha_funcionario = %s', (usuario, senha))
             verify_login = database.cursor.fetchone()
-
         
-
-        
-
             if verify_login:
                   
                 messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado. Bem Vindo!")
 
- 
+                self.root.destroy()
+                self.abrir_menu_user()
+
+            else:
+                messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema!")
+
+
+    def abrir_menu_admin(self):
+        janela_admin = tk.Tk()  
+        app = menu_admin(janela_admin) 
+
+    def abrir_menu_user(self):
+        janela_user = tk.Tk()
+        app = menu_usuario(janela_user)
         
 
     
