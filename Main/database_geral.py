@@ -22,8 +22,8 @@ class tbit_db:
             self.cursor.execute("USE tbit_db;")
 
             comandos_sql = [
-                "DROP TABLE IF EXISTS fornecedor;",
-                """CREATE TABLE fornecedor (
+                
+                """CREATE TABLE IF NOT EXISTS fornecedor (
                     id_fornecedor INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     nome_fornecedor TEXT,
                     marca_fornecedor TEXT,
@@ -32,8 +32,8 @@ class tbit_db:
                     cidade_fornecedor TEXT,
                     pais_fornecedor TEXT
                 );""",
-                "DROP TABLE IF EXISTS funcionario;",
-                """CREATE TABLE funcionario (
+                
+                """CREATE TABLE IF NOT EXISTS funcionario  (
                     id_funcionario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     nome_funcionario TEXT,
                     data_nascimento_funcionario DATE DEFAULT NULL,
@@ -46,8 +46,8 @@ class tbit_db:
                     usuario_funcionario TEXT,
                     senha_funcionario TEXT
                 );""",
-                "DROP TABLE IF EXISTS produto;",
-                """CREATE TABLE produto (
+                
+                """CREATE TABLE IF NOT EXISTS produto (
                     id_produto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     nome_produto TEXT,
                     descricao_produto TEXT,

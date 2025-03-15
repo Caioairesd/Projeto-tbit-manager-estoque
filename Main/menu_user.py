@@ -11,7 +11,7 @@ class menu_usuario:
         pass
 
 if __name__ == '__main__':
-    root_user = tk.Tk()
-    app = menu_usuario(root_user)
-    root_user.mainloop()
+    root = tk.Tk()
+    app = menu_usuario(root)
+    root.mainloop()
 

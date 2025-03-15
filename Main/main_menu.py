@@ -52,40 +52,37 @@ class login_menu:
             self.root.destroy()  
             self.abrir_menu_admin()
             return
-        
-        try:
-            database = tbit_db()
-            database.cursor.execute('SELECT * FROM funcionario WHERE usuario_funcionario = %s AND senha_funcionario = %s', (usuario, senha,))
+        else:
+            try:
+                database = tbit_db()
+                cursor = database.cursor
+                cursor.execute('SELECT * FROM funcionario WHERE usuario_funcionario = %s AND senha_funcionario = %s' ,(usuario, senha,))
             
 
-            verify_login = database.cursor.fetchone()
+                verify_login = cursor.fetchone()
 
-        
-            if verify_login:
-                  
-                messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado. Bem Vindo!")
+            
+                if verify_login:
+                    
+                    messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado. Bem Vindo!")
 
-                self.root.destroy()
-                self.abrir_menu_user()
+                    self.root.destroy()
+                    self.abrir_menu_user()
 
-            else:
-                messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema!")
-               
-        except Exception as e:
-            messagebox.showerror(title="Erro", message=f"Ocorreu um erro: {str(e)}")
+                else:
+                    messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema!")
+                
+            except Exception as e:
+                messagebox.showerror(title="Erro", message=f"Ocorreu um erro: {str(e)}")
     
     def abrir_menu_admin(self):
         janela_admin = tk.Tk()  
         app = menu_admin(janela_admin) 
 
     def abrir_menu_user(self):
-        janela_user = tk.Toplevel(self.root)
+        janela_user = tk.Tk()
         app = menu_usuario(janela_user)
         
-
-    
-       
-
     
 if __name__ == '__main__':
     root = tk.Tk()
