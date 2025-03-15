@@ -4,7 +4,7 @@ from tkinter import *
 class menu_usuario:
     def __init__(self,root):
         self.root = root
-        self.root.title("TBit Manager by TerraBytes - Menu Principal - Usuario") 
+        self.root.title("TBit Manager by TerraBytes - Menu Principal") 
 #        self.create_widget()
         self.root.geometry("900x700")
         self.root.resizable( width = False, height = False)
