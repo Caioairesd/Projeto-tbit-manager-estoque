@@ -16,17 +16,20 @@ class menu_admin:
         registrar_button = tk.Button(text='Registrar Funcionario', width=20, command= tela_funcionario)
         registrar_button.place(x=125, y=80)
 
-        fornecedor_button = tk.Button(text='Fornecedores', width=20, command=self.class_tela_fornecedor_admin)
+        fornecedor_button = tk.Button(text='Fornecedores', width=20, command=self.button_tela_fornecedor_admin)
         fornecedor_button.place(x=275, y=80)
 
-        produto_button = tk.Button(text='Produtos', width=20, command=self.class_tela_produto_admin)
+        produto_button = tk.Button(text='Produtos', width=20, command=self.button_tela_produto_admin)
         produto_button.place(x=425, y=80)
 
     # CLASSES CRIADAS PARA PASSAR O ROOT AS CLASSES QUE IMPORTAMOS
-    def class_tela_produto_admin(self):
+    def button_tela_funcionario(self):
+        tela_funcionario(self.root)
+        
+    def button_tela_produto_admin(self):
         tela_produto_admin(self.root)
     
-    def class_tela_fornecedor_admin(self):
+    def button_tela_fornecedor_admin(self):
         tela_fornecedor_admin(self.root)
         
 if __name__ == '__main__':

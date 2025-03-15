@@ -41,36 +41,25 @@ class login_menu:
         self.login_button.place(x=80, y=225)
 
     def login_user(self):
-        
-
         usuario = self.usuario_entry.get()
         senha = self.senha_entry.get()
 
-        
         if usuario == 'ADM' and senha == '2025':
-                
             self.root.destroy()  
             self.abrir_menu_admin()
             return
-        
         try:
             database = tbit_db()
             database.cursor.execute('SELECT * FROM funcionario WHERE usuario_funcionario = %s AND senha_funcionario = %s', (usuario, senha,))
-            
-
             verify_login = database.cursor.fetchone()
 
-        
-            if verify_login:
-                  
+            if verify_login: 
                 messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado. Bem Vindo!")
-
                 self.root.destroy()
                 self.abrir_menu_user()
-
             else:
                 messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema!")
-               
+                
         except Exception as e:
             messagebox.showerror(title="Erro", message=f"Ocorreu um erro: {str(e)}")
     
