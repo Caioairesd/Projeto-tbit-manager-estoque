@@ -6,92 +6,72 @@ MYSQL_PASSWORD = 'root'
 MYSQL_DATABASE = 'tbit_db'
 
 
+import mysql.connector
+
 class tbit_db:
     def __init__(self):
         self.conn = mysql.connector.connect(
-            host=MYSQL_HOST,
-            user=MYSQL_USER,
-            password=MYSQL_PASSWORD,
-            database=MYSQL_DATABASE
+            host='localhost',
+            user='root',
+            password='root'
         )
         self.cursor = self.conn.cursor()
-        
-        # Criação do banco de dados tbit_db caso não exista
-        self.cursor.execute("CREATE DATABASE IF NOT EXISTS `tbit_db`;")
-        self.cursor.execute("USE `tbit_db`;")
-        
-        # Criação das tabelas
-        self.cursor.execute("""
-            DROP TABLE IF EXISTS `fornecedor`;
-            CREATE TABLE `fornecedor` (
-                `id_fornecedor` INT NOT NULL AUTO_INCREMENT,
-                `nome_fornecedor` TEXT,
-                `marca_fornecedor` TEXT,
-                `email_fornecedor` TEXT,
-                `telefone_fornecedor` TEXT,
-                `cidade_fornecedor` TEXT,
-                `pais_fornecedor` TEXT,
-                PRIMARY KEY (`id_fornecedor`)
-            );
 
-            DROP TABLE IF EXISTS `funcionario`;
-            CREATE TABLE `funcionario` (
-                `id_funcionario` INT NOT NULL AUTO_INCREMENT,
-                `nome_funcionario` TEXT,
-                `data_nascimento_funcionario` DATE DEFAULT NULL,
-                `data_admissao_funcionario` DATE DEFAULT NULL,
-                `cpf_funcionario` TEXT DEFAULT NULL,
-                `cidade_funcionario` TEXT,
-                `estado_funcionario` TEXT,
-                `telefone_funcionario` TEXT,
-                `email_funcionario` TEXT,
-                `usuario_funcionario` TEXT,
-                `senha_funcionario` TEXT,
-                PRIMARY KEY (`id_funcionario`)
-            );
+        try:
+            self.cursor.execute("CREATE DATABASE IF NOT EXISTS tbit_db;")
+            self.cursor.execute("USE tbit_db;")
 
-            DROP TABLE IF EXISTS `produto`;
-            CREATE TABLE `produto` (
-                `id_produto` INT NOT NULL AUTO_INCREMENT,
-                `nome_produto` TEXT,
-                `descricao_produto` TEXT,
-                `quantidade_produto` INT DEFAULT NULL,
-                `valor_produto` DECIMAL(10, 2) DEFAULT NULL,
-                `fornecedor_produto` TEXT,
-                PRIMARY KEY (`id_produto`)
-            );
-        """)
-        
-        # Comitar as alterações no banco de dados
-        self.conn.commit()
+            comandos_sql = [
+                "DROP TABLE IF EXISTS fornecedor;",
+                """CREATE TABLE fornecedor (
+                    id_fornecedor INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                    nome_fornecedor TEXT,
+                    marca_fornecedor TEXT,
+                    email_fornecedor TEXT,
+                    telefone_fornecedor TEXT,
+                    cidade_fornecedor TEXT,
+                    pais_fornecedor TEXT
+                );""",
+                "DROP TABLE IF EXISTS funcionario;",
+                """CREATE TABLE funcionario (
+                    id_funcionario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                    nome_funcionario TEXT,
+                    data_nascimento_funcionario DATE DEFAULT NULL,
+                    data_admissao_funcionario DATE DEFAULT NULL,
+                    cpf_funcionario TEXT DEFAULT NULL,
+                    cidade_funcionario TEXT,
+                    estado_funcionario TEXT,
+                    telefone_funcionario TEXT,
+                    email_funcionario TEXT,
+                    usuario_funcionario TEXT,
+                    senha_funcionario TEXT
+                );""",
+                "DROP TABLE IF EXISTS produto;",
+                """CREATE TABLE produto (
+                    id_produto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                    nome_produto TEXT,
+                    descricao_produto TEXT,
+                    quantidade_produto INT DEFAULT NULL,
+                    valor_produto DECIMAL(10, 2) DEFAULT NULL,
+                    fornecedor_produto TEXT
+                );"""
+            ]
 
-        print("Banco de dados e tabelas criados com sucesso!")
+            for comando in comandos_sql:
+                self.cursor.execute(comando)
 
-   
-    
-    def create_fornecedor(self, nome_fornecedor, marca_fornecedor, email_fornecedor, telefone_fornecedor, cidade_fornecedor, pais_fornecedor):
-        self.cursor.execute("INSERT INTO fornecedor (marca_fornecedor, email_fornecedor, telefone_fornecedor, cidade_fornecedor, pais_fornecedor)VALUES(%s, %s, %s, %s)", (nome_fornecedor, marca_fornecedor, email_fornecedor, telefone_fornecedor, cidade_fornecedor, pais_fornecedor))
-        self.conn.commit()
-    
-    def read_fornecedor(self, id_fornecedor):
-        self.cursor.execute('SELECT * FROM fornecedor WHERE id_fornecedor = %s', (id_fornecedor,))
-        return self.cursor.fetchone()
-    
-    def update_fornecedor(self, id_fornecedor, nome_fornecedor, marca_fornecedor, email_fornecedor, telefone_fornecedor, cidade_fornecedor, pais_fornecedor):
-        self.cursor.execute("""
-            UPDATE fornecedor SET 
-                nome_fornecedor = %s, 
-                marca_fornecedor = %s, 
-                email_fornecedor = %s, 
-                telefone_fornecedor = %s, 
-                cidade_fornecedor = %s, 
-                pais_fornecedor = %s 
-            WHERE id_fornecedor = %s
-        """, (nome_fornecedor, marca_fornecedor, email_fornecedor, telefone_fornecedor, cidade_fornecedor, pais_fornecedor, id_fornecedor))
+            self.conn.commit()
+            print("Banco de dados e tabelas criados com sucesso!")
 
-    def delete_fornecedor(self, id_fornecedor):
-        self.cursor.execute('DELETE FROM fornecedor WHERE id_fornecedor = %s', (id_fornecedor,))
-        self.conn.commit()
+        except mysql.connector.Error as e:
+            print(f"Erro ao inicializar o banco de dados: {e}")
+
+
+    def close(self):
+        self.cursor.close()
+        self.conn.close()
+
+
 
     def create_funcionario(self, nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario):
         self.cursor.execute("""
@@ -150,6 +130,3 @@ class tbit_db:
         self.cursor.execute('DELETE FROM produto WHERE id_produto = %s', (id_produto,))
         self.conn.commit()
     
-    def close(self):
-        self.conn.commit()
-        self.conn.close()
