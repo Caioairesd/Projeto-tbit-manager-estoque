@@ -21,9 +21,9 @@ class login_menu:
         self.right_frame = Frame(root, width=395, height=300, bg="#2c2121", relief="raise") # Cria um frame à esquerda
         self.right_frame.pack(side=RIGHT) # Posiciona o frame à esquerda
 
-        logo = PhotoImage(file='tela_login/icon/logo_whatsapp.png')
-        self.logo_label = Label(self.left_frame, image=logo, bg='#2c2121') # Cria uma label que carrega a logo
-        self.logo_label.place(x=50, y=100) # Posiciona o label no frame esquerdo
+        #logo = PhotoImage(file='tela_login/icon/logo_whatsapp.png')
+        #self.logo_label = Label(self.left_frame, image=logo, bg='#2c2121') # Cria uma label que carrega a logo
+        #self.logo_label.place(x=50, y=100) # Posiciona o label no frame esquerdo
 
         self.usuario_label = Label(self.right_frame, text="Usuario:", font=("Times New Roman", 20), bg="#2c2121", fg='white') # Cria um label para o usuario
         self.usuario_label.place(x=10, y=105) # Posiciona o label o frame direito

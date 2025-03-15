@@ -2,7 +2,7 @@ import mysql.connector
 
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = 'sua_senha'
+MYSQL_PASSWORD = 'root'
 MYSQL_DATABASE = 'tbit_db'
 
 
