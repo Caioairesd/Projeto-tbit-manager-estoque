@@ -57,7 +57,7 @@ class login_menu:
 
             if verify_login:
                 messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado. Bem Vindo!")
-                menu_usuario()
+                root_user.mainloop()
 
             else:
                 messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema!")
