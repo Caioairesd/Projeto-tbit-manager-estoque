@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import *
-from tela_login.database_geral import tbit_db
+from database_geral import tbit_db
 from menu_adm import *
 from menu_user import *
 
@@ -21,7 +21,7 @@ class login_menu:
         self.right_frame = Frame(root, width=395, height=300, bg="#2c2121", relief="raise") # Cria um frame à esquerda
         self.right_frame.pack(side=RIGHT) # Posiciona o frame à esquerda
 
-        #logo = PhotoImage(file='tela_login/icon/logo_whatsapp.png')
+        #logo = PhotoImage(file='Main/icon/logo_whatsapp.png')
         #self.logo_label = Label(self.left_frame, image=logo, bg='#2c2121') # Cria uma label que carrega a logo
         #self.logo_label.place(x=50, y=100) # Posiciona o label no frame esquerdo
 
@@ -52,11 +52,12 @@ class login_menu:
 
         except:    
             database = tbit_db()
-            database.cursor.execute('SELECT * FROM usuario WHERE usuario = %s AND senha = %s', (usuario, senha))
+            database.cursor.execute('SELECT * FROM funcionario WHERE nome_funcionario = %s AND senha_funcionario = %s', (usuario, senha))
             verify_login = database.cursor.fetchone()
 
             if verify_login:
                 messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado. Bem Vindo!")
+                menu_usuario()
 
             else:
                 messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema!")
