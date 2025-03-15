@@ -173,7 +173,7 @@ class CRUDfuncionario:
         self.text_area.delete(1.0,tk.END)
         for funcionario in funcionarios:
             self.text_area.insert(tk.END,f"ID:{funcionario [0]}, nome: {funcionario [1]}, Data_de_nascimento: {funcionario[2]},Data_de_admissao:{funcionario[3]}, CPF:{funcionario[4]}, Cidade:{funcionario[5]}, UF:{funcionario[6]}, Telefone:{funcionario[7]}, Email:{funcionario[8]}, Usuario: {funcionario[9]}\n"  )    
-    
+
     def buscar_funcionario (self):
         busca= self.buscar_entry.get()
         self.buscar_entry.delete(0,tk.END)  
@@ -195,7 +195,9 @@ class CRUDfuncionario:
                 self.UF_entry.insert(0,id_solicitado[6])
                 self.Telefone_entry.insert(0,id_solicitado[7])
                 self.Email_entry.insert(0,id_solicitado[8])
-                self.Senha_entry.insert(0,id_solicitado[9])
+                self.Usuario_entry.insert(0,id_solicitado[9])
+                self.exibir_id_entry.insert(0,id_solicitado[10])
+
                 
 
             else:   
@@ -228,9 +230,6 @@ class CRUDfuncionario:
         self.Email_entry.delete(0,tk.END) 
         self.Usuario_entry.delete(0,tk.END) 
         self.Senha_entry.delete(0,tk.END) 
-
-
-
 
 
 if __name__ == "__main__":
