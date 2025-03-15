@@ -120,89 +120,79 @@ class CRUDfuncionario:
         else:
             messagebox.showerror("Error", "Todos os campos são obrigatórios")
     
-    
-
-    def editar_funcionario(self):
-        funcionario_id = self.funcionario_id_entry.get()
-        nome = self.nome_entry.get()
-        nascimento = self.Data_de_nascimento_entry.get()    
-        admissao = self.Data_de_Admissao_entry.get()  
-        CPF = self.CPF_entry.get()
-        cidade = self.Cidade_entry.get()
-        UF = self.UF_entry.get()
-        telefone = self.Telefone_entry.get()
-        Email = self.Email_entry.get()
-        usuario = self.Usuario_entry.get()    
-        senha = self.Senha_entry.get()  
-
-        if funcionario_id and nome and nascimento and admissao and CPF and cidade and UF and telefone and Email  and usuario and  senha:
-            editar_funcionario (nome, nascimento,admissao, CPF, cidade, UF, telefone, Email, usuario, senha,funcionario_id)
-            self.funcionario_id_entry.delete(0,tk.END)
-            self.nome_entry.insert(0,tk.END)
-            self.Data_de_nascimento_entry.delete(0,tk.END)
-            self.Data_de_Admissao_entry.delete(0,tk.END)
-            self.CPF_entry.delete(0,tk.END)
-            self.Cidade_entry.delete(0,tk.END)
-            self.UF_entry.delete(0,tk.END)
-            self.Telefone_entry.delete(0,tk.END)
-            self.Email_entry.delete(0,tk.END)
-            self.Senha_entry.delete(0,tk.END)
-            self.funcionario_id_entry.delete(0,tk.END)
-            self.Senha_entry.delete(0,tk.END)
-            self.listar_funcionarios()
-            
-            messagebox.showinfo("Sucess", "Funcionario atualizado com sucesso")
-        else:
-            messagebox.showerror("Error", "IDp do funcioonario é obrigatorio")
-        
-        
-    def excluir_funcionario(self):
-        funcioanrio_id = self.funcionario_id_entry.get()
-        if funcioanrio_id:
-            excluir_funcionario(funcioanrio_id)
-            self.funcionario_id_entry.delete(0,tk.END)
-            messagebox.showinfo ("Sucess", "Funcionario excluido com sucesso!")
-        else:
-            messagebox.showerror ("Error", "ID do funcioonario é obrigatorio")
-
-
     def listar_funcionarios(self):
         funcionarios = listar_funcionarios_crud()
         self.text_area.delete(1.0,tk.END)
         for funcionario in funcionarios:
-            self.text_area.insert(tk.END,f"ID:{funcionario [0]}, nome: {funcionario [1]}, Data_de_nascimento: {funcionario[2]},Data_de_admissao:{funcionario[3]}, CPF:{funcionario[4]}, Cidade:{funcionario[5]}, UF:{funcionario[6]}, Telefone:{funcionario[7]}, Email:{funcionario[8]}, Usuario: {funcionario[9]}, senha:{funcionario[10]}\n"  )    
+            self.text_area.insert(tk.END,f"ID:{funcionario [0]}, nome: {funcionario [1]}, Data_de_nascimento: {funcionario[2]},Data_de_admissao:{funcionario[3]}, CPF:{funcionario[4]}, Cidade:{funcionario[5]}, UF:{funcionario[6]}, Telefone:{funcionario[7]}, Email:{funcionario[8]}, Usuario: {funcionario[9]}, senha:{funcionario[10]}\n"  )
 
     def buscar_funcionario (self):
-        busca= self.buscar_entry.get()
-        self.buscar_entry.delete(0,tk.END)  
+            busca= self.buscar_entry.get()
+            self.buscar_entry.delete(0,tk.END)  
 
-        if busca:
-            id_solicitado = buscar_funcionario(busca)
-          
-            if id_solicitado:
-               
-                messagebox.showinfo ("Sucess", "funcionaro {}  encontrado com sucesso!".format(id_solicitado))
-                self.text_area.delete(1.0, tk.END)   
-                self.text_area.insert(tk.END,f"ID:{id_solicitado [0]}, Nome: {id_solicitado [1]}, Data_de_nascimento: {id_solicitado[2]},Data_de_admissao:{id_solicitado[3]}, CPF:{id_solicitado[4]}, Cidade:{id_solicitado[5]}, UF:{id_solicitado[6]}, Telefone:{id_solicitado[7]}, Email:{id_solicitado[8]}, Usuario: {id_solicitado[9]}, senha:{id_solicitado[10]}\n"  ) 
+            if busca:
+                id_solicitado = buscar_funcionario(busca)
+            
+                if id_solicitado:
                 
-                self.funcionario_id_entry.insert(0,id_solicitado[0])
-                self.nome_entry.insert(0,id_solicitado[1])
-                self.Data_de_nascimento_entry.insert(0,id_solicitado[2])
-                self.Data_de_Admissao_entry.insert(0,id_solicitado[3])
-                self.CPF_entry.insert(0,id_solicitado[4])
-                self.Cidade_entry.insert(0,id_solicitado[5])
-                self.UF_entry.insert(0,id_solicitado[6])
-                self.Telefone_entry.insert(0,id_solicitado[7])
-                self.Email_entry.insert(0,id_solicitado[8])
-                self.Usuario_entry.insert(0,id_solicitado[9])
-                self.exibir_id_entry.insert(0,id_solicitado[10])
-                self.cancelar()
-                self.listar_funcionarios()
-               
-            else:   
-                 messagebox.showerror ("Sucess", "funcionaro não encontrado")
+                    messagebox.showinfo ("Sucess", "funcionaro {}  encontrado com sucesso!".format(id_solicitado))
+                    self.text_area.delete(1.0, tk.END)   
+                    self.text_area.insert(tk.END,f"ID:{id_solicitado [0]}, Nome: {id_solicitado [1]}, Data_de_nascimento: {id_solicitado[2]},Data_de_admissao:{id_solicitado[3]}, CPF:{id_solicitado[4]}, Cidade:{id_solicitado[5]}, UF:{id_solicitado[6]}, Telefone:{id_solicitado[7]}, Email:{id_solicitado[8]}, Usuario: {id_solicitado[9]}, senha:{id_solicitado[10]}\n"  ) 
+                    
+                    self.funcionario_id_entry.insert(0,id_solicitado[0])
+                    self.nome_entry.insert(0,id_solicitado[1])
+                    self.Data_de_nascimento_entry.insert(0,id_solicitado[2])
+                    self.Data_de_Admissao_entry.insert(0,id_solicitado[3])
+                    self.CPF_entry.insert(0,id_solicitado[4])
+                    self.Cidade_entry.insert(0,id_solicitado[5])
+                    self.UF_entry.insert(0,id_solicitado[6])
+                    self.Telefone_entry.insert(0,id_solicitado[7])
+                    self.Email_entry.insert(0,id_solicitado[8])
+                    self.Usuario_entry.insert(0,id_solicitado[9])
+                    self.exibir_id_entry.insert(0,id_solicitado[10])
+                    self.cancelar()
+                    self.listar_funcionarios()
+                
+                else:   
+                    messagebox.showerror ("Sucess", "funcionaro não encontrado")
+            else:
+                messagebox.showerror("Error","Todos os compos são obreigatorios")
+        
+    def editar_funcionario(self):
+        funcionario_id = self.exibir_id_entry.get()
+        nome = self.nome_entry.get()
+        Data_de_nascimento = self.Data_de_nascimento_entry.get()
+        Data_de_admissao = self.Data_de_Admissao_entry.get()
+        CPF = self.CPF_entry.get()
+        Cidade = self.Cidade_entry.get()
+        UF = self.UF_entry.get()
+        Telefone = self.Telefone_entry.get()
+        Email = self.Email_entry.get()
+        Usuario = self.Usuario_entry.get()
+        Senha = self.Senha_entry.get()
+
+        if funcionario_id and nome and Data_de_nascimento and Data_de_admissao and CPF and Cidade and  UF and Telefone and Email  and Usuario and  Senha:
+            editar_funcionario (nome, Data_de_nascimento,Data_de_admissao , CPF, Cidade, UF, Telefone, Email, Usuario, Senha,funcionario_id)
+
+            messagebox.showinfo("Sucess", "Funcionario atualizado com sucesso")
         else:
-             messagebox.showerror("Error","Todos os compos são obreigatorios")
+            messagebox.showerror("Error", "IDp do funcioonario é obrigatorio")
+
+        
+    def excluir_funcionario(self):
+
+        #variáveis recebem os dados inseridos nos campos de textos
+        funcionario_id= self.funcionario_id_entry.get()
+        confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse funcionario?")
+        if confirmacao  == True:
+            if funcionario_id:
+                excluir_funcionario(funcionario_id)
+
+                self.funcionario_id_entry.delete(0,tk.END)
+                self.listar_funcionarios()
+                messagebox.showinfo("Sucesso","Funcionario deletado com sucesso!")
+            else:
+                messagebox.showerror("Erro","ID do funcionario é obrigatório!")
         
 
     def limpar_campos(self):
