@@ -79,7 +79,7 @@ class login_menu:
         app = menu_admin(janela_admin) 
 
     def abrir_menu_user(self):
-        janela_user = tk.Toplevel(self.root)
+        janela_user = tk.Tk()
         app = menu_usuario(janela_user)
         
 
