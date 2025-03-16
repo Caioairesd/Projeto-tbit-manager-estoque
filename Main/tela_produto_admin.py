@@ -1,7 +1,8 @@
 # Importacoes necessarias
+import tkinter as tk
 from tkinter import * 
 from tkinter import messagebox
-from database_geral import registrar_produto, atualizar_produto, listar_produtos, deletar_produto, pesquisar_produto
+from database_geral import atualizar_produto, listar_produtos, deletar_produto, pesquisar_produto
 
 # Criando classe principal, que carrega a janela e tudo o que há nela
 class tela_produto:
@@ -21,40 +22,40 @@ class tela_produto:
 
     def criando_widgets(self):
         # Criando os botoes que carregam as funcoes necessarias e seus posicionamentos
-        Button(self.root_produto, text="Alterar produto", command=self.alterar_no_banco, width=15, height=1).place(x=200, y=280) # Botao para alterar produto
-        Button(self.root_produto, text="Deletar produto", command=self.deletar_do_banco, width=15, height=1).place(x=400, y=280) # Botao para deletar produto
-        Button(self.root_produto, text="Cancelar operção", command=self.cancelar_operacao, width=15, height=1).place(x=600, y=280) # Botao para cancelar/voltar ao padrao
-        Button(self.root_produto, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=30, height=2).place(x=135, y=355)
+        tk.Button(self.root_produto, text="Alterar produto", command=self.alterar_no_banco, width=15, height=1).place(x=200, y=280) # Botao para alterar produto
+        tk.Button(self.root_produto, text="Deletar produto", command=self.deletar_do_banco, width=15, height=1).place(x=400, y=280) # Botao para deletar produto
+        tk.Button(self.root_produto, text="Cancelar operção", command=self.cancelar_operacao, width=15, height=1).place(x=600, y=280) # Botao para cancelar/voltar ao padrao
+        tk.Button(self.root_produto, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=30, height=2).place(x=135, y=355)
 
         # Labels usados para identificar as caixas de texto e seus posicionamentos
-        Label(self.root_produto, text="Nome do Produto:").place(x=280, y=50)
-        Label(self.root_produto, text="Descrição do Produto:").place(x=280, y=90)
-        Label(self.root_produto, text="Quantidade do Produto:").place(x=280, y=130)
-        Label(self.root_produto, text="Valor do Produto:").place(x=280, y=170)
+        tk.Label(self.root_produto, text="Nome do Produto:").place(x=280, y=50)
+        tk.Label(self.root_produto, text="Descrição do Produto:").place(x=280, y=90)
+        tk.Label(self.root_produto, text="Quantidade do Produto:").place(x=280, y=130)
+        tk.Label(self.root_produto, text="Valor do Produto:").place(x=280, y=170)
 
         # Entrys usados para o usuario digitar e seus posicionamentos
         # Entry 'nome do produto'
-        self.box_nome = Entry(self.root_produto, width=25)
+        self.box_nome = tk.Entry(self.root_produto, width=25)
         self.box_nome.place(x=420, y=50)
 
         # Entry 'descrição do produto'
-        self.box_descricao = Entry(self.root_produto, width=25)
+        self.box_descricao = tk.Entry(self.root_produto, width=25)
         self.box_descricao.place(x=420, y=90)
 
         # Entry 'quantidade do produto'
-        self.box_quantidade = Entry(self.root_produto, width=25)
+        self.box_quantidade = tk.Entry(self.root_produto, width=25)
         self.box_quantidade.place(x=420, y=130)
 
         # Entry 'valor do produto'
-        self.box_valor = Entry(self.root_produto, width=25)
+        self.box_valor = tk.Entry(self.root_produto, width=25)
         self.box_valor.place(x=420, y=170)
         
         # Entry usado para pesquisar de forma individual
-        self.box_pesquisar = Entry(self.root_produto, width=40)
+        self.box_pesquisar = tk.Entry(self.root_produto, width=40)
         self.box_pesquisar.place(x=360, y=360, height=30)
 
         # Text area usado para retornar dados ja existentes
-        self.text_area = Text(self.root_produto, width=80, height=15)
+        self.text_area = tk.Text(self.root_produto, width=80, height=15)
         self.text_area.place(x=135, y=400)
 
     def alterar_no_banco(self):
@@ -147,6 +148,6 @@ class tela_produto:
 
 # Chama a funcao principal e coloca o programa para rodar
 if __name__ == "__main__":
-    root_produto = Tk()
+    root_produto = tk.Tk()
     app = tela_produto(root_produto)
     root_produto.mainloop()
