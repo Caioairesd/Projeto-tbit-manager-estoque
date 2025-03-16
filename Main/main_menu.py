@@ -82,6 +82,7 @@ class login_menu:
     def abrir_menu_user(self):
         janela_user = tk.Tk()
         app = menu_usuario(janela_user)
+    
         
     
 if __name__ == '__main__':

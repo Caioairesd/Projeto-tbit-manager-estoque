@@ -1,5 +1,5 @@
 # Importacoes necessarias
-from tkinter import * 
+from tkinter import *
 from tkinter import messagebox
 from database_geral import registrar_produto, atualizar_produto, listar_produtos, deletar_produto, pesquisar_produto
 
@@ -13,6 +13,7 @@ class tela_produto:
         self.root_produto.title("TBit Manager - Produtos")
         self.root_produto.resizable(width=False, height=False)
         self.root_produto.geometry("900x750")
+        
     
         # Carrega os widgets da tela
         self.criando_widgets()

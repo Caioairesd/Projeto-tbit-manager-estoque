@@ -5,7 +5,7 @@ from database_geral import register_fornecedor,listar_fornecedor_db,update_forne
 class tela_fornecedor_user:
 
     def __init__(self,root):
-        self.root = root
+        self.root = tk.Toplevel()
 
         #Define os parâmetros de interface da janela
         self.root.geometry("900x700")
@@ -14,6 +14,9 @@ class tela_fornecedor_user:
         self.root.resizable(width=False,height=False)
         #self.root.attributes("-alpha",1.0)
 
+
+        self.root.transient(root)  # Faz com que a nova janela fique acima da principal
+        self.root.grab_set()  # Bloqueia interações na principal até fechar essa
         self.create_widgets()
         self.listar_fornecedor()
 

@@ -1,19 +1,22 @@
 import tkinter as tk
 from tkinter import messagebox
-from crud_funcionario import fazer_login_funcionario
+from database_geral import registrar_funcionario
 from tkinter import*
 
 
 
-class CRUDfuncioario:
+class tela_funcionario:
     def __init__(self, root):
-        self.root = root 
+        
+        self.root = tk.Toplevel(root) 
         self.root.title ("CRUD FUNCIONARIO                                                                                                                                                                       TerraBytes")
         self.root.geometry ("900x700")
         self.root.resizable(width= False, height=False)
         #self.root['bg'] = "gray"
 
 
+        self.root.transient(root)  # Faz com que a nova janela fique acima da principal
+        self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
 
        
@@ -55,9 +58,9 @@ class CRUDfuncioario:
         self.Usuario_entry.place(x= 50, y= 240, width= "100")
         self.Senha_entry.place(x= 50, y= 270, width= "100")
 
-        tk.Button(self.root, text= "FAZER LOGIN", command = self.fazer_login_funcionario).place(x= 0, y= 300)
+        tk.Button(self.root, text= "FAZER LOGIN", command = self.registrar_funcionario).place(x= 0, y= 300)
       
-    def fazer_login_funcionario (self):
+    def registrar_funcionario (self):
         nome = self.nome_entry.get()
         DataDeNascimento= self.Data_de_nascimento_entry.get()
         DataDeAdmissao = self.Data_de_Admissao_entry.get()
@@ -71,7 +74,7 @@ class CRUDfuncioario:
 
         #fazendo a mensagem de criado ou não criado o funcionario
         if nome and DataDeNascimento and DataDeAdmissao and CPF and Cidade and UF and Telefone and Email and Usuario and Senha:
-            fazer_login_funcionario(nome, DataDeNascimento, DataDeAdmissao,  CPF, Cidade, UF , Telefone, Email, Usuario, Senha)
+            registrar_funcionario(nome, DataDeNascimento, DataDeAdmissao,  CPF, Cidade, UF , Telefone, Email, Usuario, Senha)
             self.nome_entry.delete(0,tk.END)
             self.Data_de_nascimento_entry.delete(0,tk.END)
             self.Data_de_Admissao_entry.delete(0,tk.END)
@@ -92,7 +95,5 @@ class CRUDfuncioario:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = CRUDfuncioario(root)
+    app = tela_funcionario(root)
     root.mainloop()
-
-
