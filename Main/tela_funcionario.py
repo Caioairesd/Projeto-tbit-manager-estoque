@@ -7,13 +7,16 @@ from tkinter import*
 
 class tela_funcionario:
     def __init__(self, root):
-        self.root = root 
+        
+        self.root = tk.Toplevel(root) 
         self.root.title ("CRUD FUNCIONARIO                                                                                                                                                                       TerraBytes")
         self.root.geometry ("900x700")
         self.root.resizable(width= False, height=False)
         #self.root['bg'] = "gray"
 
 
+        self.root.transient(root)  # Faz com que a nova janela fique acima da principal
+        self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
 
        
