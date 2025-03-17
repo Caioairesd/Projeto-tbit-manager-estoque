@@ -1,7 +1,7 @@
 # Importacoes necessarias
 from tkinter import * 
 from tkinter import messagebox
-from database_geral import atualizar_produto, listar_produtos, deletar_produto, pesquisar_produto
+from database_geral import atualizar_produto_db, listar_produtos_db, deletar_produto_db, pesquisar_produto_db
 
 # Criando classe principal, que carrega a janela e tudo o que há nela
 class tela_produto_admin:
@@ -96,7 +96,7 @@ class tela_produto_admin:
             confirmacao = messagebox.askyesno("Confirmação", f"Você realmente deseja alterar as informações de '{nome_produto}'?") # Mensagem lançada na tela do usuario que recebe 'True' ou 'False'
 
             if confirmacao == True: # Verifica se o cliente clicou 'Sim'
-                atualizar_produto(nome_produto, descricao_produto, quantidade_produto, valor_produto) # Chama o metodo atualizar_produto, que faz conexao com o banco
+                atualizar_produto_db(nome_produto, descricao_produto, quantidade_produto, valor_produto) # Chama o metodo atualizar_produto, que faz conexao com o banco
                 self.limpar_campos() # Metodo usado para limpar os campos
                 messagebox.showinfo("Sucesso", "Produto atualizado com sucesso!") # Mensagem lançada na tela do usuario
                 self.listar_do_banco() # Lista novamente todos os itens presentes na tabela 'produto'
@@ -108,7 +108,7 @@ class tela_produto_admin:
 
     # Metodo usado para resgatar todos os itens presentes no banco
     def listar_do_banco(self):
-            produtos = listar_produtos()
+            produtos = listar_produtos_db()
             self.text_area.delete(1.0, END)
 
             for produto in produtos:
@@ -120,7 +120,7 @@ class tela_produto_admin:
             confirmacao = messagebox.askyesno("Confirmacao", f"Você deseja mesmo excluir '{produto}'")
 
             if confirmacao == True:
-                deletar_produto(produto)
+                deletar_produto_db(produto)
                 self.box_nome.delete(0, END)
                 messagebox.showinfo("Success", "Produto excluido com sucesso!")
 
@@ -138,7 +138,7 @@ class tela_produto_admin:
         self.limpar_campos() # Metodo usado para limpar os campos
 
         if pesquisa:
-            produto_retornado = pesquisar_produto(pesquisa)
+            produto_retornado = pesquisar_produto_db(pesquisa)
 
             if produto_retornado:
                 messagebox.showinfo("Success", f"Produto '{produto_retornado[1]}' encontrado com sucesso, verifique a caixa de texto!")

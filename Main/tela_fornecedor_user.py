@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from database_geral import register_fornecedor,listar_fornecedor_db,update_fornecedor,delete_fornecedor,pesquisar_fornecedor_db
+from database_geral import register_fornecedor_db,listar_fornecedor_db,update_fornecedor_db,delete_fornecedor_db,pesquisar_fornecedor_db
 
 class tela_fornecedor_user:
 
@@ -78,7 +78,7 @@ class tela_fornecedor_user:
        
         #Condicional responsável por acionar função do banco de dados
         if nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
-            register_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
+            register_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
 
             #Chama a função de limpar campos de texto
             self.limpar_campos()
@@ -151,7 +151,7 @@ class tela_fornecedor_user:
         pais_fornecedor = self.pais_fornecedor_entry.get()
         
         if  id_fornecedor and nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
-            update_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor)
+            update_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor)
             
             messagebox.showinfo("Sucess","informações alteradas com sucesso!")
         else:
@@ -171,7 +171,7 @@ class tela_fornecedor_user:
         confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse formecedor?")
         if confirmacao  == True:
             if id_fornecedor:
-                delete_fornecedor(id_fornecedor)
+                delete_fornecedor_db(id_fornecedor)
 
                 self.id_fornecedor_entry.delete(0,tk.END)
                 self.listar_fornecedor()
@@ -198,10 +198,6 @@ class tela_fornecedor_user:
             
             self.limpar_campos()
             self.listar_fornecedor()
-
-
-        
-          
 
 if __name__ == "__main__":
     root = tk.Tk()

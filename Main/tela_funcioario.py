@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from database_geral import registrar_funcionario
+from database_geral import registrar_funcionario_db
 from tkinter import*
 
 
@@ -74,7 +74,7 @@ class tela_funcionario:
 
         #fazendo a mensagem de criado ou não criado o funcionario
         if nome and DataDeNascimento and DataDeAdmissao and CPF and Cidade and UF and Telefone and Email and Usuario and Senha:
-            registrar_funcionario(nome, DataDeNascimento, DataDeAdmissao,  CPF, Cidade, UF , Telefone, Email, Usuario, Senha)
+            registrar_funcionario_db(nome, DataDeNascimento, DataDeAdmissao,  CPF, Cidade, UF , Telefone, Email, Usuario, Senha)
             self.nome_entry.delete(0,tk.END)
             self.Data_de_nascimento_entry.delete(0,tk.END)
             self.Data_de_Admissao_entry.delete(0,tk.END)
