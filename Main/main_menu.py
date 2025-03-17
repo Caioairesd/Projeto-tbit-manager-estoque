@@ -15,10 +15,10 @@ class login_menu:
         pass
 
     def create_widget(self):
-        self.left_frame = Frame(root, width=200, height=300, bg="#cc0000", relief="raise") # Cria um frame à esquerda
+        self.left_frame = Frame(root, width=200, height=300, bg"#3399ff", relief="raise") # Cria um frame à esquerda
         self.left_frame.pack(side=LEFT) # Posiciona o frame à esquerda
 
-        self.right_frame = Frame(root, width=395, height=300, bg="#2c2121", relief="raise") # Cria um frame à esquerda
+        self.right_frame = Frame(root, width=400, height=300, bg="#3399ff", relief="raise") # Cria um frame à esquerda
         self.right_frame.pack(side=RIGHT) # Posiciona o frame à esquerda
 
         #logo = PhotoImage(file='tela_login/icon/logo_whatsapp.png')
