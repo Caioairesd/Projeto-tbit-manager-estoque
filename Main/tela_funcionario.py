@@ -2,25 +2,21 @@ import tkinter as tk
 from tkinter import messagebox
 from database_geral import registrar_funcionario
 from tkinter import*
-
+from menu_adm import *
 
 
 class tela_funcionario:
     def __init__(self, root):
-        
         self.root = tk.Toplevel(root) 
-        self.root.title ("CRUD FUNCIONARIO                                                                                                                                                                       TerraBytes")
-        self.root.geometry ("900x700")
-        self.root.resizable(width= False, height=False)
-        #self.root['bg'] = "gray"
+        self.root.title("CRUD FUNCIONARIO TerraBytes")
+        self.root.geometry("900x700")
+        self.root.resizable(width=False, height=False)
 
-
-        self.root.transient(root)  # Faz com que a nova janela fique acima da principal
+        self.root.transient(root)  # Mantém a janela no topo
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
-
-       
         self.criar_funcionario()
+
     def criar_funcionario(self):
         tk.Label(self.root,text= "Nome: ").place(x= 0, y= 0)
         tk.Label(self.root,text= "Data de Nascimento: ").place(x= 0, y= 30)
