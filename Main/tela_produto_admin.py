@@ -10,11 +10,15 @@ class tela_produto_admin:
     # Construtor da classe, carrega as informações básicas de carregamento
     def __init__(self, root):
         # Definições da janela
-        self.root_produto = root
+        self.root_produto = tk.Toplevel(root)
+
         self.root_produto.title("TBit Manager - Produtos - Administrador")
         self.root_produto.resizable(width=False, height=False)
         self.root_produto.geometry("900x750")
     
+        self.root_produto.transient(root)  # Faz com que a nova janela fique acima da principal
+        self.root_produto.grab_set()  # Bloqueia interações na principal até fechar essa
+
         # Carrega os widgets da tela
         self.criando_widgets()
         # Lista todos os produtos ja cadastrados

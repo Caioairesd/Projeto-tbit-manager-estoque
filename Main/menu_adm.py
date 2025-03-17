@@ -1,8 +1,8 @@
 import tkinter as tk 
 from tkinter import *
-from fornecedor.tela_fornecedor_admin import tela_fornecedor_admin
-from produto.tela_produto_admin import tela_produto_admin
-from funcionario.tela_funcionario import tela_funcionario_admin
+from tela_fornecedor_admin import tela_fornecedor_admin
+from tela_produto_admin import tela_produto_admin
+from tela_funcionario import tela_funcionario_admin
 
 class menu_admin:
     def __init__(self, root):

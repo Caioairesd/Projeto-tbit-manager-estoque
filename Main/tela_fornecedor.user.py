@@ -5,7 +5,7 @@ from database_geral import register_fornecedor_db,listar_fornecedor_db,update_fo
 class tela_fornecedor_user:
 
     def __init__(self,root):
-        self.root = root
+        self.root = tk.Toplevel()
 
         #Define os parâmetros de interface da janela
         self.root.geometry("900x700")
