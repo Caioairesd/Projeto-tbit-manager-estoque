@@ -77,7 +77,7 @@ def get_connection():
 
 
 #Funções da tabela fornecedor
-def register_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
+def register_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
     query = "insert fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)VALUES(%s,%s,%s,%s,%s,%s)"
@@ -107,7 +107,7 @@ def pesquisar_fornecedor_db(id_solicitado):
     return busca
 
 
-def update_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor):
+def update_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
     query = "UPDATE fornecedor SET nome_fornecedor = %s,marca_fornecedor = %s,email_fornecedor = %s,telefone_fornecedor = %s,cidade_fornecedor = %s,pais_fornecedor = %s WHERE id_fornecedor = %s"
@@ -115,7 +115,7 @@ def update_fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone
     conn.commit()
     cursor.close()
 
-def delete_fornecedor(id_fornecedor):
+def delete_fornecedor_db(id_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
     query = "DELETE FROM fornecedor WHERE id_fornecedor = %s"
@@ -126,7 +126,7 @@ def delete_fornecedor(id_fornecedor):
 #Funções da tabela produto
 
 
-def registrar_produto(nome_produto, descricao, quantidade, valor):
+def registrar_produto_db(nome_produto, descricao, quantidade, valor):
     conn = get_connection()
     cursor = conn.cursor()
     query = "INSERT INTO produto (nome_produto, descricao_produto, quantidade_produto, valor_produto)VALUES(%s, %s, %s, %s)"
@@ -136,7 +136,7 @@ def registrar_produto(nome_produto, descricao, quantidade, valor):
     cursor.close()
     conn.close()
 
-def atualizar_produto(nome_produto, descricao, quantidade, valor):
+def atualizar_produto_db(nome_produto, descricao, quantidade, valor):
     conn = get_connection()
     cursor = conn.cursor()
     query = "UPDATE produto SET nome_produto = %s, descricao_produto = %s, quantidade_produto = %s, valor_produto = %s WHERE nome_produto LIKE %s"
@@ -146,7 +146,7 @@ def atualizar_produto(nome_produto, descricao, quantidade, valor):
     cursor.close()
     conn.close()
 
-def listar_produtos():
+def listar_produtos_db():
     conn = get_connection()
     cursor = conn.cursor()
     query = "SELECT * FROM produto"
@@ -158,7 +158,7 @@ def listar_produtos():
 
     return busca
 
-def deletar_produto(produto_requisitado):
+def deletar_produto_db(produto_requisitado):
     conn = get_connection()
     cursor = conn.cursor()
     query = "DELETE FROM produto WHERE nome_produto = %s"
@@ -167,7 +167,7 @@ def deletar_produto(produto_requisitado):
     cursor.close()
     conn.close()
 
-def pesquisar_produto(produto_requisitado):
+def pesquisar_produto_db(produto_requisitado):
     conn = get_connection()
     cursor = conn.cursor()
     query = "SELECT * FROM produto WHERE nome_produto = %s OR id_produto = %s"
