@@ -1,62 +1,94 @@
 # Importacoes necessarias
-import tkinter as tk
 from tkinter import * 
 from tkinter import messagebox
+import tkinter as tk
 from database_geral import atualizar_produto, listar_produtos, deletar_produto, pesquisar_produto
 
 # Criando classe principal, que carrega a janela e tudo o que há nela
-class tela_produto:
+class tela_produto_admin:
 
     # Construtor da classe, carrega as informações básicas de carregamento
     def __init__(self, root):
         # Definições da janela
-        self.root_produto = root
+        self.root_produto = tk.Toplevel(root)
         self.root_produto.title("TBit Manager - Produtos - Administrador")
         self.root_produto.resizable(width=False, height=False)
         self.root_produto.geometry("900x750")
+
+        self.root_produto.transient(root)  # Faz com que a nova janela fique acima da principal
+        self.root_produto.grab_set()  # Bloqueia interações na principal até fechar essa
     
+
         # Carrega os widgets da tela
         self.criando_widgets()
         # Lista todos os produtos ja cadastrados
         self.listar_do_banco()
 
+
     def criando_widgets(self):
-        # Criando os botoes que carregam as funcoes necessarias e seus posicionamentos
-        tk.Button(self.root_produto, text="Alterar produto", command=self.alterar_no_banco, width=15, height=1).place(x=200, y=280) # Botao para alterar produto
-        tk.Button(self.root_produto, text="Deletar produto", command=self.deletar_do_banco, width=15, height=1).place(x=400, y=280) # Botao para deletar produto
-        tk.Button(self.root_produto, text="Cancelar operção", command=self.cancelar_operacao, width=15, height=1).place(x=600, y=280) # Botao para cancelar/voltar ao padrao
-        tk.Button(self.root_produto, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=30, height=2).place(x=135, y=355)
+        # Frame que carrega os botoes
+        frame_botoes = Frame(self.root_produto, width=900, height=250)
+        frame_botoes.grid(row=1)
 
-        # Labels usados para identificar as caixas de texto e seus posicionamentos
-        tk.Label(self.root_produto, text="Nome do Produto:").place(x=280, y=50)
-        tk.Label(self.root_produto, text="Descrição do Produto:").place(x=280, y=90)
-        tk.Label(self.root_produto, text="Quantidade do Produto:").place(x=280, y=130)
-        tk.Label(self.root_produto, text="Valor do Produto:").place(x=280, y=170)
-
-        # Entrys usados para o usuario digitar e seus posicionamentos
-        # Entry 'nome do produto'
-        self.box_nome = tk.Entry(self.root_produto, width=25)
-        self.box_nome.place(x=420, y=50)
-
-        # Entry 'descrição do produto'
-        self.box_descricao = tk.Entry(self.root_produto, width=25)
-        self.box_descricao.place(x=420, y=90)
-
-        # Entry 'quantidade do produto'
-        self.box_quantidade = tk.Entry(self.root_produto, width=25)
-        self.box_quantidade.place(x=420, y=130)
-
-        # Entry 'valor do produto'
-        self.box_valor = tk.Entry(self.root_produto, width=25)
-        self.box_valor.place(x=420, y=170)
+        # Labels vazios para divisoes
+        tk.Label(frame_botoes, text="", height=4).grid(row=1, column=1)
+        tk.Label(frame_botoes, text="", width=5).grid(row=1, column=1)
+        tk.Label(frame_botoes, text="", width=7).grid(row=3, column=3)
+        tk.Label(frame_botoes, text="", width=7).grid(row=5, column=5)
         
+        # Botoes que ficam na parte de cima do layout, carrega as funcoes
+        Button(frame_botoes, text="Alterar produto", command=self.alterar_no_banco, width=18, height=1).grid(row=2, column=2) # Botao para alterar produto
+        Button(frame_botoes, text="Deletar produto", command=self.deletar_do_banco, width=18, height=1).grid(row=2, column=4) # Botao para deletar produto
+        
+        # Criando frame que carrega itens de cadastro
+        frame_cadastrar = Frame(self.root_produto, width=900, height=300)
+        frame_cadastrar.grid(row=2)
+
+        # Labels vazios para divisoes
+        tk.Label(frame_cadastrar, text="", height=2).grid(row=2)
+        tk.Label(frame_cadastrar, text="", height=1).grid(row=4)
+        tk.Label(frame_cadastrar, text="", height=1).grid(row=6)
+        tk.Label(frame_cadastrar, text="", height=1).grid(row=8)
+        tk.Label(frame_cadastrar, text="", height=1).grid(row=10)
+        tk.Label(frame_cadastrar, text="", height=1).grid(row=12)
+
+        # Botao para pesqusiar um produto especifico
+        tk.Button(frame_cadastrar, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=25, height=2).grid(row=1, column=3, rowspan=1)
+
         # Entry usado para pesquisar de forma individual
-        self.box_pesquisar = tk.Entry(self.root_produto, width=40)
-        self.box_pesquisar.place(x=360, y=360, height=30)
+        self.box_pesquisar = tk.Entry(frame_cadastrar, width=40)
+        self.box_pesquisar.grid(row=1, column=1, columnspan=2)
+
+        # Label e entry para 'nome' do produto
+        tk.Label(frame_cadastrar, text="Nome do Produto:").grid(row=3, column=1)
+        self.box_nome = tk.Entry(frame_cadastrar, width=25)
+        self.box_nome.grid(row=3, column=3)
+
+        # Label e entry para 'descricao' do produto
+        tk.Label(frame_cadastrar, text="Descrição do Produto:").grid(row=5, column=1)
+        self.box_descricao = tk.Entry(frame_cadastrar, width=25)
+        self.box_descricao.grid(row=5, column=3)
+
+        # Label e entry para 'quantidade' do produto
+        tk.Label(frame_cadastrar, text="Quantidade do Produto:").grid(row=7, column=1)
+        self.box_quantidade = tk.Entry(frame_cadastrar, width=25)
+        self.box_quantidade.grid(row=7, column=3)
+
+        # Label e entry para 'valor' do produto
+        tk.Label(frame_cadastrar, text="Valor do Produto:").grid(row=9, column=1)
+        self.box_valor = tk.Entry(frame_cadastrar, width=25)
+        self.box_valor.grid(row=9, column=3)
+
+        # Area de texto que aparece os dados e informações pedidos
+        frame_text_area = tk.Frame(self.root_produto, width=900, height=200)
+        frame_text_area.grid(row=3)
+
+        # Labels vazios para divisoes
+        tk.Label(frame_text_area, text="", width=5).grid(column=1)
 
         # Text area usado para retornar dados ja existentes
-        self.text_area = tk.Text(self.root_produto, width=80, height=15)
-        self.text_area.place(x=135, y=400)
+        self.text_area = tk.Text(frame_text_area, width=100, height=16)
+        self.text_area.grid(row=2,column=2,columnspan=5)
 
     def alterar_no_banco(self):
         nome_produto = self.box_nome.get() # Resgata as informações que estão dentro da box 'Nome'
@@ -149,5 +181,5 @@ class tela_produto:
 # Chama a funcao principal e coloca o programa para rodar
 if __name__ == "__main__":
     root_produto = tk.Tk()
-    app = tela_produto(root_produto)
+    app = tela_produto_admin(root_produto)
     root_produto.mainloop()
