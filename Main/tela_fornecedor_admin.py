@@ -172,10 +172,6 @@ class tela_fornecedor_admin:
             self.limpar_campos()
             self.listar_fornecedor()
 
-
-        
-          
-
 if __name__ == "__main__":
     root = tk.Tk()
     app = tela_fornecedor_admin(root)

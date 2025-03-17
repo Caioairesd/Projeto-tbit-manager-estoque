@@ -5,7 +5,7 @@ from database_geral import register_fornecedor_db,listar_fornecedor_db,update_fo
 class tela_fornecedor_user:
 
     def __init__(self,root):
-        self.root = tk.Toplevel()
+        self.root = tk.Toplevel(root)
 
         #Define os parâmetros de interface da janela
         self.root.geometry("900x700")
@@ -13,6 +13,9 @@ class tela_fornecedor_user:
         #self.root.configure(background="white")
         self.root.resizable(width=False,height=False)
         #self.root.attributes("-alpha",1.0)
+
+        self.root.transient(root)  # Faz com que a nova janela fique acima da principal
+        self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
         self.create_widgets()
         self.listar_fornecedor()
@@ -120,7 +123,7 @@ class tela_fornecedor_user:
                 self.search_area.delete(1.0,tk.END)
 
                 #Insere os dados do fornecedor pesquisado no campo de exibição
-                self.search_area.insert(tk.END,f"ID: {id_solicitado[0]},id_solicitado: {id_solicitado[1]},Marca:{id_solicitado[2]},Email:{id_solicitado[3]},Telefone:{id_solicitado[4]},Cidade:{id_solicitado[5]},Cidade:{id_solicitado[6]}\n")
+                self.search_area.insert(tk.END,f"ID: {id_solicitado[0]},Fornecedor: {id_solicitado[1]},Marca:{id_solicitado[2]},Email:{id_solicitado[3]},Telefone:{id_solicitado[4]},Cidade:{id_solicitado[5]},Cidade:{id_solicitado[6]}\n")
 
                 #Insere os dados do fornecedor pesquisado nos campos de texto para possível edição  
                 self.id_fornecedor_entry.insert(0,id_solicitado[0])
