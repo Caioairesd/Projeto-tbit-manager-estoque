@@ -18,10 +18,12 @@ class tela_produto_admin:
         self.root_produto.transient(root)  # Faz com que a nova janela fique acima da principal
         self.root_produto.grab_set()  # Bloqueia interações na principal até fechar essa
     
+
         # Carrega os widgets da tela
         self.criando_widgets()
         # Lista todos os produtos ja cadastrados
         self.listar_do_banco()
+
 
     def criando_widgets(self):
         # Frame que carrega os botoes
