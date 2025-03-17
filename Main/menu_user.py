@@ -19,16 +19,14 @@ class menu_usuario:
 
     def create_widgets(self):        
             #Criação de botões
-            btn_funcionario_menu = tk.Button(self.root,text="Funcionários",width=15,height=2,command=self.abrir_funcionario)
             btn_produto_menu = tk.Button(self.root,text="Produto",width=15,height=2,command=self.abrir_produto)
             btn_fornecedor_menu = tk.Button(self.root,text="Fornecedores",width=15,height=2,command=self.abrir_fornecedor_user)
             btn_logout_menu = tk.Button(self.root,text="Logout",width=15,height=2,command=self.logout)
             
             pass
             
-            btn_funcionario_menu.place(x=550,y=300)
             btn_produto_menu.place(x=300,y=300)
-            btn_fornecedor_menu.place(x=50,y=300)
+            btn_fornecedor_menu.place(x=450,y=300)
             btn_logout_menu.place(x=700,y=600)
     
     
