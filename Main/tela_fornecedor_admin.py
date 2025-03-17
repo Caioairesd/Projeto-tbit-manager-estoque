@@ -16,7 +16,6 @@ class tela_fornecedor_admin:
         self.root.transient(root)  # Faz com que a nova janela fique acima da principal
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
-        self.root.destroy()
         self.create_widgets()
         self.listar_fornecedor()
 

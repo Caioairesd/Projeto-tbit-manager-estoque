@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tela_fornecedor_admin import tela_fornecedor_admin
 from tela_produto_admin import tela_produto_admin
-from tela_funcionario import tela_funcionario
+from tela_funcionario import tela_funcionario_admin
 
 class menu_admin:
     def __init__(self, root):
@@ -24,7 +24,7 @@ class menu_admin:
 
     # CLASSES CRIADAS PARA PASSAR O ROOT AS CLASSES QUE IMPORTAMOS
     def button_tela_funcionario(self):
-        tela_funcionario(self.root)
+        tela_funcionario_admin(self.root)
         
     def button_tela_produto_admin(self):
         tela_produto_admin(self.root)

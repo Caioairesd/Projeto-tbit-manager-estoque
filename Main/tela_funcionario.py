@@ -1,11 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
 from database_geral import register_funcionario_db, delete_funcionario_db, update_funcionario_db, pesquisar_funcionario_db, listar_funcionarios_db
-from tkinter import*
-from menu_adm import *
+from tkinter import *
 
 
-class tela_funcionario:
+class tela_funcionario_admin:
     def __init__(self, root):
         self.root = tk.Toplevel(root) 
         self.root.title("CRUD FUNCIONARIO TerraBytes")
@@ -59,18 +58,18 @@ class tela_funcionario:
         self.email_funcionario_entry.place(x=180, y=300, width=250)
         self.usuario_funcionario_entry.place(x=180, y=340, width=250)
         self.senha_funcionario_entry.place(x=180, y=380, width=250)
-        self.buscar_funcionario_entry.place(x=310, y=423, width=70)
+        self.buscar_funcionario_entry.place(x=660, y=453, width=70)
         
 
-        tk.Label(self.root, text="id:", bg="lightgray").place(x=290, y=420)
+        tk.Label(self.root, text="Busca por ID:", bg="lightgray").place(x=565, y=450)
         self.id_funcionario_entry = tk.Entry(self.root, bg="darkgray")
 
         # Botões de funções
-        tk.Button(self.root, text="CANCELAR", command=self.cancelar).place(x=450, y=420)
+        tk.Button(self.root, text="CANCELAR", command=self.cancelar).place(x=800, y=450)
         tk.Button(self.root, text="REGISTRAR", command=self.registrar_funcionario).place(x=30, y=420)
-        tk.Button(self.root, text="EXCLUIR", command=self.delete_funcionario).place(x=90, y=420)
-        tk.Button(self.root, text="EDITAR", command=self.update_funcionario).place(x=160, y=420)
-        tk.Button(self.root, text="BUSCAR", command=self.pesquisar_funcionario).place(x=225, y=420)
+        tk.Button(self.root, text="EXCLUIR", command=self.delete_funcionario).place(x=120, y=420)
+        tk.Button(self.root, text="EDITAR", command=self.update_funcionario).place(x=195, y=420)
+        tk.Button(self.root, text="BUSCAR", command=self.pesquisar_funcionario).place(x=740, y=450)
 
         self.text_area = tk.Text(self.root, height=12, width=105, bg="lightgray")
         self.text_area.place(x=30, y=480)
@@ -203,7 +202,7 @@ class tela_funcionario:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = tela_funcionario(root)
+    app = tela_funcionario_admin(root)
     root.mainloop()
 
 
