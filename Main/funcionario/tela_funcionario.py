@@ -76,7 +76,7 @@ class tela_funcionario_admin:
         self.text_area.place(x=30, y=480)
 
     def registrar_funcionario(self):
-        nome_funcionario = self.nome_funciona_entry.get()
+        nome_funcionario = self.nome_funcionario_entry.get()
         data_nascimento_funcionario_invertida = self.data_nascimento_funcionario_entry.get()
         data_admissao_funcionario_invertida = self.data_admissao_funcionario_entry.get()
         CPF = self.cpf_funcionario_entry.get()
@@ -120,7 +120,7 @@ class tela_funcionario_admin:
 
                 # Preenche os campos de entrada com os dados encontrados
                 self.id_funcionario_entry.insert(0, id_solicitado[0])
-                self.nome_funciona_entry.insert(0, id_solicitado[1])
+                self.nome_funcionario_entry.insert(0, id_solicitado[1])
                 self.data_nascimento_funcionario_entry.insert(0, id_solicitado[2])
                 self.data_admissao_funcionario_entry.insert(0, id_solicitado[3])
                 self.cpf_funcionario_entry.insert(0, id_solicitado[4])
@@ -138,7 +138,7 @@ class tela_funcionario_admin:
 
     def update_funcionario(self):
         id_funcionario = self.id_funcionario_entry.get()
-        nome_funcionario = self.nome_funciona_entry.get()
+        nome_funcionario = self.nome_funcionario_entry.get()
         data_nascimento_funcionario = self.data_nascimento_funcionario_entry.get()
         data_admissao_funcionario = self.data_admissao_funcionario_entry.get()
         CPF = self.cpf_funcionario_entry.get()

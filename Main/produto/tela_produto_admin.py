@@ -5,7 +5,7 @@ from tkinter import messagebox
 from database_geral import atualizar_produto_db, listar_produtos_db, deletar_produto_db, pesquisar_produto_db
 
 # Criando classe principal, que carrega a janela e tudo o que há nela
-class tela_produto:
+class tela_produto_admin:
 
     # Construtor da classe, carrega as informações básicas de carregamento
     def __init__(self, root):
@@ -24,7 +24,7 @@ class tela_produto:
         # Criando os botoes que carregam as funcoes necessarias e seus posicionamentos
         tk.Button(self.root_produto, text="Alterar produto", command=self.alterar_no_banco, width=15, height=1).place(x=200, y=280) # Botao para alterar produto
         tk.Button(self.root_produto, text="Deletar produto", command=self.deletar_do_banco, width=15, height=1).place(x=400, y=280) # Botao para deletar produto
-        tk.Button(self.root_produto, text="Cancelar operção", command=self.cancelar_operacao, width=15, height=1).place(x=600, y=280) # Botao para cancelar/voltar ao padrao
+        tk.Button(self.root_produto, text="Cancelar operação", command=self.cancelar_operacao, width=15, height=1).place(x=600, y=280) # Botao para cancelar/voltar ao padrao
         tk.Button(self.root_produto, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=30, height=2).place(x=135, y=355)
 
         # Labels usados para identificar as caixas de texto e seus posicionamentos
@@ -133,7 +133,7 @@ class tela_produto:
         
     # Metodo que reseta tudo ao padrao
     def cancelar_operacao(self):
-        confirmacao = messagebox.askyesno("Confirmação", "Você desejar mesmo cancelar a opreção?") # Janela de sim ou nao para confirmacao
+        confirmacao = messagebox.askyesno("Confirmação", "Você desejar mesmo cancelar a operação?") # Janela de sim ou nao para confirmacao
         if confirmacao == True: # Verifica se o cliente clicou em 'sim'
             messagebox.showinfo("Cancelado", "Operação cancelada!")
             self.limpar_campos()
@@ -149,5 +149,5 @@ class tela_produto:
 # Chama a funcao principal e coloca o programa para rodar
 if __name__ == "__main__":
     root_produto = tk.Tk()
-    app = tela_produto(root_produto)
+    app = tela_produto_admin(root_produto)
     root_produto.mainloop()
