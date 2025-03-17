@@ -199,8 +199,6 @@ class tela_funcionario_admin:
 
         return data_banco
 
-
-
 if __name__ == "__main__":
     root = tk.Tk()
     app = tela_funcionario_admin(root)
