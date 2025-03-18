@@ -1,0 +1,2 @@
+LEIA ANTES DE USAR
+O menu que deve ser iniciado é o "main_menu.py" e se você não tiver o banco de dados ele criará automaticamente na tabela.
