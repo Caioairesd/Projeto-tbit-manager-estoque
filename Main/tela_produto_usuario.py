@@ -15,6 +15,7 @@ class tela_produto_usuario:
         self.root_produto.resizable(width=False, height=False)
         self.root_produto.geometry("900x750")
 
+        self.root_produto.config(bg="#003366")
         self.root_produto.transient(root)  # Faz com que a nova janela fique acima da principal
         self.root_produto.grab_set()  # Bloqueia interações na principal até fechar essa
     
@@ -32,10 +33,10 @@ class tela_produto_usuario:
         tk.Button(self.root_produto, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=30, height=2).place(x=135, y=355)
 
         # Labels usados para identificar as caixas de texto e seus posicionamentos
-        tk.Label(self.root_produto, text="Nome do Produto:").place(x=280, y=50)
-        tk.Label(self.root_produto, text="Descrição do Produto:").place(x=280, y=90)
-        tk.Label(self.root_produto, text="Quantidade do Produto:").place(x=280, y=130)
-        tk.Label(self.root_produto, text="Valor do Produto:").place(x=280, y=170)
+        tk.Label(self.root_produto, text="Nome do Produto:",bg="#00284d", fg='white').place(x=280, y=50)
+        tk.Label(self.root_produto, text="Descrição do Produto:",bg="#00284d", fg='white').place(x=280, y=90)
+        tk.Label(self.root_produto, text="Quantidade do Produto:",bg="#00284d", fg='white').place(x=280, y=130)
+        tk.Label(self.root_produto, text="Valor do Produto:",bg="#00284d", fg='white').place(x=280, y=170)
 
         # Entrys usados para o usuario digitar e seus posicionamentos
         # Entry 'nome do produto'

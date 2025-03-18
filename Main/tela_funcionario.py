@@ -15,23 +15,23 @@ class tela_funcionario_admin:
         self.root.transient(root)  # Mantém a janela no topo
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
-        self.root.config(bg="lightgray")
+        self.root.config(bg="#003366")
         self.create_widgets()
 
         self.listar_funcionarios()
 
     def create_widgets(self):
         # Labels com o texto e sem fundo
-        tk.Label(self.root, text="Nome:", bg="lightgray").place(x=30, y=20)
-        tk.Label(self.root, text="Data de Nascimento:", bg="lightgray").place(x=30, y=60)
-        tk.Label(self.root, text="Data de Admissão:",  bg="lightgray").place(x=30, y=100)
-        tk.Label(self.root, text="CPF:", bg="lightgray").place(x=30, y=140)
-        tk.Label(self.root, text="Cidade:", bg="lightgray").place(x=30, y=180)
-        tk.Label(self.root, text="Estado:", bg="lightgray").place(x=30, y=220)
-        tk.Label(self.root, text="Telefone:", bg="lightgray").place(x=30, y=260)
-        tk.Label(self.root, text="Email:", bg="lightgray").place(x=30, y=300)
-        tk.Label(self.root, text="Usuario:", bg="lightgray").place(x=30, y=340)
-        tk.Label(self.root, text="Senha:", bg="lightgray").place(x=30, y=380)
+        tk.Label(self.root, text="Nome:",bg="#00284d", fg='white').place(x=30, y=20)
+        tk.Label(self.root, text="Data de Nascimento:",bg="#00284d", fg='white').place(x=30, y=60)
+        tk.Label(self.root, text="Data de Admissão:",bg="#00284d", fg='white').place(x=30, y=100)
+        tk.Label(self.root, text="CPF:",bg="#00284d", fg='white').place(x=30, y=140)
+        tk.Label(self.root, text="Cidade:",bg="#00284d", fg='white').place(x=30, y=180)
+        tk.Label(self.root, text="Estado:",bg="#00284d", fg='white').place(x=30, y=220)
+        tk.Label(self.root, text="Telefone:",bg="#00284d", fg='white').place(x=30, y=260)
+        tk.Label(self.root, text="Email:",bg="#00284d", fg='white').place(x=30, y=300)
+        tk.Label(self.root, text="Usuario:",bg="#00284d", fg='white').place(x=30, y=340)
+        tk.Label(self.root, text="Senha:",bg="#00284d", fg='white').place(x=30, y=380)
         
 
         # Caixas cinza escuro

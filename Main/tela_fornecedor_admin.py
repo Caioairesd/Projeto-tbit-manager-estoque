@@ -12,6 +12,7 @@ class tela_fornecedor_admin:
         #self.root.configure(background="white")
         self.root.resizable(width=False,height=False)
         #self.root.attributes("-alpha",1.0)
+        self.root.config(bg="#003366")
 
         self.root.transient(root)  # Faz com que a nova janela fique acima da principal
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
@@ -30,13 +31,13 @@ class tela_fornecedor_admin:
  
         
         #Criação de labels
-        tk.Label(self.root,text="Fornecedor:").place(x=300,y=30)
-        tk.Label(self.root,text="Marca:").place(x=300,y=60)
-        tk.Label(self.root,text="Email:").place(x=300,y=90)
-        tk.Label(self.root,text="Telefone:").place(x=300,y=120)
-        tk.Label(self.root,text="Cidade:").place(x=300,y=150)
-        tk.Label(self.root,text="País:").place(x=300,y=180)
-        tk.Label(self.root,text="ID:").place(x=300,y=210)
+        tk.Label(self.root,text="Fornecedor:",bg="#00284d", fg='white').place(x=300,y=30)
+        tk.Label(self.root,text="Marca:",bg="#00284d", fg='white').place(x=300,y=60)
+        tk.Label(self.root,text="Email:",bg="#00284d", fg='white').place(x=300,y=90)
+        tk.Label(self.root,text="Telefone:",bg="#00284d", fg='white').place(x=300,y=120)
+        tk.Label(self.root,text="Cidade:",bg="#00284d", fg='white').place(x=300,y=150)
+        tk.Label(self.root,text="País:",bg="#00284d", fg='white').place(x=300,y=180)
+        tk.Label(self.root,text="ID:",bg="#00284d", fg='white').place(x=300,y=210)
 
 
         #Criação de campos de entrada de dados

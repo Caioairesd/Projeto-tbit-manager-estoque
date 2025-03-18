@@ -12,6 +12,7 @@ class menu_usuario:
         self.root.title("TBit Manager by TerraBytes - Menu Principal - Usuario") 
 #self.create_widget()
         self.root.geometry("900x700")
+        self.root.config(bg="#003366")
         self.root.resizable( width = False, height = False)
 
         self.create_widgets()

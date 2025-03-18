@@ -15,23 +15,23 @@ class login_menu:
         pass
 
     def create_widget(self):
-        self.left_frame = Frame(root, width=200, height=300, bg"#3399ff", relief="raise") # Cria um frame à esquerda
+        self.left_frame = Frame(root, width=200, height=300, bg="#003366", relief="raise") # Cria um frame à esquerda
         self.left_frame.pack(side=LEFT) # Posiciona o frame à esquerda
 
-        self.right_frame = Frame(root, width=400, height=300, bg="#3399ff", relief="raise") # Cria um frame à esquerda
+        self.right_frame = Frame(root, width=400, height=300, bg="#003366", relief="raise") # Cria um frame à esquerda
         self.right_frame.pack(side=RIGHT) # Posiciona o frame à esquerda
 
-        #logo = PhotoImage(file='tela_login/icon/logo_whatsapp.png')
-        #self.logo_label = Label(self.left_frame, image=logo, bg='#2c2121') # Cria uma label que carrega a logo
+        #logo = PhotoImage(file='icon/tbit_logo_64x.png')
+        #self.logo_label = Label(self.left_frame, image=logo) # Cria uma label que carrega a logo
         #self.logo_label.place(x=50, y=100) # Posiciona o label no frame esquerdo
 
-        self.usuario_label = Label(self.right_frame, text="Usuario:", font=("Times New Roman", 20), bg="#2c2121", fg='white') # Cria um label para o usuario
+        self.usuario_label = Label(self.right_frame, text="Usuario:", font=("Times New Roman", 20), bg="#00284d", fg='white') # Cria um label para o usuario
         self.usuario_label.place(x=10, y=105) # Posiciona o label o frame direito
 
         self.usuario_entry = tk.Entry(self.right_frame, width=30) # Cria um campo de entrada para o usuario
         self.usuario_entry.place(x=120, y=115) # Posiciona o campo de entrada
 
-        self.senha_label = Label(self.right_frame, text="Senha:", font=("", 20), bg="#2c2121", fg="White") # Cria um label para a senha
+        self.senha_label = Label(self.right_frame, text="Senha:", font=("", 20), bg="#00284d", fg="White") # Cria um label para a senha
         self.senha_label.place(x=10, y=150) # Posiciona o label no frame direito
 
         self.senha_entry = tk.Entry(self.right_frame, width=30, show="*") # Cria um campo de entrada para a senha
