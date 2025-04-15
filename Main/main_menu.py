@@ -4,9 +4,13 @@ from tkinter import *
 from database_geral import tbit_db
 from menu_adm import menu_admin
 from menu_user import menu_usuario
+from database_geral import __init__
 
 class login_menu:
     def __init__(self,root):
+        tbit_db.__init__(self)
+        
+
         self.root = root
         self.root.title("TBit Manager by TerraBytes") 
         self.create_widget()
