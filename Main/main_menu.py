@@ -10,7 +10,6 @@ class login_menu:
     def __init__(self,root):
         tbit_db.__init__(self)
         
-
         self.root = root
         self.root.title("TBit Manager by TerraBytes") 
         self.create_widget()
@@ -53,6 +52,8 @@ class login_menu:
         
         if usuario == 'ADM' and senha == '2025':
                 
+            messagebox.showinfo(title="INFO ADM", message="Seja bem-vindo administrador!")
+
             self.root.destroy()  
             self.abrir_menu_admin()
             return
