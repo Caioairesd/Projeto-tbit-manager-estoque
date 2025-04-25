@@ -1,3 +1,5 @@
+-- OBS!!!!! É só clicar no raio que vai executar tudo perfeitamente, tmj
+
 drop database tbit_db;
 
 -- Criação do database
