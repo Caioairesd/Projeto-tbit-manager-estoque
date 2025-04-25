@@ -8,11 +8,11 @@ CREATE TABLE Fornecedor
 ( 
  id_fornecedor INT not null auto_increment,  
  nome_fornecedor varchar(30),  
- cnpj_fornecedor varchar(15),  
+ cnpj_fornecedor varchar(18),  
  email_fornecedor varchar(40),  
- telefone_fornecedor varchar(15),  
- pais_fornecedor varchar(15),  
- cidade_fornecedor varchar(15),
+ telefone_fornecedor varchar(20),  
+ pais_fornecedor varchar(30),  
+ cidade_fornecedor varchar(30),
  constraint pk_fornecedor primary key (id_fornecedor) 
 ); 
 
@@ -54,12 +54,12 @@ CREATE TABLE Funcionario
  data_nascimento_funcionario date,  
  data_admissao_funcionario date,  
  cpf_funcionario varchar(14),  
- cidade_funcionario varchar(15),  
- estado_funcionario varchar(15),  
+ cidade_funcionario varchar(30),  
+ estado_funcionario varchar(30),  
  telefone_funcionario varchar(15),  
  email_funcionario varchar(30),  
- usuario_funcionario varchar(15),  
- senha_funcionario varchar(15),
+ usuario_funcionario varchar(30),  
+ senha_funcionario varchar(30),
  constraint pk_funcionario primary key (id_funcionario)
 ); 
 
@@ -76,8 +76,8 @@ CREATE TABLE Cadastro
 create table Administrador
 (
 	id_administrador int not null auto_increment,
-    usuario_administrador varchar(15),
-    senha_administrador varchar(15),
+    usuario_administrador varchar(30),
+    senha_administrador varchar(30),
     idFuncionario int not null,
     constraint pk_administrador primary key (id_administrador),
     constraint fk_funcionario_administrador foreign key (idFuncionario) references Funcionario(id_funcionario)

@@ -1,9 +1,14 @@
-INSERT INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES  
-(1001, 12345678901234, 1002, 5511999999999, 1, 1003),  
-(1004, 98765432109876, 1005, 5511888888888, 1, 1006),  
-(1007, 56789012345678, 1008, 5511777777777, 2, 1009),  
-(1010, 34567890123456, 1011, 5511666666666, 3, 1012),  
-(1013, 78901234567890, 1014, 5511555555555, 1, 1015);  
+INSERT INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
+('TechParts Brasil', '12.345.678/0001-95', 'contato@techparts.com.br', '+55 (11) 98765-4321', 'Brasil', 'São Paulo'),
+('EletroComponentes Ltda', '98.765.432/0001-10', 'vendas@eletrocomp.com', '+55 (21) 91234-5678', 'Brasil', 'Rio de Janeiro'),
+('Global Hardware Inc', '23.456.789/0001-45', 'contact@globalhw.com', '+1 (212) 555-0199', 'EUA', 'Nova York'),
+('Asian Electronics Co', '87.654.321/0001-33', 'sales@asian-elec.com', '+852 1234 5678', 'China', 'Hong Kong'),
+('EuroTech Solutions', '34.567.891/0001-22', 'info@eurotech.eu', '+49 30 12345678', 'Alemanha', 'Berlim'),
+('MegaSupply Distribuidora', '45.678.912/0001-88', 'atendimento@megasupply.com.br', '+55 (31) 99876-5432', 'Brasil', 'Belo Horizonte'),
+('Componentes Digitais SA', '56.789.123/0001-77', 'sac@compdigital.com', '+55 (51) 98765-1234', 'Brasil', 'Porto Alegre'),
+('TecnoImport Ltda', '67.891.234/0001-66', 'tecnocompras@tecnimport.com', '+55 (41) 91234-8765', 'Brasil', 'Curitiba'),
+('Quality Parts International', '78.912.345/0001-55', 'quality@qparts.com', '+44 20 7123 4567', 'Reino Unido', 'Londres'),
+('Japan Electronic Corp', '89.123.456/0001-44', 'export@jpec.co.jp', '+81 3 1234 5678', 'Japão', 'Tóquio');
 
 INSERT INTO Produto (nome_produto, descricao_produto, quantidade_produto, valor_produto, idFornecedor) VALUES  
 ('Notebook Dell', 'Notebook i5, 8GB RAM, SSD 256GB', 50, 3500.00, 1),  
