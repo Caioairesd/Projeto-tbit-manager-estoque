@@ -7,12 +7,12 @@ use tbit_db;
 CREATE TABLE Fornecedor 
 ( 
  id_fornecedor INT not null auto_increment,  
- nome_fornecedor varchar(30),  
- cnpj_fornecedor varchar(18),  
- email_fornecedor varchar(40),  
- telefone_fornecedor varchar(15),  
- pais_fornecedor varchar(15),  
- cidade_fornecedor varchar(15),
+ nome_fornecedor INT,  
+ cnpj_fornecedor INT,  
+ email_fornecedor INT,  
+ telefone_fornecedor INT,  
+ pais_fornecedor INT,  
+ cidade_fornecedor INT,
  constraint pk_fornecedor primary key (id_fornecedor) 
 ); 
 
