@@ -1,9 +1,7 @@
 -- OBS!!!!! É só clicar no raio que vai executar tudo perfeitamente, tmj
 
-drop database tbit_db;
-
 -- Criação do database
-CREATE DATABASE tbit_db;
+CREATE DATABASE IF NOT EXISTS tbit_db;
 
 USE tbit_db;
 
