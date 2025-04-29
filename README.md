@@ -27,7 +27,7 @@ Este projeto foi desenvolvido como parte de uma **situação de aprendizagem** n
 
 ## 👨‍💻 Colaboradores
 
-- **Caio Aires** – Back-end e Front-end [@caioairesd](https://github.com/caioairesd)
+- **Caio Aires** – Back-end [@caioairesd](https://github.com/caioairesd)
 - **Daniel Balera** – Banco de Dados [@baleradaniel](https://github.com/baleradaniel)
-- **Eberth Rodrigues** – Back-end [@Eberrth44](https://github.com/Eberrth44)
-- **Kaio Mazza** – Back-end e Front-end [@mazzaKaio](https://github.com/mazzaKaio)
+- **Eberth Rodrigues** – Front-end [@Eberrth44](https://github.com/Eberrth44)
+- **Kaio Mazza** – Back-end [@mazzaKaio](https://github.com/mazzaKaio)
