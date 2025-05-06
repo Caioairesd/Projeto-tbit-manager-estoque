@@ -21,11 +21,13 @@ class menu_usuario:
             #Criação de botões
             btn_produto_menu = tk.Button(self.root,text="Produto",width=15,height=2,command=self.abrir_produto)
             btn_fornecedor_menu = tk.Button(self.root,text="Fornecedores",width=15,height=2,command=self.abrir_fornecedor_user)
+            btn_logout = tk.Button(self.root, text='Logout', width=18, command=self.logout_usuario)
             
             pass
             
             btn_produto_menu.place(x=300,y=300)
             btn_fornecedor_menu.place(x=450,y=300)
+            btn_logout.place(x=400, y=580)
     
     
     def abrir_fornecedor_user(self):
@@ -37,8 +39,8 @@ class menu_usuario:
     def abrir_produto(self):
         tela_produto_usuario(self.root)
     
-
-if __name__ == '__main__':
-    root = tk.Tk()
-    app = menu_usuario(root)
-    root.mainloop()
+    def logout_usuario(self):
+        from main_menu import login_menu
+        menu = tk.Tk()
+        app = login_menu(menu)
+        self.root.destroy()

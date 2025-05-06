@@ -27,6 +27,9 @@ class menu_admin:
         produto_button = tk.Button(self.root, text='Produtos', width=20, command=self.button_tela_produto_admin)
         produto_button.place(x=425, y=80)
 
+        logout_button = tk.Button(self.root, text='Logout', width=18, command=self.logout_admin)
+        logout_button.place(x=300, y=250)
+
     # CLASSES CRIADAS PARA PASSAR O ROOT AS CLASSES QUE IMPORTAMOS
     def button_tela_funcionario(self):
         tela_funcionario_admin(self.root)
@@ -36,8 +39,9 @@ class menu_admin:
     
     def button_tela_fornecedor_admin(self):
         tela_fornecedor_admin(self.root)
-        
-if __name__ == '__main__':
-    root = tk.Tk()
-    app = menu_admin(root)
-    root.mainloop()
+
+    def logout_admin(self):
+        from main_menu import login_menu
+        menu = tk.Tk()
+        app = login_menu(menu)
+        self.root.destroy()

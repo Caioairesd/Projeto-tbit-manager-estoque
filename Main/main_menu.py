@@ -18,10 +18,10 @@ class login_menu:
         pass
 
     def create_widget(self):
-        self.left_frame = Frame(root, width=200, height=300, bg="#003366", relief="raise") # Cria um frame à esquerda
+        self.left_frame = Frame(self.root, width=200, height=300, bg="#003366", relief="raise") # Cria um frame à esquerda
         self.left_frame.pack(side=LEFT) # Posiciona o frame à esquerda
 
-        self.right_frame = Frame(root, width=400, height=300, bg="#003366", relief="raise") # Cria um frame à esquerda
+        self.right_frame = Frame(self.root, width=400, height=300, bg="#003366", relief="raise") # Cria um frame à esquerda
         self.right_frame.pack(side=RIGHT) # Posiciona o frame à esquerda
 
         #logo = PhotoImage(file='icon/tbit_logo_64x.png')
