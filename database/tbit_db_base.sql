@@ -7,9 +7,9 @@ use tbit_db;
 CREATE TABLE Fornecedor 
 ( 
  id_fornecedor INT not null auto_increment,  
- nome_fornecedor varchar(30),  
+ nome_fornecedor varchar(40),  
  cnpj_fornecedor varchar(18),  
- email_fornecedor varchar(40),  
+ email_fornecedor varchar(50),  
  telefone_fornecedor varchar(20),  
  pais_fornecedor varchar(30),  
  cidade_fornecedor varchar(30),
@@ -19,9 +19,9 @@ CREATE TABLE Fornecedor
 CREATE TABLE Produto 
 ( 
  id_produto INT not null auto_increment,  
- nome_produto varchar(30),  
- descricao_produto varchar(60),  
- quantidade_produto INT,  
+ nome_produto varchar(40),  
+ descricao_produto varchar(200),  
+ quantidade_produto INT null,  
  valor_produto decimal(10,2),  
  idFornecedor INT not null,
  constraint pk_produto primary key (id_produto),
@@ -31,8 +31,8 @@ CREATE TABLE Produto
 CREATE TABLE Cliente 
 ( 
  id_cliente INT not null auto_increment,  
- nome_cliente varchar(30),  
- descricao_cliente varchar(60),  
+ nome_cliente varchar(40),  
+ descricao_cliente varchar(200),  
  cnpj_cliente varchar(18),
  constraint pk_cliente primary key (id_cliente)
 ); 
@@ -50,14 +50,14 @@ CREATE TABLE Compra
 CREATE TABLE Funcionario 
 ( 
  id_funcionario INT not null auto_increment,  
- nome_funcionario varchar(30),  
+ nome_funcionario varchar(40),  
  data_nascimento_funcionario date,  
  data_admissao_funcionario date,  
  cpf_funcionario varchar(14),  
  cidade_funcionario varchar(30),  
  estado_funcionario varchar(30),  
  telefone_funcionario varchar(15),  
- email_funcionario varchar(30),  
+ email_funcionario varchar(50),  
  usuario_funcionario varchar(30),  
  senha_funcionario varchar(30),
  constraint pk_funcionario primary key (id_funcionario)
@@ -72,13 +72,3 @@ CREATE TABLE Cadastro
  constraint fk_funcionario_cadastro foreign key (idFuncionario) references Funcionario(id_funcionario),
  constraint fk_cliente_cadastro foreign key (idCliente) references Cliente(id_cliente)
 ); 
-
-create table Administrador
-(
-	id_administrador int not null auto_increment,
-    usuario_administrador varchar(30),
-    senha_administrador varchar(30),
-    idFuncionario int not null,
-    constraint pk_administrador primary key (id_administrador),
-    constraint fk_funcionario_administrador foreign key (idFuncionario) references Funcionario(id_funcionario)
-);
