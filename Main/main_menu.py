@@ -51,35 +51,31 @@ class login_menu:
         senha = self.senha_entry.get()
 
         
-        if usuario == 'ADM' and senha == '2025':
+        try:
+            database = tbit_db()
+            cursor = database.cursor
+            cursor.execute('SELECT nome_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario FROM funcionario WHERE usuario_funcionario = %s AND senha_funcionario = %s' ,(usuario, senha,))
+        
+            verify_login = cursor.fetchone()
+
+            if verify_login:
                 
-            messagebox.showinfo(title="INFO ADM", message="Seja bem-vindo administrador!")
+                if (verify_login[3] == "Administrador"):
+                    messagebox.showinfo(title="INFO LOGIN", message="Acesso ao ADM concedido. Bem Vindo!")
 
-            self.root.destroy()  
-            self.abrir_menu_admin()
-            return
-        else:
-            try:
-                database = tbit_db()
-                cursor = database.cursor
-                cursor.execute('SELECT * FROM funcionario WHERE usuario_funcionario = %s AND senha_funcionario = %s' ,(usuario, senha,))
-            
+                    self.root.withdraw()
+                    self.abrir_menu_admin()
 
-                verify_login = cursor.fetchone()
+                elif (verify_login[3] == "Usuario simples"):
+                    messagebox.showinfo(title="INFO LOGIN", message="Acesso concedido. Bem Vindo!")
 
-            
-                if verify_login:
-                    
-                    messagebox.showinfo(title="INFO LOGIN", message="Acesso Confirmado. Bem Vindo!")
-
-                    self.root.destroy()
+                    self.root.withdraw()
                     self.abrir_menu_user()
-
-                else:
-                    messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema!")
+            else:
+                messagebox.showinfo(title="INFO LOGIN", message="Acesso Negado. Verifique se está cadastrado no Sistema!")
                 
-            except Exception as e:
-                messagebox.showerror(title="Erro", message=f"Ocorreu um erro: {str(e)}")
+        except Exception as e:
+            messagebox.showerror(title="Erro", message=f"Ocorreu um erro: {str(e)}")
     
     def abrir_menu_admin(self):
         janela_admin = ctk.CTk()  
