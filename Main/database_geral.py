@@ -353,8 +353,21 @@ class tbit_db:
                     (41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
                     (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);"""
 
-                """ delimiter $$
-                    create trigger 
+                """ 
+                    DELIMITER $$
+
+                    CREATE TRIGGER aumentar_quantidade_produto
+                    AFTER update ON Produto
+                    FOR EACH ROW
+                    BEGIN
+                        UPDATE Produto
+                        SET quantidade_produto = quantidade_produto + NEW.quantidade_produto
+                        WHERE id_produto = NEW.id_produto;
+                    END;
+                    $$
+
+                    DELIMITER ;
+
                 """
             ]
 # joins
