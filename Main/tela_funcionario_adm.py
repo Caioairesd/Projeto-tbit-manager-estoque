@@ -1,13 +1,15 @@
 import tkinter as tk
+import customtkinter as ctk
 from tkinter import messagebox
 from database_geral import register_funcionario_db, delete_funcionario_db, update_funcionario_db, pesquisar_funcionario_db, listar_funcionarios_db
-from tkinter import *
+
+#from tkinter import *
 
 
 class tela_funcionario_admin:
     def __init__(self, root):
         
-        self.root = tk.Toplevel(root) 
+        self.root = ctk.CTkToplevel(root) 
         self.root.title("CRUD FUNCIONARIO TerraBytes")
         self.root.geometry("900x700")
         self.root.resizable(width=False, height=False)
@@ -15,38 +17,38 @@ class tela_funcionario_admin:
         self.root.transient(root)  # Mantém a janela no topo
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
-        self.root.config(bg="#003366")
+        #self.root.config(bg="#003366")
         self.create_widgets()
 
         self.listar_funcionarios()
 
     def create_widgets(self):
         # Labels com o texto e sem fundo
-        tk.Label(self.root, text="Nome:",bg="#00284d", fg='white').place(x=30, y=20)
-        tk.Label(self.root, text="Data de Nascimento:",bg="#00284d", fg='white').place(x=30, y=60)
-        tk.Label(self.root, text="Data de Admissão:",bg="#00284d", fg='white').place(x=30, y=100)
-        tk.Label(self.root, text="CPF:",bg="#00284d", fg='white').place(x=30, y=140)
-        tk.Label(self.root, text="Cidade:",bg="#00284d", fg='white').place(x=30, y=180)
-        tk.Label(self.root, text="Estado:",bg="#00284d", fg='white').place(x=30, y=220)
-        tk.Label(self.root, text="Telefone:",bg="#00284d", fg='white').place(x=30, y=260)
-        tk.Label(self.root, text="Email:",bg="#00284d", fg='white').place(x=30, y=300)
-        tk.Label(self.root, text="Usuario:",bg="#00284d", fg='white').place(x=30, y=340)
-        tk.Label(self.root, text="Senha:",bg="#00284d", fg='white').place(x=30, y=380)
+        ctk.CTkLabel(self.root, text="Nome:",fg_color="#00284d", text_color='white').place(x=30, y=20)
+        ctk.CTkLabel(self.root, text="Data de Nascimento:",fg_color="#00284d", text_color='white').place(x=30, y=60)
+        ctk.CTkLabel(self.root, text="Data de Admissão:",fg_color="#00284d", text_color='white').place(x=30, y=100)
+        ctk.CTkLabel(self.root, text="CPF:",fg_color="#00284d", text_color='white').place(x=30, y=140)
+        ctk.CTkLabel(self.root, text="Cidade:",fg_color="#00284d", text_color='white').place(x=30, y=180)
+        ctk.CTkLabel(self.root, text="Estado:",fg_color="#00284d", text_color='white').place(x=30, y=220)
+        ctk.CTkLabel(self.root, text="Telefone:",fg_color="#00284d", text_color='white').place(x=30, y=260)
+        ctk.CTkLabel(self.root, text="Email:",fg_color="#00284d", text_color='white').place(x=30, y=300)
+        ctk.CTkLabel(self.root, text="Usuario:",fg_color="#00284d", text_color='white').place(x=30, y=340)
+        ctk.CTkLabel(self.root, text="Senha:",fg_color="#00284d", text_color='white').place(x=30, y=380)
         
 
         # Caixas cinza escuro
-        self.nome_funcionario_entry  = tk.Entry(self.root, bg="darkgray")
-        self.data_nascimento_funcionario_entry = tk.Entry(self.root, bg="darkgray")
-        self.data_admissao_funcionario_entry = tk.Entry(self.root, bg="darkgray")
-        self.cpf_funcionario_entry = tk.Entry(self.root, bg="darkgray")
-        self.cidade_funcionario_entry = tk.Entry(self.root, bg="darkgray")
-        self.uf_funcionario_entry = tk.Entry(self.root, bg="darkgray")
-        self.telefone_funcionario_entry = tk.Entry(self.root, bg="darkgray")
-        self.email_funcionario_entry = tk.Entry(self.root, bg="darkgray")
-        self.usuario_funcionario_entry = tk.Entry(self.root, bg="darkgray")
-        self.senha_funcionario_entry = tk.Entry(self.root, bg="darkgray", show="*")
-        self.buscar_funcionario_entry = tk.Entry(self.root, bg="darkgray")
-        self.exibir_id_entry = tk.Entry(self.root, bg="darkgray")
+        self.nome_funcionario_entry  = ctk.CTkEntry(self.root, fg_color="darkgray")
+        self.data_nascimento_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
+        self.data_admissao_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
+        self.cpf_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
+        self.cidade_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
+        self.uf_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
+        self.telefone_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
+        self.email_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
+        self.usuario_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
+        self.senha_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", show="*")
+        self.buscar_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
+        self.exibir_id_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
 
         # Caixas de texto
         self.nome_funcionario_entry.place(x=180, y=20, width=250)
@@ -62,18 +64,19 @@ class tela_funcionario_admin:
         self.buscar_funcionario_entry.place(x=660, y=453, width=70)
         
 
-        tk.Label(self.root, text="Busca por ID:", bg="lightgray").place(x=565, y=450)
-        self.id_funcionario_entry = tk.Entry(self.root, bg="darkgray")
+        ctk.CTkLabel(self.root, text="Busca por ID:", fg_color="lightgray").place(x=565, y=450)
+        self.id_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
 
         # Botões de funções
-        tk.Button(self.root, text="CANCELAR", command=self.cancelar).place(x=800, y=450)
-        tk.Button(self.root, text="REGISTRAR", command=self.registrar_funcionario).place(x=30, y=420)
-        tk.Button(self.root, text="EXCLUIR", command=self.delete_funcionario).place(x=120, y=420)
-        tk.Button(self.root, text="EDITAR", command=self.update_funcionario).place(x=195, y=420)
-        tk.Button(self.root, text="BUSCAR", command=self.pesquisar_funcionario).place(x=740, y=450)
+        ctk.CTkButton(self.root, text="CANCELAR", command=self.cancelar).place(x=800, y=450)
+        ctk.CTkButton(self.root, text="REGISTRAR", command=self.registrar_funcionario).place(x=30, y=420)
+        ctk.CTkButton(self.root, text="EXCLUIR", command=self.delete_funcionario).place(x=120, y=420)
+        ctk.CTkButton(self.root, text="EDITAR", command=self.update_funcionario).place(x=195, y=420)
+        ctk.CTkButton(self.root, text="BUSCAR", command=self.pesquisar_funcionario).place(x=740, y=450)
 
-        self.text_area = tk.Text(self.root, height=12, width=105, bg="lightgray")
-        self.text_area.place(x=30, y=480)
+        #Text Area não funciona verificar
+        #self.text_area = ctk.CTkText(self.root, height=12, width=105, fg_color="lightgray")
+        #self.text_area.place(x=30, y=480)
 
     def registrar_funcionario(self):
         nome_funcionario = self.nome_funcionario_entry.get()
@@ -200,7 +203,7 @@ class tela_funcionario_admin:
         return data_banco
 
 if __name__ == "__main__":
-    root = tk.Tk()
+    root = ctk.CTk()
     app = tela_funcionario_admin(root)
     root.mainloop()
 

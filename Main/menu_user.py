@@ -1,8 +1,9 @@
 import tkinter as tk
-from tkinter import *
-from tela_fornecedor_user import tela_fornecedor_user
-from tela_funcionario import tela_funcionario_admin
-from tela_produto_usuario import tela_produto_usuario
+#from tkinter import *
+import customtkinter as ctk
+from Main.tela_fornecedor_adm import tela_fornecedor_user
+from Main.tela_funcionario_adm import tela_funcionario_admin
+from Main.tela_produto_adm import tela_produto_usuario
 
 
 class menu_usuario:
@@ -12,16 +13,16 @@ class menu_usuario:
         self.root.title("TBit Manager by TerraBytes - Menu Principal - Usuario") 
 #self.create_widget()
         self.root.geometry("900x700")
-        self.root.config(bg="#003366")
+        #self.root.config(fg_color="black")
         self.root.resizable( width = False, height = False)
 
         self.create_widgets()
 
     def create_widgets(self):        
             #Criação de botões
-            btn_produto_menu = tk.Button(self.root,text="Produto",width=15,height=2,command=self.abrir_produto)
-            btn_fornecedor_menu = tk.Button(self.root,text="Fornecedores",width=15,height=2,command=self.abrir_fornecedor_user)
-            btn_logout = tk.Button(self.root, text='Logout', width=18, command=self.logout_usuario)
+            btn_produto_menu = ctk.CTkButton(self.root,text="Produto",width=15,height=2,command=self.abrir_produto)
+            btn_fornecedor_menu = ctk.CTkButton(self.root,text="Fornecedores",width=15,height=2,command=self.abrir_fornecedor_user)
+            btn_logout = ctk.CTkButton(self.root, text='Logout', width=18, command=self.logout_usuario)
             
             pass
             
@@ -41,6 +42,7 @@ class menu_usuario:
     
     def logout_usuario(self):
         from main_menu import login_menu
-        menu = tk.Tk()
+        menu = ctk.CTk()
         app = login_menu(menu)
         self.root.destroy()
+        menu.mainloop()

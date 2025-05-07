@@ -1,6 +1,7 @@
 import tkinter as tk
-from tkinter import messagebox
-from tkinter import *
+import customtkinter as ctk
+from tkinter import messagebox, LEFT, RIGHT
+#from tkinter import *
 from database_geral import tbit_db
 from menu_adm import menu_admin
 from menu_user import menu_usuario
@@ -18,29 +19,29 @@ class login_menu:
         pass
 
     def create_widget(self):
-        self.left_frame = Frame(self.root, width=200, height=300, bg="#003366", relief="raise") # Cria um frame à esquerda
+        self.left_frame = ctk.CTkFrame(self.root, width=200, height=300, fg_color="Black") # Cria um frame à esquerda
         self.left_frame.pack(side=LEFT) # Posiciona o frame à esquerda
 
-        self.right_frame = Frame(self.root, width=400, height=300, bg="#003366", relief="raise") # Cria um frame à esquerda
+        self.right_frame = ctk.CTkFrame(self.root, width=400, height=300, fg_color="Black") # Cria um frame à esquerda
         self.right_frame.pack(side=RIGHT) # Posiciona o frame à esquerda
 
         #logo = PhotoImage(file='icon/tbit_logo_64x.png')
         #self.logo_label = Label(self.left_frame, image=logo) # Cria uma label que carrega a logo
         #self.logo_label.place(x=50, y=100) # Posiciona o label no frame esquerdo
 
-        self.usuario_label = Label(self.right_frame, text="Usuario:", font=("Times New Roman", 20), bg="#00284d", fg='white') # Cria um label para o usuario
+        self.usuario_label = ctk.CTkLabel(self.right_frame, text="Usuario:", font=("Times New Roman", 20), fg_color="Black", text_color='white') # Cria um label para o usuario
         self.usuario_label.place(x=10, y=105) # Posiciona o label o frame direito
 
-        self.usuario_entry = tk.Entry(self.right_frame, width=30) # Cria um campo de entrada para o usuario
-        self.usuario_entry.place(x=120, y=115) # Posiciona o campo de entrada
+        self.usuario_entry = ctk.CTkEntry(self.right_frame, width=140,height=30) # Cria um campo de entrada para o usuario
+        self.usuario_entry.place(x=100, y=100) # Posiciona o campo de entrada
 
-        self.senha_label = Label(self.right_frame, text="Senha:", font=("", 20), bg="#00284d", fg="White") # Cria um label para a senha
-        self.senha_label.place(x=10, y=150) # Posiciona o label no frame direito
+        self.senha_label = ctk.CTkLabel(self.right_frame, text="Senha:", font=("", 20), fg_color="Black", text_color="White") # Cria um label para a senha
+        self.senha_label.place(x=10, y=160) # Posiciona o label no frame direito
 
-        self.senha_entry = tk.Entry(self.right_frame, width=30, show="*") # Cria um campo de entrada para a senha
-        self.senha_entry.place(x=120, y=165)       
+        self.senha_entry = ctk.CTkEntry(self.right_frame, width=140,height=30, show="*") # Cria um campo de entrada para a senha
+        self.senha_entry.place(x=100, y=160)       
         
-        self.login_button = tk.Button(self.right_frame, text="LOGIN", width=15, command=self.login_user) # Cria um botao de login
+        self.login_button = ctk.CTkButton(self.right_frame, text="LOGIN", width=15, command=self.login_user) # Cria um botao de login
         self.login_button.place(x=80, y=225)
 
     def login_user(self):
@@ -81,15 +82,16 @@ class login_menu:
                 messagebox.showerror(title="Erro", message=f"Ocorreu um erro: {str(e)}")
     
     def abrir_menu_admin(self):
-        janela_admin = tk.Tk()  
+        janela_admin = ctk.CTk()  
         app = menu_admin(janela_admin) 
+        janela_admin.mainloop()
 
     def abrir_menu_user(self):
-        janela_user = tk.Tk()
+        janela_user = ctk.CTk()
         app = menu_usuario(janela_user)
-        
+        janela_user.mainloop()
     
 if __name__ == '__main__':
-    root = tk.Tk()
+    root = ctk.CTk()
     app = login_menu(root)
     root.mainloop()
