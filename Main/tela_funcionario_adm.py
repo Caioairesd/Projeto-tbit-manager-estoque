@@ -75,8 +75,8 @@ class tela_funcionario_admin:
         ctk.CTkButton(self.root, text="BUSCAR", command=self.pesquisar_funcionario).place(x=740, y=450)
 
         #Text Area não funciona verificar
-        #self.text_area = ctk.CTkText(self.root, height=12, width=105, fg_color="lightgray")
-        #self.text_area.place(x=30, y=480)
+        self.text_area = ctk.CTkTextbox(self.root, height=12, width=105, fg_color="lightgray")
+        self.text_area.place(x=30, y=480)
 
     def registrar_funcionario(self):
         nome_funcionario = self.nome_funcionario_entry.get()
