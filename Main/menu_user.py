@@ -1,9 +1,7 @@
-import tkinter as tk
+#import tkinter as tk
 #from tkinter import *
 import customtkinter as ctk
-from Main.tela_fornecedor_adm import tela_fornecedor_user
-from Main.tela_funcionario_adm import tela_funcionario_admin
-from Main.tela_produto_adm import tela_produto_usuario
+
 
 
 class menu_usuario:
@@ -31,14 +29,7 @@ class menu_usuario:
             btn_logout.place(x=400, y=580)
     
     
-    def abrir_fornecedor_user(self):
-        tela_fornecedor_user(self.root)
-
-    def abrir_funcionario(self):
-        tela_funcionario_admin(self.root)
-
-    def abrir_produto(self):
-        tela_produto_usuario(self.root)
+   
     
     def logout_usuario(self):
         from main_menu import login_menu

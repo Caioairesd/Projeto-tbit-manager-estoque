@@ -1,7 +1,5 @@
-import tkinter as tk
 import customtkinter as ctk
 from tkinter import messagebox, LEFT, RIGHT
-#from tkinter import *
 from database_geral import tbit_db
 from menu_adm import menu_admin
 from menu_user import menu_usuario
@@ -25,9 +23,6 @@ class login_menu:
         self.right_frame = ctk.CTkFrame(self.root, width=400, height=300, fg_color="Black") # Cria um frame à esquerda
         self.right_frame.pack(side=RIGHT) # Posiciona o frame à esquerda
 
-        #logo = PhotoImage(file='icon/tbit_logo_64x.png')
-        #self.logo_label = Label(self.left_frame, image=logo) # Cria uma label que carrega a logo
-        #self.logo_label.place(x=50, y=100) # Posiciona o label no frame esquerdo
 
         self.usuario_label = ctk.CTkLabel(self.right_frame, text="Usuario:", font=("Times New Roman", 20), fg_color="Black", text_color='white') # Cria um label para o usuario
         self.usuario_label.place(x=10, y=105) # Posiciona o label o frame direito
@@ -86,6 +81,8 @@ class login_menu:
         janela_user = ctk.CTk()
         app = menu_usuario(janela_user)
         janela_user.mainloop()
+        
+    
     
 if __name__ == '__main__':
     root = ctk.CTk()

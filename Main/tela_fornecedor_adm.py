@@ -1,11 +1,11 @@
-import tkinter as tk
+import customtkinter as ctk
 from tkinter import messagebox
 from database_geral import register_fornecedor_db,listar_fornecedor_db,update_fornecedor_db,delete_fornecedor_db,pesquisar_fornecedor_db
 
-class tela_fornecedor_user:
+class tela_fornecedor_adm:
 
     def __init__(self,root):
-        self.root = tk.Toplevel(root)
+        self.root = ctk.CTkToplevel(root)
 
         #Define os parâmetros de interface da janela
         self.root.geometry("900x700")
@@ -13,7 +13,7 @@ class tela_fornecedor_user:
         #self.root.configure(background="white")
         self.root.resizable(width=False,height=False)
         #self.root.attributes("-alpha",1.0)
-        self.root.config(bg="#003366")
+        #self.root.config(bg="#003366")
 
         self.root.transient(root)  # Faz com que a nova janela fique acima da principal
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
@@ -25,32 +25,32 @@ class tela_fornecedor_user:
         #Criação de labels
 
         #Criação de botões
-        tk.Button(self.root,text="Cadastrar",width=15,height=1,command=self.create_fornecedor).place(x=160,y=280)
-        tk.Button(self.root,text="Alterar",width=15,height=1,command=self.update_fornecedor).place(x=320,y=280)
-        tk.Button(self.root,text="Excluir",width=15,height=1,command=self.delete_fornecedor).place(x=480,y=280)
-        tk.Button(self.root,text="Cancelar",width=15,height=1,command=self.cancelar_operacao).place(x=640,y=280)
-        tk.Button(self.root,text="Pesquisar e inserir dados\n(Nome ou ID)",width=30,height=2,command=self.pesquisar_fornecedor).place(x=135,y=355)
+        ctk.CTkButton(self.root,text="Cadastrar",width=15,height=1,command=self.create_fornecedor).place(x=160,y=280)
+        ctk.CTkButton(self.root,text="Alterar",width=15,height=1,command=self.update_fornecedor).place(x=320,y=280)
+        ctk.CTkButton(self.root,text="Excluir",width=15,height=1,command=self.delete_fornecedor).place(x=480,y=280)
+        ctk.CTkButton(self.root,text="Cancelar",width=15,height=1,command=self.cancelar_operacao).place(x=640,y=280)
+        ctk.CTkButton(self.root,text="Pesquisar e inserir dados\n(Nome ou ID)",width=30,height=2,command=self.pesquisar_fornecedor).place(x=135,y=355)
         
         
         #Criação de labels
-        tk.Label(self.root,text="Fornecedor:",bg="#00284d", fg='white').place(x=300,y=30)
-        tk.Label(self.root,text="Marca:",bg="#00284d", fg='white').place(x=300,y=60)
-        tk.Label(self.root,text="Email:",bg="#00284d", fg='white').place(x=300,y=90)
-        tk.Label(self.root,text="Telefone:",bg="#00284d", fg='white').place(x=300,y=120)
-        tk.Label(self.root,text="Cidade:",bg="#00284d", fg='white').place(x=300,y=150)
-        tk.Label(self.root,text="País:",bg="#00284d", fg='white').place(x=300,y=180)
-        tk.Label(self.root,text="ID:",bg="#00284d", fg='white').place(x=300,y=210)
+        ctk.CTkLabel(self.root,text="Fornecedor:",fg_color="blue", text_color='white').place(x=300,y=30)
+        ctk.CTkLabel(self.root,text="Marca:",fg_color="blue", text_color='white').place(x=300,y=60)
+        ctk.CTkLabel(self.root,text="Email:",fg_color="blue", text_color='white').place(x=300,y=90)
+        ctk.CTkLabel(self.root,text="Telefone:",fg_color="blue", text_color='white').place(x=300,y=120)
+        ctk.CTkLabel(self.root,text="Cidade:",fg_color="blue", text_color='white').place(x=300,y=150)
+        ctk.CTkLabel(self.root,text="País:",fg_color="blue", text_color='white').place(x=300,y=180)
+        ctk.CTkLabel(self.root,text="ID:",fg_color="blue", text_color='white').place(x=300,y=210)
 
 
         #Criação de campos de entrada de dados
-        self.fornecedor_entry = tk.Entry(self.root)
-        self.marca_fornecedor_entry = tk.Entry(self.root)
-        self.email_fornecedor_entry = tk.Entry(self.root)
-        self.telefone_fornecedor_entry = tk.Entry(self.root)
-        self.cidade_fornecedor_entry = tk.Entry(self.root)
-        self.pais_fornecedor_entry = tk.Entry(self.root)
-        self.id_fornecedor_entry = tk.Entry(self.root)
-        self.pesquisar_entry = tk.Entry(self.root,width=40)
+        self.fornecedor_entry = ctk.CTkEntry(self.root)
+        self.marca_fornecedor_entry = ctk.CTkEntry(self.root)
+        self.email_fornecedor_entry = ctk.CTkEntry(self.root)
+        self.telefone_fornecedor_entry = ctk.CTkEntry(self.root)
+        self.cidade_fornecedor_entry = ctk.CTkEntry(self.root)
+        self.pais_fornecedor_entry = ctk.CTkEntry(self.root)
+        self.id_fornecedor_entry = ctk.CTkEntry(self.root)
+        self.pesquisar_entry = ctk.CTkEntry(self.root,width=300,height=30)
 
         #Definindo localização dos campos na tela
         self.fornecedor_entry.place(x=400,y=30)
@@ -60,10 +60,10 @@ class tela_fornecedor_user:
         self.cidade_fornecedor_entry.place(x=400,y=150)
         self.pais_fornecedor_entry.place(x=400,y=180)
         self.id_fornecedor_entry.place(x=400,y=210)
-        self.pesquisar_entry.place(x=360,y=360,width=300,height=30)
+        self.pesquisar_entry.place(x=360,y=360)
 
         #Criação da área de texto responsável por exibir informações dos fornecedores
-        self.search_area = tk.Text(self.root,height=15,width=80)
+        self.search_area = ctk.CTkTextbox(self.root,height=15,width=80)
         self.search_area.place(x=135,y=400)
 
     #função responsável por criar um fornecedor 
@@ -97,10 +97,10 @@ class tela_fornecedor_user:
     def listar_fornecedor(self):
         
         fornecedores = listar_fornecedor_db()
-        self.search_area.delete(1.0,tk.END)
+        self.search_area.delete(1.0,ctk.END)
 
         for fornecedor in fornecedores:
-                    self.search_area.insert(tk.END,f"ID: {fornecedor[0]},Fornecedor: {fornecedor[1]},Marca:{fornecedor[2]},Email:{fornecedor[3]},Telefone:{fornecedor[4]},Cidade:{fornecedor[5]},Cidade:{fornecedor[6]}\n")
+                    self.search_area.insert(ctk.END,f"ID: {fornecedor[0]},Fornecedor: {fornecedor[1]},Marca:{fornecedor[2]},Email:{fornecedor[3]},Telefone:{fornecedor[4]},Cidade:{fornecedor[5]},Cidade:{fornecedor[6]}\n")
 
     #função responsável por exibir e setar os valores relacionados ao id ou nome inserido ao usuário
     # como não realizamos ainda a máteria de banco de dados não é possível vincular tabela.         
@@ -109,7 +109,7 @@ class tela_fornecedor_user:
         #pesquisa recebe valor inserido no campo de texto de id
         pesquisa = self.pesquisar_entry.get()
 
-        self.pesquisar_entry.delete(0,tk.END)
+        self.pesquisar_entry.delete(0,ctk.END)
 
             
         if pesquisa:
@@ -121,10 +121,10 @@ class tela_fornecedor_user:
                 
                 messagebox.showinfo("Sucesso!","{}Fornecedor encontrado com sucesso!\nVerifique a caixa de texto".format(id_solicitado))
                 #Retira de exibição os fornecedores cadastrados deixando somente o pesquisado           
-                self.search_area.delete(1.0,tk.END)
+                self.search_area.delete(1.0,ctk.END)
 
                 #Insere os dados do fornecedor pesquisado no campo de exibição
-                self.search_area.insert(tk.END,f"ID: {id_solicitado[0]},Fornecedor: {id_solicitado[1]},Marca:{id_solicitado[2]},Email:{id_solicitado[3]},Telefone:{id_solicitado[4]},Cidade:{id_solicitado[5]},Cidade:{id_solicitado[6]}\n")
+                self.search_area.insert(ctk.END,f"ID: {id_solicitado[0]},Fornecedor: {id_solicitado[1]},Marca:{id_solicitado[2]},Email:{id_solicitado[3]},Telefone:{id_solicitado[4]},Cidade:{id_solicitado[5]},Cidade:{id_solicitado[6]}\n")
 
                 #Insere os dados do fornecedor pesquisado nos campos de texto para possível edição  
                 self.id_fornecedor_entry.insert(0,id_solicitado[0])
@@ -174,7 +174,7 @@ class tela_fornecedor_user:
             if id_fornecedor:
                 delete_fornecedor_db(id_fornecedor)
 
-                self.id_fornecedor_entry.delete(0,tk.END)
+                self.id_fornecedor_entry.delete(0,ctk.END)
                 self.listar_fornecedor()
                 messagebox.showinfo("Sucesso","Fornecedor deletado com sucesso!")
             else:
@@ -182,13 +182,13 @@ class tela_fornecedor_user:
 
             #Função responsável por limpar os campos de texto
     def limpar_campos(self):
-        self.fornecedor_entry.delete(0,tk.END)
-        self.marca_fornecedor_entry.delete(0,tk.END)
-        self.email_fornecedor_entry.delete(0,tk.END)
-        self.telefone_fornecedor_entry.delete(0,tk.END)
-        self.cidade_fornecedor_entry.delete(0,tk.END)
-        self.pais_fornecedor_entry.delete(0,tk.END)
-        self.id_fornecedor_entry.delete(0,tk.END)
+        self.fornecedor_entry.delete(0,ctk.END)
+        self.marca_fornecedor_entry.delete(0,ctk.END)
+        self.email_fornecedor_entry.delete(0,ctk.END)
+        self.telefone_fornecedor_entry.delete(0,ctk.END)
+        self.cidade_fornecedor_entry.delete(0,ctk.END)
+        self.pais_fornecedor_entry.delete(0,ctk.END)
+        self.id_fornecedor_entry.delete(0,ctk.END)
 
     #Função responsável por cancelar a operação
     def cancelar_operacao(self):
@@ -205,6 +205,6 @@ class tela_fornecedor_user:
           
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = tela_fornecedor_user(root)
+    root = ctk.CTk()
+    app = tela_fornecedor_adm(root)
     root.mainloop()

@@ -1,21 +1,22 @@
 # Importacoes necessarias
-import tkinter as tk
-from tkinter import * 
+#import ctkinter as ctk
+#from ctkinter import * 
+import customtkinter as ctk
 from tkinter import messagebox
 from database_geral import registrar_produto_db, atualizar_produto_db, listar_produtos_db, deletar_produto_db, pesquisar_produto_db
 
 # Criando classe principal, que carrega a janela e tudo o que há nela
-class tela_produto_usuario:
+class tela_produto_adm:
 
     # Construtor da classe, carrega as informações básicas de carregamento
     def __init__(self, root):
         # Definições da janela
-        self.root_produto = tk.Toplevel()
+        self.root_produto = ctk.CTkToplevel()
         self.root_produto.title("TBit Manager - Produtos")
         self.root_produto.resizable(width=False, height=False)
         self.root_produto.geometry("900x750")
 
-        self.root_produto.config(bg="#003366")
+       #self.root_produto.config(bg="")
         self.root_produto.transient(root)  # Faz com que a nova janela fique acima da principal
         self.root_produto.grab_set()  # Bloqueia interações na principal até fechar essa
     
@@ -26,41 +27,41 @@ class tela_produto_usuario:
 
     def criando_widgets(self):
         # Criando os botoes que carregam as funcoes necessarias e seus posicionamentos
-        tk.Button(self.root_produto, text="Cadastrar produto", command=self.registrar_no_banco, width=15, height=1).place(x=160, y=280) # Botao para cadastrar produto
-        tk.Button(self.root_produto, text="Alterar produto", command=self.alterar_no_banco, width=15, height=1).place(x=320, y=280) # Botao para alterar produto
-        tk.Button(self.root_produto, text="Deletar produto", command=self.deletar_do_banco, width=15, height=1).place(x=480, y=280) # Botao para deletar produto
-        tk.Button(self.root_produto, text="Cancelar operção", command=self.cancelar_operacao, width=15, height=1).place(x=640, y=280) # Botao para cancelar/voltar ao padrao
-        tk.Button(self.root_produto, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=30, height=2).place(x=135, y=355)
+        ctk.CTkButton(self.root_produto, text="Cadastrar produto", command=self.registrar_no_banco, width=15, height=1).place(x=160, y=280) # Botao para cadastrar produto
+        ctk.CTkButton(self.root_produto, text="Alterar produto", command=self.alterar_no_banco, width=15, height=1).place(x=320, y=280) # Botao para alterar produto
+        ctk.CTkButton(self.root_produto, text="Deletar produto", command=self.deletar_do_banco, width=15, height=1).place(x=480, y=280) # Botao para deletar produto
+        ctk.CTkButton(self.root_produto, text="Cancelar operção", command=self.cancelar_operacao, width=15, height=1).place(x=640, y=280) # Botao para cancelar/voltar ao padrao
+        ctk.CTkButton(self.root_produto, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=30, height=2).place(x=135, y=355)
 
         # Labels usados para identificar as caixas de texto e seus posicionamentos
-        tk.Label(self.root_produto, text="Nome do Produto:",bg="#00284d", fg='white').place(x=280, y=50)
-        tk.Label(self.root_produto, text="Descrição do Produto:",bg="#00284d", fg='white').place(x=280, y=90)
-        tk.Label(self.root_produto, text="Quantidade do Produto:",bg="#00284d", fg='white').place(x=280, y=130)
-        tk.Label(self.root_produto, text="Valor do Produto:",bg="#00284d", fg='white').place(x=280, y=170)
+        ctk.CTkLabel(self.root_produto, text="Nome do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=50)
+        ctk.CTkLabel(self.root_produto, text="Descrição do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=90)
+        ctk.CTkLabel(self.root_produto, text="Quantidade do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=130)
+        ctk.CTkLabel(self.root_produto, text="Valor do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=170)
 
         # Entrys usados para o usuario digitar e seus posicionamentos
         # Entry 'nome do produto'
-        self.box_nome = tk.Entry(self.root_produto, width=25)
+        self.box_nome = ctk.CTkEntry(self.root_produto, width=25,height=30)
         self.box_nome.place(x=420, y=50)
 
         # Entry 'descrição do produto'
-        self.box_descricao = tk.Entry(self.root_produto, width=25)
+        self.box_descricao = ctk.CTkEntry(self.root_produto, width=25,height=30)
         self.box_descricao.place(x=420, y=90)
 
         # Entry 'quantidade do produto'
-        self.box_quantidade = tk.Entry(self.root_produto, width=25)
+        self.box_quantidade = ctk.CTkEntry(self.root_produto, width=25,height=30)
         self.box_quantidade.place(x=420, y=130)
 
         # Entry 'valor do produto'
-        self.box_valor = tk.Entry(self.root_produto, width=25)
+        self.box_valor = ctk.CTkEntry(self.root_produto, width=25,height=30)
         self.box_valor.place(x=420, y=170)
         
         # Entry usado para pesquisar de forma individual
-        self.box_pesquisar = tk.Entry(self.root_produto, width=40)
-        self.box_pesquisar.place(x=360, y=360, height=30)
+        self.box_pesquisar = ctk.CTkEntry(self.root_produto, width=40, height=30)
+        self.box_pesquisar.place(x=360, y=360 )
 
         # Text area usado para retornar dados ja existentes
-        self.text_area = tk.Text(self.root_produto, width=80, height=15)
+        self.text_area = ctk.CTkTextbox(self.root_produto, width=80, height=15)
         self.text_area.place(x=135, y=400)
 
     # Método usado quando o botao 'Cadastrar' é clicado
@@ -97,7 +98,7 @@ class tela_produto_usuario:
                 self.limpar_campos() # Metodo usado para limpar os campos
                 messagebox.showinfo("Sucesso", "Produto atualizado com sucesso!") # Mensagem lançada na tela do usuario
                 self.listar_do_banco() # Lista novamente todos os itens presentes na tabela 'produto'
-                self.box_nome.delete(0, END) 
+                self.box_nome.delete(0, ctk.END) 
             else:
                 messagebox.showinfo("Cancelado", "Operação de alteração cancelada!") # Mensagem lançada na tela do usuario
         else:
@@ -106,10 +107,10 @@ class tela_produto_usuario:
     # Metodo usado para resgatar todos os itens presentes no banco
     def listar_do_banco(self):
             produtos = listar_produtos_db()
-            self.text_area.delete(1.0, END)
+            self.text_area.delete(1.0, ctk.END)
 
             for produto in produtos:
-                self.text_area.insert(END, f"-ID: {produto[0]} | Nome: {produto[1]} | Descrição: {produto[2]} | Quantidade: {produto[3]} | Valor: {produto[4]}\n")
+                self.text_area.insert(ctk.END, f"-ID: {produto[0]} | Nome: {produto[1]} | Descrição: {produto[2]} | Quantidade: {produto[3]} | Valor: {produto[4]}\n")
     
     def deletar_do_banco(self):
         produto = self.box_nome.get()
@@ -118,7 +119,7 @@ class tela_produto_usuario:
 
             if confirmacao == True:
                 deletar_produto_db(produto)
-                self.box_nome.delete(0, END)
+                self.box_nome.delete(0, ctk.END)
                 messagebox.showinfo("Success", "Produto excluido com sucesso!")
 
                 self.listar_do_banco() # Lista novamente todos os itens presentes na tabela 'produto'
@@ -131,7 +132,7 @@ class tela_produto_usuario:
 
     def pesquisar_produto_especifico(self):
         pesquisa = self.box_pesquisar.get().title()
-        self.box_pesquisar.delete(0, END)
+        self.box_pesquisar.delete(0, ctk.END)
         self.limpar_campos() # Metodo usado para limpar os campos
 
         if pesquisa:
@@ -139,8 +140,8 @@ class tela_produto_usuario:
 
             if produto_retornado:
                 messagebox.showinfo("Success", f"Produto '{produto_retornado[1]}' encontrado com sucesso, verifique a caixa de texto!")
-                self.text_area.delete(1.0, END)
-                self.text_area.insert(END, f"ID: {produto_retornado[0]} | Nome: {produto_retornado[1]} | Descrição: {produto_retornado[2]} | Quantidade: {produto_retornado[3]} | Valor: {produto_retornado[4]}")
+                self.text_area.delete(1.0, ctk.END)
+                self.text_area.insert(ctk.END, f"ID: {produto_retornado[0]} | Nome: {produto_retornado[1]} | Descrição: {produto_retornado[2]} | Quantidade: {produto_retornado[3]} | Valor: {produto_retornado[4]}")
                 
                 self.box_nome.insert(0, produto_retornado[1]) # Retorna as informações recebidas na caixa 'Nome'
                 self.box_descricao.insert(0, produto_retornado[2]) # Retorna as informações recebidas na caixa 'Descricao'
@@ -164,13 +165,13 @@ class tela_produto_usuario:
     
     # Metodo que limpa os campos
     def limpar_campos(self):
-        self.box_nome.delete(0, END)
-        self.box_descricao.delete(0, END)
-        self.box_quantidade.delete(0, END)
-        self.box_valor.delete(0, END)    
+        self.box_nome.delete(0, ctk.END)
+        self.box_descricao.delete(0, ctk.END)
+        self.box_quantidade.delete(0, ctk.END)
+        self.box_valor.delete(0, ctk.END)    
 
 # Chama a funcao principal e coloca o programa para rodar
 if __name__ == "__main__":
-    root_produto = tk.Tk()
-    app = tela_produto_usuario(root_produto)
+    root_produto = ctk.CTk()
+    app = tela_produto_adm(root_produto)
     root_produto.mainloop()
