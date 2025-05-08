@@ -15,12 +15,13 @@ class tbit_db:
         self.cursor = self.conn.cursor()
 
         try:
-            self.cursor.execute("CREATE DATABASE IF NOT EXISTS tbit_db;")
-            self.cursor.execute("USE tbit_db;")
+            self.cursor.execute("create database if not exists tbit_db;")
+            self.cursor.execute("use tbit_db;")
 
             comandos_sql = [
                 
-                """CREATE TABLE Fornecedor 
+                """
+                    CREATE TABLE Fornecedor 
                     ( 
                     id_fornecedor INT not null auto_increment,  
                     nome_fornecedor varchar(40),  
@@ -30,9 +31,11 @@ class tbit_db:
                     pais_fornecedor varchar(30),  
                     cidade_fornecedor varchar(30),
                     constraint pk_fornecedor primary key (id_fornecedor) 
-                    );"""
+                    );
+                """
 
-                """CREATE TABLE Produto 
+                """
+                    CREATE TABLE Produto 
                     ( 
                     id_produto INT not null auto_increment,  
                     nome_produto varchar(40),  
@@ -42,18 +45,22 @@ class tbit_db:
                     idFornecedor INT not null,
                     constraint pk_produto primary key (id_produto),
                     constraint fk_fornecedor_produto foreign key (idFornecedor) references Fornecedor(id_fornecedor)
-                    );"""
+                    );
+                """
 
-                """CREATE TABLE Cliente 
+                """
+                    CREATE TABLE Cliente 
                     ( 
                     id_cliente INT not null auto_increment,  
                     nome_cliente varchar(40),  
                     descricao_cliente varchar(200),  
                     cnpj_cliente varchar(18),
                     constraint pk_cliente primary key (id_cliente)
-                    );"""
+                    );
+                """
 
-                """CREATE TABLE Pedido 
+                """
+                    CREATE TABLE Pedido 
                     (
                     id_compra int not null auto_increment,
                     idProduto int not null,  
@@ -61,9 +68,11 @@ class tbit_db:
                     constraint pk_compra primary key (id_compra),
                     constraint fk_produto_compra foreign key (idProduto) references Produto(id_produto),
                     constraint fk_cliente_compra foreign key (idCliente) references Cliente(id_cliente)
-                    );"""
+                    );
+                """
 
-                """CREATE TABLE Funcionario 
+                """
+                    CREATE TABLE Funcionario 
                     ( 
                     id_funcionario INT not null auto_increment,  
                     nome_funcionario varchar(40),  
@@ -78,9 +87,11 @@ class tbit_db:
                     perfil_funcionario varchar(30),  
                     senha_funcionario varchar(30),
                     constraint pk_funcionario primary key (id_funcionario)
-                    );"""
+                    );
+                """
 
-                """CREATE TABLE Cadastro 
+                """
+                    CREATE TABLE Cadastro 
                     ( 
                     id_cadastro int not null auto_increment,
                     idFuncionario INT not null,  
@@ -88,8 +99,21 @@ class tbit_db:
                     constraint pk_cadastro primary key (id_cadastro),
                     constraint fk_funcionario_cadastro foreign key (idFuncionario) references Funcionario(id_funcionario),
                     constraint fk_cliente_cadastro foreign key (idCliente) references Cliente(id_cliente)
-                    );"""
-                """INSERT INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
+                    );
+                """
+                
+                """
+                    CREATE TABLE Estoque
+                    (
+                    id_estoque INT not null auto_increment,
+                    id_produto INT not null,
+                    quantidade_estoque INT not null,
+                    constraint pk_estoque primary key (id_estoque),
+                    constraint fk_produto_estoque foreign key (id_produto) references Produto(id_produto)
+                    );
+                """
+                """
+                    INSERT INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
                     ('TechImport', '12.345.678/0001-01', 'contato@techimport.com.br', '(11) 98765-4321', 'Brasil', 'São Paulo'),
                     ('EletroParts', '23.456.789/0001-02', 'vendas@eletroparts.com', '(21) 99876-5432', 'Brasil', 'Rio de Janeiro'),
                     ('Global Components', '34.567.890/0001-03', 'sales@globalcomp.com', '+1 (555) 123-4567', 'EUA', 'Nova York'),
@@ -149,9 +173,11 @@ class tbit_db:
                     ('Componentes SC', '78.901.234/0001-57', 'contato@componentessc.com', '(48) 98765-1234', 'Brasil', 'São José'),
                     ('Digital Info', '89.012.345/0001-58', 'vendas@digitalinfo.com', '(41) 95678-9012', 'Brasil', 'Colombo'),
                     ('TechWales', '90.123.456/0001-59', 'contact@techwales.co.uk', '+44 29 8765 4321', 'Reino Unido', 'Cardiff'),
-                    ('Fukuoka Electronics', '01.234.567/0001-60', 'sales@fukuokaelec.com', '+81 92 9876 5432', 'Japão', 'Fukuoka');"""
+                    ('Fukuoka Electronics', '01.234.567/0001-60', 'sales@fukuokaelec.com', '+81 92 9876 5432', 'Japão', 'Fukuoka');
+                """
 
-                """INSERT INTO Cliente (nome_cliente, descricao_cliente, cnpj_cliente) VALUES
+                """
+                    INSERT INTO Cliente (nome_cliente, descricao_cliente, cnpj_cliente) VALUES
                     ('Loja Tech', 'Revenda de equipamentos eletrônicos', '11.111.111/0001-11'),
                     ('Eletro Magazine', 'Rede de varejo de eletrônicos', '22.222.222/0001-22'),
                     ('Informática Express', 'Loja de informática e acessórios', '33.333.333/0001-33'),
@@ -211,9 +237,11 @@ class tbit_db:
                     ('Flying Tech', 'Tecnologia para aviação', '57.585.858/0001-58'),
                     ('Space Tech', 'Tecnologia espacial', '58.595.959/0001-59'),
                     ('Future Tech', 'Tecnologias futuras e inovadoras', '59.606.060/0001-60'),
-                    ('Loja Exemplo', 'Cliente atacadista do setor têxtil', '12.345.678/0001-90');"""
+                    ('Loja Exemplo', 'Cliente atacadista do setor têxtil', '12.345.678/0001-90');
+                """
 
-                """INSERT INTO Funcionario (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario) VALUES
+                """
+                    INSERT INTO Funcionario (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario) VALUES
                     ('João Silva', '1985-05-15', '2020-03-10', '111.111.111-11', 'São Paulo', 'SP', '(11) 91234-5678', 'joao.silva@empresa.com', 'joao.silva', 'senha123', 'Administrador'),
                     ('Maria Oliveira', '1990-08-22', '2021-02-15', '222.222.222-22', 'Rio de Janeiro', 'RJ', '(21) 92345-6789', 'maria.oliveira@empresa.com', 'maria.oliveira', 'senha456', 'Administrador'),
                     ('Carlos Souza', '1988-11-30', '2019-07-05', '333.333.333-33', 'Belo Horizonte', 'MG', '(31) 93456-7890', 'carlos.souza@empresa.com', 'carlos.souza', 'senha789', 'Administrador'),
@@ -273,9 +301,11 @@ class tbit_db:
                     ('Lucas Henrique', '1984-03-24', '2019-05-15', '484.848.484-84', 'Belo Horizonte', 'MG', '(31) 98901-2345', 'lucas.henrique@empresa.com', 'lucas.henrique', 'senha789', 'Usuario simples'),
                     ('Laura Santos', '1997-06-06', '2023-08-20', '494.949.494-94', 'Porto Alegre', 'RS', '(51) 99012-3456', 'laura.santos@empresa.com', 'laura.santos', 'senha890', 'Usuario simples'),
                     ('Eduardo Oliveira', '1990-09-19', '2021-11-25', '505.050.505-05', 'Curitiba', 'PR', '(41) 90123-4567', 'eduardo.oliveira@empresa.com', 'eduardo.oliveira', 'senha901', 'Usuario simples'),
-                    ('Beatriz Costa', '1985-12-02', '2020-02-05', '515.151.515-15', 'Salvador', 'BA', '(71) 91234-5678', 'beatriz.costa@empresa.com', 'beatriz.costa', 'senha012', 'Usuario simples');"""
+                    ('Beatriz Costa', '1985-12-02', '2020-02-05', '515.151.515-15', 'Salvador', 'BA', '(71) 91234-5678', 'beatriz.costa@empresa.com', 'beatriz.costa', 'senha012', 'Usuario simples');
+                """
 
-                """INSERT INTO Produto (nome_produto, descricao_produto, quantidade_produto, valor_produto, idFornecedor) VALUES
+                """
+                    INSERT INTO Produto (nome_produto, descricao_produto, quantidade_produto, valor_produto, idFornecedor) VALUES
                     ('Notebook Dell', 'Notebook Dell Inspiron 15 i5 8GB 256GB SSD', 50, 3499.90, 1),
                     ('Mouse Logitech', 'Mouse sem fio Logitech M170', 120, 79.90, 2),
                     ('Teclado Mecânico', 'Teclado mecânico Redragon Kumara', 35, 279.90, 3),
@@ -335,39 +365,65 @@ class tbit_db:
                     ('Projetor Mini', 'Projetor mini portátil', 15, 699.90, 57),
                     ('TV Box Android', 'TV Box Android 4GB RAM', 40, 299.90, 58),
                     ('Controle Remoto', 'Controle remoto universal', 70, 49.90, 59),
-                    ('Antena Digital', 'Antena digital interna', 60, 79.90, 60);"""
+                    ('Antena Digital', 'Antena digital interna', 60, 79.90, 60);
+                """
 
-                """INSERT INTO Pedido (idProduto, idCliente) VALUES
+                """
+                    INSERT INTO Pedido (idProduto, idCliente) VALUES
                     (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10),
                     (11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20),
                     (21, 21), (22, 22), (23, 23), (24, 24), (25, 25), (26, 26), (27, 27), (28, 28), (29, 29), (30, 30),
                     (31, 31), (32, 32), (33, 33), (34, 34), (35, 35), (36, 36), (37, 37), (38, 38), (39, 39), (40, 40),
                     (41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
-                    (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);"""
-
-                """INSERT INTO Cadastro (idFuncionario, idCliente) VALUES
+                    (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
+                """
+                """
+                    INSERT INTO Cadastro (idFuncionario, idCliente) VALUES
                     (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10),
                     (11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20),
                     (21, 21), (22, 22), (23, 23), (24, 24), (25, 25), (26, 26), (27, 27), (28, 28), (29, 29), (30, 30),
                     (31, 31), (32, 32), (33, 33), (34, 34), (35, 35), (36, 36), (37, 37), (38, 38), (39, 39), (40, 40),
                     (41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
-                    (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);"""
+                    (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
+                """
+                """
+                    INSERT INTO Estoque (id_produto, quantidade_estoque) VALUES
+                    (1, 50), (2, 120), (3, 35), (4, 28), (5, 75), (6, 40), (7, 30), (8, 25), (9, 60), (10, 45), 
+                    (11, 55), (12, 40), (13, 100), (14, 30), (15, 200), (16, 80), (17, 60), (18, 45), (19, 50), (20, 35),
+                    (21, 70), (22, 40), (23, 25), (24, 90), (25, 60), (26, 50), (27, 15), (28, 20), (29, 65), (30, 30),
+                    (31, 18), (32, 45), (33, 40), (34, 22), (35, 50), (36, 35), (37, 25), (38, 40), (39, 30), (40, 10), 
+                    (41, 40), (42, 60), (43, 15), (44, 25), (45, 20), (46, 30), (47, 25), (48, 18), (49, 40), (50, 50), 
+                    (51, 80), (52, 60), (53, 45), (54, 30), (55, 20), (56, 50), (57, 15), (58, 40), (59, 70), (60, 60); 
+                """
+                """
+                    delimiter $$
 
-                """ 
-                    DELIMITER $$
-
-                    CREATE TRIGGER aumentar_quantidade_produto
-                    AFTER update ON Produto
+                    create trigger reabastecer_estoque
+                    after insert on Estoque
                     FOR EACH ROW
-                    BEGIN
-                        UPDATE Produto
-                        SET quantidade_produto = quantidade_produto + NEW.quantidade_produto
-                        WHERE id_produto = NEW.id_produto;
-                    END;
+                    begin
+                        update Produto
+                        set quantidade_produto = quantidade_produto + new.quantidade_estoque
+                        where id_produto = new.id_produto;
+                    end;
                     $$
 
-                    DELIMITER ;
+                    delimiter ;
+                """
+                """ 
+                    delimiter $$
 
+                    create trigger diminuir_quantidade_produto
+                    after insert on Compra
+                    for each row
+                    begin
+                        update Produto
+                        set quantidade_produto = quantidade_produto - new.quantidade_compra
+                        where id_produto = new.id_produto;
+                    end;
+                    $$
+
+                    delimiter ;
                 """
             ]
 # joins

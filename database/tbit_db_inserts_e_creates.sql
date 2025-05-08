@@ -77,6 +77,15 @@ CREATE TABLE Cadastro
  constraint fk_cliente_cadastro foreign key (idCliente) references Cliente(id_cliente)
 ); 
 
+CREATE TABLE Estoque
+(
+id_estoque INT not null auto_increment,
+id_produto INT not null,
+quantidade_estoque INT not null,
+constraint pk_estoque primary key (id_estoque),
+constraint fk_produto_estoque foreign key (id_produto) references Produto(id_produto)
+);
+
 -- Inserção de dados na tabela Fornecedor (60 registros)
 INSERT INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
 ('TechImport', '12.345.678/0001-01', 'contato@techimport.com.br', '(11) 98765-4321', 'Brasil', 'São Paulo'),
@@ -346,3 +355,11 @@ INSERT INTO Cadastro (idFuncionario, idCliente) VALUES
 (31, 31), (32, 32), (33, 33), (34, 34), (35, 35), (36, 36), (37, 37), (38, 38), (39, 39), (40, 40),
 (41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
 (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
+
+INSERT INTO Estoque (id_produto, quantidade_estoque) VALUES
+(1, 50), (2, 120), (3, 35), (4, 28), (5, 75), (6, 40), (7, 30), (8, 25), (9, 60), (10, 45), 
+(11, 55), (12, 40), (13, 100), (14, 30), (15, 200), (16, 80), (17, 60), (18, 45), (19, 50), (20, 35),
+(21, 70), (22, 40), (23, 25), (24, 90), (25, 60), (26, 50), (27, 15), (28, 20), (29, 65), (30, 30),
+(31, 18), (32, 45), (33, 40), (34, 22), (35, 50), (36, 35), (37, 25), (38, 40), (39, 30), (40, 10), 
+(41, 40), (42, 60), (43, 15), (44, 25), (45, 20), (46, 30), (47, 25), (48, 18), (49, 40), (50, 50), 
+(51, 80), (52, 60), (53, 45), (54, 30), (55, 20), (56, 50), (57, 15), (58, 40), (59, 70), (60, 60);

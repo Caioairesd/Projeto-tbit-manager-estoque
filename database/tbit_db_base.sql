@@ -72,3 +72,12 @@ CREATE TABLE Cadastro
  constraint fk_funcionario_cadastro foreign key (idFuncionario) references Funcionario(id_funcionario),
  constraint fk_cliente_cadastro foreign key (idCliente) references Cliente(id_cliente)
 ); 
+
+CREATE TABLE Estoque
+(
+id_estoque INT not null auto_increment,
+id_produto INT not null,
+quantidade_estoque INT not null,
+constraint pk_estoque primary key (id_estoque),
+constraint fk_produto_estoque foreign key (id_produto) references Produto(id_produto)
+);
