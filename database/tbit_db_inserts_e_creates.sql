@@ -9,21 +9,22 @@ USE tbit_db;
 CREATE TABLE Fornecedor 
 ( 
  id_fornecedor INT not null auto_increment,  
- nome_fornecedor varchar(30),  
+ nome_fornecedor varchar(40),  
  cnpj_fornecedor varchar(18),  
- email_fornecedor varchar(40),  
+ email_fornecedor varchar(50),  
  telefone_fornecedor varchar(20),  
  pais_fornecedor varchar(30),  
- cidade_fornecedor varchar(30),
+ 
+cidade_fornecedor varchar(30),
  constraint pk_fornecedor primary key (id_fornecedor) 
 ); 
 
 CREATE TABLE Produto 
 ( 
  id_produto INT not null auto_increment,  
- nome_produto varchar(30),  
- descricao_produto varchar(60),  
- quantidade_produto INT,  
+ nome_produto varchar(40),  
+ descricao_produto varchar(200),  
+ quantidade_produto INT null,  
  valor_produto decimal(10,2),  
  idFornecedor INT not null,
  constraint pk_produto primary key (id_produto),
@@ -33,8 +34,8 @@ CREATE TABLE Produto
 CREATE TABLE Cliente 
 ( 
  id_cliente INT not null auto_increment,  
- nome_cliente varchar(30),  
- descricao_cliente varchar(60),  
+ nome_cliente varchar(40),  
+ descricao_cliente varchar(200),  
  cnpj_cliente varchar(18),
  constraint pk_cliente primary key (id_cliente)
 ); 
@@ -52,17 +53,17 @@ CREATE TABLE Pedido
 CREATE TABLE Funcionario 
 ( 
  id_funcionario INT not null auto_increment,  
- nome_funcionario varchar(30),  
+ nome_funcionario varchar(40),  
  data_nascimento_funcionario date,  
  data_admissao_funcionario date,  
  cpf_funcionario varchar(14),  
  cidade_funcionario varchar(30),  
  estado_funcionario varchar(30),  
  telefone_funcionario varchar(15),  
- email_funcionario varchar(30),  
- usuario_funcionario varchar(30),  
+ email_funcionario varchar(50),  
+ usuario_funcionario varchar(30),
+ perfil_funcionario varchar(30),  
  senha_funcionario varchar(30),
- perfil_funcionario varchar(18),
  constraint pk_funcionario primary key (id_funcionario)
 ); 
 
@@ -75,6 +76,15 @@ CREATE TABLE Cadastro
  constraint fk_funcionario_cadastro foreign key (idFuncionario) references Funcionario(id_funcionario),
  constraint fk_cliente_cadastro foreign key (idCliente) references Cliente(id_cliente)
 ); 
+
+CREATE TABLE Estoque
+(
+id_estoque INT not null auto_increment,
+id_produto INT not null,
+quantidade_estoque INT not null,
+constraint pk_estoque primary key (id_estoque),
+constraint fk_produto_estoque foreign key (id_produto) references Produto(id_produto)
+);
 
 -- Inserção de dados na tabela Fornecedor (60 registros)
 INSERT INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
@@ -345,3 +355,11 @@ INSERT INTO Cadastro (idFuncionario, idCliente) VALUES
 (31, 31), (32, 32), (33, 33), (34, 34), (35, 35), (36, 36), (37, 37), (38, 38), (39, 39), (40, 40),
 (41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
 (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
+
+INSERT INTO Estoque (id_produto, quantidade_estoque) VALUES
+(1, 50), (2, 120), (3, 35), (4, 28), (5, 75), (6, 40), (7, 30), (8, 25), (9, 60), (10, 45), 
+(11, 55), (12, 40), (13, 100), (14, 30), (15, 200), (16, 80), (17, 60), (18, 45), (19, 50), (20, 35),
+(21, 70), (22, 40), (23, 25), (24, 90), (25, 60), (26, 50), (27, 15), (28, 20), (29, 65), (30, 30),
+(31, 18), (32, 45), (33, 40), (34, 22), (35, 50), (36, 35), (37, 25), (38, 40), (39, 30), (40, 10), 
+(41, 40), (42, 60), (43, 15), (44, 25), (45, 20), (46, 30), (47, 25), (48, 18), (49, 40), (50, 50), 
+(51, 80), (52, 60), (53, 45), (54, 30), (55, 20), (56, 50), (57, 15), (58, 40), (59, 70), (60, 60);
