@@ -10,15 +10,16 @@ class tela_produto_adm:
 
     # Construtor da classe, carrega as informações básicas de carregamento
     def __init__(self, root):
+        self.menu_root = root  
         # Definições da janela
-        self.root_produto = ctk.CTkToplevel()
-        self.root_produto.title("TBit Manager - Produtos")
-        self.root_produto.resizable(width=False, height=False)
-        self.root_produto.geometry("900x750")
+        self.root = ctk.CTkToplevel()
+        self.root.title("TBit Manager - Menu de produtos")
+        self.root.resizable(width=False, height=False)
+        self.root.geometry("900x700")
 
-       #self.root_produto.config(bg="")
-        self.root_produto.transient(root)  # Faz com que a nova janela fique acima da principal
-        self.root_produto.grab_set()  # Bloqueia interações na principal até fechar essa
+       #self.root.config(bg="")
+        self.root.transient(root)  # Faz com que a nova janela fique acima da principal
+        self.root.grab_set()  # Bloqueia interações na principal até fechar essa
     
         # Carrega os widgets da tela
         self.criando_widgets()
@@ -27,41 +28,42 @@ class tela_produto_adm:
 
     def criando_widgets(self):
         # Criando os botoes que carregam as funcoes necessarias e seus posicionamentos
-        ctk.CTkButton(self.root_produto, text="Cadastrar produto", command=self.registrar_no_banco, width=15, height=1).place(x=160, y=280) # Botao para cadastrar produto
-        ctk.CTkButton(self.root_produto, text="Alterar produto", command=self.alterar_no_banco, width=15, height=1).place(x=320, y=280) # Botao para alterar produto
-        ctk.CTkButton(self.root_produto, text="Deletar produto", command=self.deletar_do_banco, width=15, height=1).place(x=480, y=280) # Botao para deletar produto
-        ctk.CTkButton(self.root_produto, text="Cancelar operção", command=self.cancelar_operacao, width=15, height=1).place(x=640, y=280) # Botao para cancelar/voltar ao padrao
-        ctk.CTkButton(self.root_produto, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=30, height=2).place(x=135, y=355)
+        ctk.CTkButton(self.root, text="Cadastrar produto", command=self.registrar_no_banco, width=15, height=1).place(x=160, y=280) # Botao para cadastrar produto
+        ctk.CTkButton(self.root, text="Alterar produto", command=self.alterar_no_banco, width=15, height=1).place(x=320, y=280) # Botao para alterar produto
+        ctk.CTkButton(self.root, text="Deletar produto", command=self.deletar_do_banco, width=15, height=1).place(x=480, y=280) # Botao para deletar produto
+        ctk.CTkButton(self.root, text="Cancelar operção", command=self.cancelar_operacao, width=15, height=1).place(x=640, y=280) # Botao para cancelar/voltar ao padrao
+        ctk.CTkButton(self.root, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=30, height=2).place(x=135, y=355)
+        ctk.CTkButton(self.root, text='Voltar', width=20, command=self.voltar_menu).place(x=800, y=600)
 
         # Labels usados para identificar as caixas de texto e seus posicionamentos
-        ctk.CTkLabel(self.root_produto, text="Nome do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=50)
-        ctk.CTkLabel(self.root_produto, text="Descrição do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=90)
-        ctk.CTkLabel(self.root_produto, text="Quantidade do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=130)
-        ctk.CTkLabel(self.root_produto, text="Valor do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=170)
+        ctk.CTkLabel(self.root, text="Nome do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=50)
+        ctk.CTkLabel(self.root, text="Descrição do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=90)
+        ctk.CTkLabel(self.root, text="Quantidade do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=130)
+        ctk.CTkLabel(self.root, text="Valor do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=170)
 
         # Entrys usados para o usuario digitar e seus posicionamentos
         # Entry 'nome do produto'
-        self.box_nome = ctk.CTkEntry(self.root_produto, width=25,height=30)
+        self.box_nome = ctk.CTkEntry(self.root, width=25,height=30)
         self.box_nome.place(x=420, y=50)
 
         # Entry 'descrição do produto'
-        self.box_descricao = ctk.CTkEntry(self.root_produto, width=25,height=30)
+        self.box_descricao = ctk.CTkEntry(self.root, width=25,height=30)
         self.box_descricao.place(x=420, y=90)
 
         # Entry 'quantidade do produto'
-        self.box_quantidade = ctk.CTkEntry(self.root_produto, width=25,height=30)
+        self.box_quantidade = ctk.CTkEntry(self.root, width=25,height=30)
         self.box_quantidade.place(x=420, y=130)
 
         # Entry 'valor do produto'
-        self.box_valor = ctk.CTkEntry(self.root_produto, width=25,height=30)
+        self.box_valor = ctk.CTkEntry(self.root, width=25,height=30)
         self.box_valor.place(x=420, y=170)
         
         # Entry usado para pesquisar de forma individual
-        self.box_pesquisar = ctk.CTkEntry(self.root_produto, width=40, height=30)
+        self.box_pesquisar = ctk.CTkEntry(self.root, width=40, height=30)
         self.box_pesquisar.place(x=360, y=360 )
 
         # Text area usado para retornar dados ja existentes
-        self.text_area = ctk.CTkTextbox(self.root_produto, width=80, height=15)
+        self.text_area = ctk.CTkTextbox(self.root, width=80, height=15)
         self.text_area.place(x=135, y=400)
 
     # Método usado quando o botao 'Cadastrar' é clicado
@@ -170,8 +172,16 @@ class tela_produto_adm:
         self.box_quantidade.delete(0, ctk.END)
         self.box_valor.delete(0, ctk.END)    
 
+    
+       
+    def voltar_menu(self):
+        
+       # from menu_adm import menu_admin
+        self.root.destroy()  # Fecha a janela atual
+        self.menu_root.deiconify()
+
 # Chama a funcao principal e coloca o programa para rodar
 if __name__ == "__main__":
-    root_produto = ctk.CTk()
-    app = tela_produto_adm(root_produto)
-    root_produto.mainloop()
+    root = ctk.CTk()
+    app = tela_produto_adm(root)
+    root.mainloop()

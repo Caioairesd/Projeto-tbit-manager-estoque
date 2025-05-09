@@ -5,11 +5,12 @@ from database_geral import register_fornecedor_db,listar_fornecedor_db,update_fo
 class tela_fornecedor_adm:
 
     def __init__(self,root):
+        self.menu_root = root  
         self.root = ctk.CTkToplevel(root)
 
         #Define os parâmetros de interface da janela
         self.root.geometry("900x700")
-        self.root.title("TBit Manager - Menu Fornecedor")
+        self.root.title("TBit Manager - Menu de fornecedor")
         #self.root.configure(background="white")
         self.root.resizable(width=False,height=False)
         #self.root.attributes("-alpha",1.0)
@@ -30,7 +31,7 @@ class tela_fornecedor_adm:
         ctk.CTkButton(self.root,text="Excluir",width=15,height=1,command=self.delete_fornecedor).place(x=480,y=280)
         ctk.CTkButton(self.root,text="Cancelar",width=15,height=1,command=self.cancelar_operacao).place(x=640,y=280)
         ctk.CTkButton(self.root,text="Pesquisar e inserir dados\n(Nome ou ID)",width=30,height=2,command=self.pesquisar_fornecedor).place(x=135,y=355)
-        
+        ctk.CTkButton(self.root, text='Voltar', width=20, command=self.voltar_menu).place(x=800, y=600)
         
         #Criação de labels
         ctk.CTkLabel(self.root,text="Fornecedor:",fg_color="blue", text_color='white').place(x=300,y=30)
@@ -200,7 +201,11 @@ class tela_fornecedor_adm:
             self.limpar_campos()
             self.listar_fornecedor()
 
-
+    def voltar_menu(self):
+        
+       # from menu_adm import menu_admin
+        self.root.destroy()  # Fecha a janela atual
+        self.menu_root.deiconify()
         
           
 

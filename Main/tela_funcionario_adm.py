@@ -8,9 +8,9 @@ from database_geral import register_funcionario_db, delete_funcionario_db, updat
 
 class tela_funcionario_adm:
     def __init__(self, root):
-        
+        self.menu_root = root  
         self.root = ctk.CTkToplevel(root) 
-        self.root.title("CRUD FUNCIONARIO TerraBytes")
+        self.root.title("TBit Manager - Menu de funcionário")
         self.root.geometry("900x700")
         self.root.resizable(width=False, height=False)
 
@@ -73,7 +73,8 @@ class tela_funcionario_adm:
         ctk.CTkButton(self.root, text="EXCLUIR", command=self.delete_funcionario).place(x=120, y=420)
         ctk.CTkButton(self.root, text="EDITAR", command=self.update_funcionario).place(x=195, y=420)
         ctk.CTkButton(self.root, text="BUSCAR", command=self.pesquisar_funcionario).place(x=740, y=450)
-
+        ctk.CTkButton(self.root, text='Voltar', width=20, command=self.voltar_menu).place(x=800, y=600)
+       
         #Text Area não funciona verificar
         self.text_area = ctk.CTkTextbox(self.root, height=12, width=105, fg_color="lightgray")
         self.text_area.place(x=30, y=480)
@@ -188,6 +189,7 @@ class tela_funcionario_adm:
         self.text_area.delete(1.0, ctk.END)
 
     def cancelar(self):
+        self.menu_root = root  
         confirmacao = messagebox.askyesno("Confirmação", "Você deseja mesmo cancelar a operação?")
         if confirmacao == True:
             messagebox.showinfo("Cancelar", "Ação cancelada")
@@ -201,6 +203,12 @@ class tela_funcionario_adm:
         print(data_banco)
 
         return data_banco
+    
+    def voltar_menu(self):
+        
+       # from menu_adm import menu_admin
+        self.root.destroy()  # Fecha a janela atual
+        self.menu_root.deiconify()
 
 if __name__ == "__main__":
     root = ctk.CTk()

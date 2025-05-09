@@ -4,9 +4,9 @@ import customtkinter as ctk
 from tela_fornecedor_adm import tela_fornecedor_adm
 from tela_produto_adm import tela_produto_adm
 from tela_funcionario_adm import tela_funcionario_adm
-from tela_cliente import  tela_cliente
-from tela_estoque import  tela_estoque
-from tela_pedido import  tela_pedido
+from tela_cliente import tela_cliente
+from tela_estoque import tela_estoque
+from tela_pedido import tela_pedido
 from tela_reabastecimento import tela_reabastecimento
 from tela_dashboard import tela_dashboard
 
@@ -49,55 +49,42 @@ class menu_admin:
 
         
 
-    # CLASSES CRIADAS PARA PASSAR O ROOT AS CLASSES QUE IMPORTAMOS
+    # Classes responsáveis pelas transições de telas, atribuindo root
     def abrir_tela_funcionario(self):
         tela_funcionario_adm(self.root)
-        
+        self.root.withdraw()
 
     def abrir_tela_produto_admin(self):
         tela_produto_adm(self.root)
-        
-
+        self.root.withdraw()
 
     def abrir_tela_fornecedor_admin(self):
         tela_fornecedor_adm(self.root)
-       
+        self.root.withdraw()       
 
     def abrir_tela_cliente(self):
         tela_cliente(self.root)
-        
+        self.root.withdraw()
 
     def abrir_tela_estoque(self):
         tela_estoque(self.root)
-        
+        self.root.withdraw()
 
     def abrir_tela_pedido(self):
         tela_pedido(self.root)
-        
+        self.root.withdraw()
 
     def abrir_tela_reabastecimento(self):
         tela_reabastecimento(self.root)
-        
+        self.root.withdraw()
 
     def abrir_tela_dashboard(self):
         tela_dashboard(self.root)
-        
+        self.root.withdraw()
         
     def logout_admin(self):
         from main_menu import login_menu
         root = ctk.CTk()
         app = login_menu(root)
         self.root.destroy()
-        root.mainloop()
-
-    def apagar_menu_adm(self):
-        from menu_adm import menu_admin
-
-        root = ctk.CTk()
-        app = menu_admin(root)
-        self.root.destroy()
-
-        
-
-
-        
+        root.mainloop()    
