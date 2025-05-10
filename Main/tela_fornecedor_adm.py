@@ -35,36 +35,36 @@ class tela_fornecedor_adm:
         
         #Criação de labels
         ctk.CTkLabel(self.root,text="Fornecedor:",fg_color="blue", text_color='white').place(x=300,y=30)
-        ctk.CTkLabel(self.root,text="Marca:",fg_color="blue", text_color='white').place(x=300,y=60)
+        ctk.CTkLabel(self.root,text="CNPJ:",fg_color="blue", text_color='white').place(x=300,y=60)
         ctk.CTkLabel(self.root,text="Email:",fg_color="blue", text_color='white').place(x=300,y=90)
         ctk.CTkLabel(self.root,text="Telefone:",fg_color="blue", text_color='white').place(x=300,y=120)
-        ctk.CTkLabel(self.root,text="Cidade:",fg_color="blue", text_color='white').place(x=300,y=150)
-        ctk.CTkLabel(self.root,text="País:",fg_color="blue", text_color='white').place(x=300,y=180)
+        ctk.CTkLabel(self.root,text="País:",fg_color="blue", text_color='white').place(x=300,y=150)
+        ctk.CTkLabel(self.root,text="Cidade:",fg_color="blue", text_color='white').place(x=300,y=180)
         ctk.CTkLabel(self.root,text="ID:",fg_color="blue", text_color='white').place(x=300,y=210)
 
 
         #Criação de campos de entrada de dados
         self.fornecedor_entry = ctk.CTkEntry(self.root)
-        self.marca_fornecedor_entry = ctk.CTkEntry(self.root)
+        self.cnpj_fornecedor_entry = ctk.CTkEntry(self.root)
         self.email_fornecedor_entry = ctk.CTkEntry(self.root)
         self.telefone_fornecedor_entry = ctk.CTkEntry(self.root)
-        self.cidade_fornecedor_entry = ctk.CTkEntry(self.root)
         self.pais_fornecedor_entry = ctk.CTkEntry(self.root)
+        self.cidade_fornecedor_entry = ctk.CTkEntry(self.root)
         self.id_fornecedor_entry = ctk.CTkEntry(self.root)
         self.pesquisar_entry = ctk.CTkEntry(self.root,width=300,height=30)
 
         #Definindo localização dos campos na tela
         self.fornecedor_entry.place(x=400,y=30)
-        self.marca_fornecedor_entry.place(x=400,y=60)
+        self.cnpj_fornecedor_entry.place(x=400,y=60)
         self.email_fornecedor_entry.place(x=400,y=90)
         self.telefone_fornecedor_entry.place(x=400,y=120)
-        self.cidade_fornecedor_entry.place(x=400,y=150)
-        self.pais_fornecedor_entry.place(x=400,y=180)
+        self.pais_fornecedor_entry.place(x=400,y=150)
+        self.cidade_fornecedor_entry.place(x=400,y=180)
         self.id_fornecedor_entry.place(x=400,y=210)
         self.pesquisar_entry.place(x=360,y=360)
 
         #Criação da área de texto responsável por exibir informações dos fornecedores
-        self.search_area = ctk.CTkTextbox(self.root,height=15,width=80)
+        self.search_area = ctk.CTkTextbox(self.root,height=250,width=600)
         self.search_area.place(x=135,y=400)
 
     #função responsável por criar um fornecedor 
@@ -72,15 +72,15 @@ class tela_fornecedor_adm:
         
         #variáveis recebem o valor inserido no campo de texto
         nome_fornecedor = self.fornecedor_entry.get()
-        marca_fornecedor = self.marca_fornecedor_entry.get()
+        cnpj_fornecedor = self.cnpj_fornecedor_entry.get()
         email_fornecedor = self.email_fornecedor_entry.get()
         telefone_fornecedor = self.telefone_fornecedor_entry.get()
-        cidade_fornecedor = self.cidade_fornecedor_entry.get()
-        pais_fornecedor = self.pais_fornecedor_entry.get()
+        cidade_fornecedor = self.pais_fornecedor_entry.get()
+        pais_fornecedor = self.cidade_fornecedor_entry.get()
        
         #Condicional responsável por acionar função do banco de dados
-        if nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
-            register_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
+        if nome_fornecedor and cnpj_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
+            register_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
 
             #Chama a função de limpar campos de texto
             self.limpar_campos()
@@ -101,7 +101,7 @@ class tela_fornecedor_adm:
         self.search_area.delete(1.0,ctk.END)
 
         for fornecedor in fornecedores:
-                    self.search_area.insert(ctk.END,f"ID: {fornecedor[0]},Fornecedor: {fornecedor[1]},Marca:{fornecedor[2]},Email:{fornecedor[3]},Telefone:{fornecedor[4]},Cidade:{fornecedor[5]},Cidade:{fornecedor[6]}\n")
+                    self.search_area.insert(ctk.END,f"ID: {fornecedor[0]}, Fornecedor: {fornecedor[1]}, CNPJ:{fornecedor[2]}, Email:{fornecedor[3]}, Telefone:{fornecedor[4]}, País:{fornecedor[5]}, Cidade:{fornecedor[6]}\n\n")
 
     #função responsável por exibir e setar os valores relacionados ao id ou nome inserido ao usuário
     # como não realizamos ainda a máteria de banco de dados não é possível vincular tabela.         
@@ -120,21 +120,21 @@ class tela_fornecedor_adm:
             if id_solicitado:
 
                 
-                messagebox.showinfo("Sucesso!","{}Fornecedor encontrado com sucesso!\nVerifique a caixa de texto".format(id_solicitado))
+                messagebox.showinfo("Sucesso!","Fornecedor '{}' encontrado com sucesso!\nVerifique as caixas de texto".format(id_solicitado[1]))
                 #Retira de exibição os fornecedores cadastrados deixando somente o pesquisado           
                 self.search_area.delete(1.0,ctk.END)
 
                 #Insere os dados do fornecedor pesquisado no campo de exibição
-                self.search_area.insert(ctk.END,f"ID: {id_solicitado[0]},Fornecedor: {id_solicitado[1]},Marca:{id_solicitado[2]},Email:{id_solicitado[3]},Telefone:{id_solicitado[4]},Cidade:{id_solicitado[5]},Cidade:{id_solicitado[6]}\n")
+                self.search_area.insert(ctk.END,f"ID: {id_solicitado[0]}, Fornecedor: {id_solicitado[1]}, CNPJ:{id_solicitado[2]}, Email:{id_solicitado[3]}, Telefone:{id_solicitado[4]}, País:{id_solicitado[5]}, Cidade:{id_solicitado[6]}\n")
 
                 #Insere os dados do fornecedor pesquisado nos campos de texto para possível edição  
                 self.id_fornecedor_entry.insert(0,id_solicitado[0])
                 self.fornecedor_entry.insert(0,id_solicitado[1])
-                self.marca_fornecedor_entry.insert(0,id_solicitado[2])
+                self.cnpj_fornecedor_entry.insert(0,id_solicitado[2])
                 self.email_fornecedor_entry.insert(0,id_solicitado[3])
                 self.telefone_fornecedor_entry.insert(0,id_solicitado[4])
-                self.cidade_fornecedor_entry.insert(0,id_solicitado[5])
-                self.pais_fornecedor_entry.insert(0,id_solicitado[6])
+                self.pais_fornecedor_entry.insert(0,id_solicitado[5])
+                self.cidade_fornecedor_entry.insert(0,id_solicitado[6])
             else:
                 messagebox.showerror("Erro","Fornecedor não encontrado!")
         else:
@@ -146,14 +146,14 @@ class tela_fornecedor_adm:
         #variáveis recebem os dados inseridos nos campos de textos
         id_fornecedor = self.id_fornecedor_entry.get() 
         nome_fornecedor=self.fornecedor_entry.get()
-        marca_fornecedor =self.marca_fornecedor_entry.get()        
+        cnpj_fornecedor =self.cnpj_fornecedor_entry.get()        
         email_fornecedor =self.email_fornecedor_entry.get()
         telefone_fornecedor =self.telefone_fornecedor_entry.get()
-        cidade_fornecedor =self.cidade_fornecedor_entry.get()
-        pais_fornecedor = self.pais_fornecedor_entry.get()
+        cidade_fornecedor =self.pais_fornecedor_entry.get()
+        pais_fornecedor = self.cidade_fornecedor_entry.get()
         
-        if  id_fornecedor and nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
-            update_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor)
+        if  id_fornecedor and nome_fornecedor and cnpj_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
+            update_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor)
             
             messagebox.showinfo("Sucess","informações alteradas com sucesso!")
         else:
@@ -181,14 +181,15 @@ class tela_fornecedor_adm:
             else:
                 messagebox.showerror("Erro","ID do fornecedor é obrigatório!")
 
-            #Função responsável por limpar os campos de texto
+
+    #Função responsável por limpar os campos de texto
     def limpar_campos(self):
         self.fornecedor_entry.delete(0,ctk.END)
-        self.marca_fornecedor_entry.delete(0,ctk.END)
+        self.cnpj_fornecedor_entry.delete(0,ctk.END)
         self.email_fornecedor_entry.delete(0,ctk.END)
         self.telefone_fornecedor_entry.delete(0,ctk.END)
-        self.cidade_fornecedor_entry.delete(0,ctk.END)
         self.pais_fornecedor_entry.delete(0,ctk.END)
+        self.cidade_fornecedor_entry.delete(0,ctk.END)
         self.id_fornecedor_entry.delete(0,ctk.END)
 
     #Função responsável por cancelar a operação

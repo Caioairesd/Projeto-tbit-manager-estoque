@@ -34,19 +34,22 @@ class tela_funcionario_adm:
         ctk.CTkLabel(self.root, text="Email:",fg_color="#00284d", text_color='white').place(x=30, y=300)
         ctk.CTkLabel(self.root, text="Usuario:",fg_color="#00284d", text_color='white').place(x=30, y=340)
         ctk.CTkLabel(self.root, text="Senha:",fg_color="#00284d", text_color='white').place(x=30, y=380)
-        
+        ctk.CTkLabel(self.root, text="Perfil:",fg_color="#00284d", text_color='white').place(x=30, y=420)
 
         # Caixas cinza escuro
-        self.nome_funcionario_entry  = ctk.CTkEntry(self.root, fg_color="darkgray", width=25,height=100)
-        self.data_nascimento_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=25,height=100)
-        self.data_admissao_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=25,height=100)
-        self.cpf_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=25,height=100)
-        self.cidade_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=25,height=100)
-        self.uf_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=25,height=100)
-        self.telefone_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=25,height=100)
-        self.email_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=25,height=100)
+        self.nome_funcionario_entry  = ctk.CTkEntry(self.root, fg_color="darkgray", width=100,height=25)
+        self.data_nascimento_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=100,height=25)
+        self.data_admissao_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=100,height=25)
+        self.cpf_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=100,height=25)
+        self.cidade_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=100,height=25)
+        self.uf_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=100,height=25)
+        self.telefone_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=100,height=25)
+        self.email_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=100,height=25)
         self.usuario_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
-        self.senha_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", show="*", width=25,height=100)
+        self.senha_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", show="*", width=100,height=25)
+        
+        self.perfil_funcionario_entry = ctk.CTkComboBox(self.root, fg_color="darkgray", values=["Usuario simples", "Administrador"], width=130, height=25)
+        
         self.buscar_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=25,height=100)
         self.exibir_id_entry = ctk.CTkEntry(self.root, fg_color="darkgray", width=70,height=100)
 
@@ -61,6 +64,7 @@ class tela_funcionario_adm:
         self.email_funcionario_entry.place(x=180, y=300)
         self.usuario_funcionario_entry.place(x=180, y=340)
         self.senha_funcionario_entry.place(x=180, y=380)
+        self.perfil_funcionario_entry.place(x=180, y=420)
         self.buscar_funcionario_entry.place(x=660, y=453)
         
 
@@ -68,15 +72,15 @@ class tela_funcionario_adm:
         self.id_funcionario_entry = ctk.CTkEntry(self.root, fg_color="darkgray")
 
         # Botões de funções
-        ctk.CTkButton(self.root, text="CANCELAR", command=self.cancelar).place(x=800, y=450)
-        ctk.CTkButton(self.root, text="REGISTRAR", command=self.registrar_funcionario).place(x=30, y=420)
-        ctk.CTkButton(self.root, text="EXCLUIR", command=self.delete_funcionario).place(x=120, y=420)
-        ctk.CTkButton(self.root, text="EDITAR", command=self.update_funcionario).place(x=195, y=420)
-        ctk.CTkButton(self.root, text="BUSCAR", command=self.pesquisar_funcionario).place(x=740, y=450)
+        ctk.CTkButton(self.root, text="CANCELAR", command=self.cancelar).place(x=800, y=500)
+        ctk.CTkButton(self.root, text="REGISTRAR", command=self.registrar_funcionario).place(x=30, y=450)
+        ctk.CTkButton(self.root, text="EXCLUIR", command=self.delete_funcionario).place(x=120, y=450)
+        ctk.CTkButton(self.root, text="ALTERAR", command=self.update_funcionario).place(x=195, y=450)
+        ctk.CTkButton(self.root, text="BUSCAR", command=self.pesquisar_funcionario).place(x=740, y=500)
         ctk.CTkButton(self.root, text='Voltar', width=20, command=self.voltar_menu).place(x=800, y=600)
        
         #Text Area não funciona verificar
-        self.text_area = ctk.CTkTextbox(self.root, height=12, width=105, fg_color="lightgray")
+        self.text_area = ctk.CTkTextbox(self.root, height=200, width=550, fg_color="lightgray")
         self.text_area.place(x=30, y=480)
 
     def registrar_funcionario(self):
@@ -90,12 +94,13 @@ class tela_funcionario_adm:
         Email = self.email_funcionario_entry.get()
         Usuario = self.usuario_funcionario_entry.get()
         Senha = self.senha_funcionario_entry.get()
+        perfil = self.perfil_funcionario_entry.get()
         
         data_nascimento_funcionario = self.inverter_data(data_nascimento_funcionario_invertida)
         data_admissao_funcionario = self.inverter_data(data_admissao_funcionario_invertida)
 
         if nome_funcionario and data_nascimento_funcionario and data_admissao_funcionario and CPF and Cidade and UF and Telefone and Email and Usuario and Senha:
-            register_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, CPF, Cidade, UF, Telefone, Email, Usuario, Senha)
+            register_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, CPF, Cidade, UF, Telefone, Email, Usuario, Senha, perfil)
             self.limpar_campos()
             messagebox.showinfo("Success", "Funcionario criado com Sucesso")
         else:
@@ -105,7 +110,7 @@ class tela_funcionario_adm:
         funcionarios = listar_funcionarios_db()
         self.text_area.delete(1.0, ctk.END)
         for funcionario in funcionarios:
-            self.text_area.insert(ctk.END, f"id:{funcionario[0]}, Nome: {funcionario[1]}, Data de Nascimento: {funcionario[2]}, Data de Admissão: {funcionario[3]}, CPF: {funcionario[4]}, Cidade: {funcionario[5]}, UF: {funcionario[6]}, Telefone: {funcionario[7]}, Email: {funcionario[8]}, Usuario: {funcionario[9]}, Senha: {funcionario[10]}\n\n")
+            self.text_area.insert(ctk.END, f"ID:{funcionario[0]}, Nome: {funcionario[1]}, Data de Nascimento: {funcionario[2]}, Data de Admissão: {funcionario[3]}, CPF: {funcionario[4]}, Cidade: {funcionario[5]}, UF: {funcionario[6]}, Telefone: {funcionario[7]}, Email: {funcionario[8]}, Usuario: {funcionario[9]}, Senha: {funcionario[10]}, Perfil: {funcionario[11]}\n\n")
 
     def pesquisar_funcionario(self):
         busca = self.buscar_funcionario_entry.get()
@@ -120,7 +125,7 @@ class tela_funcionario_adm:
                 self.text_area.delete(1.0, ctk.END)  # Limpa a área de texto antes de exibir os dados
 
                 # Exibe as informações do funcionário na caixa de texto
-                self.text_area.insert(ctk.END, f"ID:{id_solicitado[0]}, Nome: {id_solicitado[1]}, Data de Nascimento: {id_solicitado[2]}, Data de Admissão: {id_solicitado[3]}, CPF: {id_solicitado[4]}, Cidade: {id_solicitado[5]}, UF: {id_solicitado[6]}, Telefone: {id_solicitado[7]}, Email: {id_solicitado[8]}, Usuario: {id_solicitado[9]}, Senha: {id_solicitado[10]}\n")
+                self.text_area.insert(ctk.END, f"ID:{id_solicitado[0]}, Nome: {id_solicitado[1]}, Data de Nascimento: {id_solicitado[2]}, Data de Admissão: {id_solicitado[3]}, CPF: {id_solicitado[4]}, Cidade: {id_solicitado[5]}, UF: {id_solicitado[6]}, Telefone: {id_solicitado[7]}, Email: {id_solicitado[8]}, Usuario: {id_solicitado[9]}, Senha: {id_solicitado[10]}, Perfil: {id_solicitado[11]}\n")
 
                 # Preenche os campos de entrada com os dados encontrados
                 self.id_funcionario_entry.insert(0, id_solicitado[0])
@@ -134,6 +139,7 @@ class tela_funcionario_adm:
                 self.email_funcionario_entry.insert(0, id_solicitado[8])
                 self.usuario_funcionario_entry.insert(0, id_solicitado[9])
                 self.senha_funcionario_entry.insert(0, id_solicitado[10])
+                self.perfil_funcionario_entry.set(id_solicitado[11])
      
             else:
                 messagebox.showerror("Erro", "Funcionário não encontrado")
@@ -152,9 +158,10 @@ class tela_funcionario_adm:
         Email = self.email_funcionario_entry.get()
         Usuario = self.usuario_funcionario_entry.get()
         Senha = self.senha_funcionario_entry.get()
+        perfil = self.perfil_funcionario_entry.get()
 
         if id_funcionario and nome_funcionario and data_nascimento_funcionario and data_admissao_funcionario and CPF and Cidade and UF and Telefone and Email and Usuario and Senha:
-            update_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, CPF, Cidade, UF, Telefone, Email, Usuario, Senha, id_funcionario)
+            update_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, CPF, Cidade, UF, Telefone, Email, Usuario, Senha, perfil, id_funcionario)
             messagebox.showinfo("Sucesso", "Funcionário atualizado com sucesso")
             self.limpar_campos()
             self.listar_funcionarios()

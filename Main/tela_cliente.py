@@ -12,8 +12,6 @@ class tela_cliente:
 
         self.root.title("TBit Manager - Menu de cliente")
         self.root.resizable(width=False,height=False)
-        
-
 
         self.root.transient(root)  # Faz com que a nova janela fique acima da principal
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
@@ -31,14 +29,6 @@ class tela_cliente:
         self.root.destroy()  # Fecha a janela atual
         self.menu_root.deiconify()
     
-        
-
-        
-
-    
-        
-        
-
 if __name__ == "__main__":
     root = ctk.CTk()
     app = tela_cliente(root)

@@ -3,7 +3,7 @@
 #from ctkinter import * 
 import customtkinter as ctk
 from tkinter import messagebox
-from database_geral import registrar_produto_db, atualizar_produto_db, listar_produtos_db, deletar_produto_db, pesquisar_produto_db
+from database_geral import registrar_produto_db, atualizar_produto_db, listar_produtos_db, deletar_produto_db, pesquisar_produto_db, listar_fornecedores_db
 
 # Criando classe principal, que carrega a janela e tudo o que há nela
 class tela_produto_adm:
@@ -40,43 +40,69 @@ class tela_produto_adm:
         ctk.CTkLabel(self.root, text="Descrição do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=90)
         ctk.CTkLabel(self.root, text="Quantidade do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=130)
         ctk.CTkLabel(self.root, text="Valor do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=170)
+        ctk.CTkLabel(self.root, text="Fornecedor do Produto:",fg_color="#00284d", text_color='white').place(x=485, y=210)
+        ctk.CTkLabel(self.root, text="Pesquisar fornecedor:",fg_color="#00284d", text_color='white').place(x=190, y=210)
+
 
         # Entrys usados para o usuario digitar e seus posicionamentos
         # Entry 'nome do produto'
-        self.box_nome = ctk.CTkEntry(self.root, width=25,height=30)
+        self.box_nome = ctk.CTkEntry(self.root, width=150,height=30)
         self.box_nome.place(x=420, y=50)
 
         # Entry 'descrição do produto'
-        self.box_descricao = ctk.CTkEntry(self.root, width=25,height=30)
+        self.box_descricao = ctk.CTkEntry(self.root, width=150,height=30)
         self.box_descricao.place(x=420, y=90)
 
         # Entry 'quantidade do produto'
-        self.box_quantidade = ctk.CTkEntry(self.root, width=25,height=30)
+        self.box_quantidade = ctk.CTkEntry(self.root, width=150,height=30)
         self.box_quantidade.place(x=420, y=130)
+        self.box_quantidade.configure(state="disabled")
 
         # Entry 'valor do produto'
-        self.box_valor = ctk.CTkEntry(self.root, width=25,height=30)
+        self.box_valor = ctk.CTkEntry(self.root, width=150,height=30)
         self.box_valor.place(x=420, y=170)
-        
+
+        self.box_fornecedor = ctk.CTkEntry(self.root, width=150, height=30)
+        self.box_fornecedor.place(x=325, y=210)
+        self.box_fornecedor.bind("<KeyRelease>", self.filtrar_nomes)
+
+        #COMBO box fornecedor
+        self.combobox_fornecedor = ctk.CTkComboBox(self.root, values=self.buscar_fornecedores(), height=30, width=210)
+        self.combobox_fornecedor.place(x=620, y=210)
+
         # Entry usado para pesquisar de forma individual
         self.box_pesquisar = ctk.CTkEntry(self.root, width=40, height=30)
-        self.box_pesquisar.place(x=360, y=360 )
+        self.box_pesquisar.place(x=360, y=360)
 
         # Text area usado para retornar dados ja existentes
-        self.text_area = ctk.CTkTextbox(self.root, width=80, height=15)
+        self.text_area = ctk.CTkTextbox(self.root, width=650, height=280)
         self.text_area.place(x=135, y=400)
+
+    def buscar_fornecedores(self):
+            busca = listar_fornecedores_db()
+            fornecedores = [nome[1] for nome in busca]
+            return fornecedores
+
+    #EVENTO PARA FILTRAGEM
+    def filtrar_nomes(self, event):
+        fornecedores = listar_fornecedores_db()
+
+        texto = self.box_fornecedor.get().lower()
+
+        filtrados = [nome[1] for nome in fornecedores if texto in nome[1].lower()]
+        self.combobox_fornecedor.configure(values=filtrados)
+        self.combobox_fornecedor.set(filtrados[0])
 
     # Método usado quando o botao 'Cadastrar' é clicado
     def registrar_no_banco(self):
         nome_produto = self.box_nome.get().title() # Pega o valor que esta dentro da box de nome
         descricao_produto = self.box_descricao.get() # Pega o valor que esta dentro da box de descricao
-        quantidade_produto = self.box_quantidade.get() # Pega o valor que esta dentro da box de quantidade
         valor_produto = self.box_valor.get() # Pega o valor que esta dentro da box de valor
 
-        if nome_produto and descricao_produto and quantidade_produto and valor_produto: # Verifica se todas as variaveis carregam um valor diferente de nulo
-            registrar_produto_db(nome_produto, descricao_produto, quantidade_produto, valor_produto) # Executa o metodo que se conecta com o banco
+        if nome_produto and descricao_produto and valor_produto: # Verifica se todas as variaveis carregam um valor diferente de nulo
+            registrar_produto_db(nome_produto, descricao_produto, valor_produto) # Executa o metodo que se conecta com o banco
 
-            self.limpar_campos() # Executa o metodo que limpa os bancos
+            self.limpar_campos() # Executa o metodo que limpa os campos
 
             messagebox.showinfo("Sucesso", "Produto cadastrado com sucesso!") # Mensagem lançada na tela do usuario
 
@@ -87,16 +113,13 @@ class tela_produto_adm:
     def alterar_no_banco(self):
         nome_produto = self.box_nome.get() # Resgata as informações que estão dentro da box 'Nome'
         descricao_produto = self.box_descricao.get() # Resgata as informações que estão dentro da box 'Descricao'
-        quantidade_produto = self.box_quantidade.get() # Resgata as informações que estão dentro da box 'Quantidade'
-        valor_produto = self.box_valor.get(
+        valor_produto = self.box_valor.get() # Resgata as informações que estão dentro da box 'Valor'
 
-        ) # Resgata as informações que estão dentro da box 'Valor'
-
-        if nome_produto and descricao_produto and quantidade_produto and valor_produto: # Verifica se alguma variavel esta vazia
+        if nome_produto and descricao_produto and valor_produto: # Verifica se alguma variavel esta vazia
             confirmacao = messagebox.askyesno("Confirmação", f"Você realmente deseja alterar as informações de '{nome_produto}'?") # Mensagem lançada na tela do usuario que recebe 'True' ou 'False'
 
             if confirmacao == True: # Verifica se o cliente clicou 'Sim'
-                atualizar_produto_db(nome_produto, descricao_produto, quantidade_produto, valor_produto) # Chama o metodo atualizar_produto, que faz conexao com o banco
+                atualizar_produto_db(nome_produto, descricao_produto, valor_produto) # Chama o metodo atualizar_produto, que faz conexao com o banco
                 self.limpar_campos() # Metodo usado para limpar os campos
                 messagebox.showinfo("Sucesso", "Produto atualizado com sucesso!") # Mensagem lançada na tela do usuario
                 self.listar_do_banco() # Lista novamente todos os itens presentes na tabela 'produto'
@@ -112,7 +135,7 @@ class tela_produto_adm:
             self.text_area.delete(1.0, ctk.END)
 
             for produto in produtos:
-                self.text_area.insert(ctk.END, f"-ID: {produto[0]} | Nome: {produto[1]} | Descrição: {produto[2]} | Quantidade: {produto[3]} | Valor: {produto[4]}\n")
+                self.text_area.insert(ctk.END, f"-ID: {produto[0]} | Nome: {produto[1]} | Descrição: {produto[2]} | Quantidade: {produto[3]} | Valor: {produto[4]}\n\n")
     
     def deletar_do_banco(self):
         produto = self.box_nome.get()
@@ -171,8 +194,6 @@ class tela_produto_adm:
         self.box_descricao.delete(0, ctk.END)
         self.box_quantidade.delete(0, ctk.END)
         self.box_valor.delete(0, ctk.END)    
-
-    
        
     def voltar_menu(self):
         
