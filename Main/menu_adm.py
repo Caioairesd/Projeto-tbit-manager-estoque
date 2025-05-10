@@ -88,3 +88,8 @@ class menu_admin:
         app = login_menu(root)
         self.root.destroy()
         root.mainloop()    
+
+if __name__ == '__main__':
+    root = ctk.CTk()
+    app = menu_admin(root)
+    root.mainloop()

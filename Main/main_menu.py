@@ -83,7 +83,6 @@ class login_menu:
         janela_user.mainloop()
         
     
-    
 if __name__ == '__main__':
     root = ctk.CTk()
     app = login_menu(root)

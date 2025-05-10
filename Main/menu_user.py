@@ -55,3 +55,8 @@ class menu_usuario:
         app = login_menu(menu)
         self.root.destroy()
         menu.mainloop()
+    
+if __name__ == '__main__':
+    root = ctk.CTk()
+    app = menu_usuario(root)
+    root.mainloop()
