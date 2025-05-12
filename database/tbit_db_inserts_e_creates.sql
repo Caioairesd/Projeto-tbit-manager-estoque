@@ -62,8 +62,8 @@ CREATE TABLE Funcionario
  telefone_funcionario varchar(15),  
  email_funcionario varchar(50),  
  usuario_funcionario varchar(30),
- perfil_funcionario varchar(30),  
- senha_funcionario varchar(30),
+ senha_funcionario varchar(30),  
+ perfil_funcionario varchar(30),
  constraint pk_funcionario primary key (id_funcionario)
 ); 
 

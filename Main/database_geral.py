@@ -2,15 +2,15 @@ import mysql.connector
 
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = 'root'
+MYSQL_PASSWORD = ''
 MYSQL_DATABASE = 'tbit_db'
 
 class tbit_db:
     def __init__(self):
         self.conn = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password='root'
+            host=MYSQL_HOST,
+            user=MYSQL_USER,
+            password=MYSQL_PASSWORD
         )
         self.cursor = self.conn.cursor()
 
