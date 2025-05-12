@@ -110,7 +110,7 @@ class tela_funcionario_adm:
         funcionarios = listar_funcionarios_db()
         self.text_area.delete(1.0, ctk.END)
         for funcionario in funcionarios:
-            self.text_area.insert(ctk.END, f"ID:{funcionario[0]}, Nome: {funcionario[1]}, Data de Nascimento: {funcionario[2]}, Data de Admissão: {funcionario[3]}, CPF: {funcionario[4]}, Cidade: {funcionario[5]}, UF: {funcionario[6]}, Telefone: {funcionario[7]}, Email: {funcionario[8]}, Usuario: {funcionario[9]}, Senha: {funcionario[11]}, Perfil: {funcionario[10]}\n\n")
+            self.text_area.insert(ctk.END, f"ID:{funcionario[0]}, Nome: {funcionario[1]}, Data de Nascimento: {funcionario[2]}, Data de Admissão: {funcionario[3]}, CPF: {funcionario[4]}, Cidade: {funcionario[5]}, UF: {funcionario[6]}, Telefone: {funcionario[7]}, Email: {funcionario[8]}, Usuario: {funcionario[9]}, Senha: {funcionario[10]}, Perfil: {funcionario[11]}\n\n")
 
     def pesquisar_funcionario(self):
         busca = self.buscar_funcionario_entry.get()
@@ -125,7 +125,7 @@ class tela_funcionario_adm:
                 self.text_area.delete(1.0, ctk.END)  # Limpa a área de texto antes de exibir os dados
 
                 # Exibe as informações do funcionário na caixa de texto
-                self.text_area.insert(ctk.END, f"ID:{id_solicitado[0]}, Nome: {id_solicitado[1]}, Data de Nascimento: {id_solicitado[2]}, Data de Admissão: {id_solicitado[3]}, CPF: {id_solicitado[4]}, Cidade: {id_solicitado[5]}, UF: {id_solicitado[6]}, Telefone: {id_solicitado[7]}, Email: {id_solicitado[8]}, Usuario: {id_solicitado[9]}, Senha: {id_solicitado[11]}, Perfil: {id_solicitado[10]}\n")
+                self.text_area.insert(ctk.END, f"ID:{id_solicitado[0]}, Nome: {id_solicitado[1]}, Data de Nascimento: {id_solicitado[2]}, Data de Admissão: {id_solicitado[3]}, CPF: {id_solicitado[4]}, Cidade: {id_solicitado[5]}, UF: {id_solicitado[6]}, Telefone: {id_solicitado[7]}, Email: {id_solicitado[8]}, Usuario: {id_solicitado[9]}, Senha: {id_solicitado[10]}, Perfil: {id_solicitado[11]}\n")
 
                 # Preenche os campos de entrada com os dados encontrados
                 self.id_funcionario_entry.insert(0, id_solicitado[0])
