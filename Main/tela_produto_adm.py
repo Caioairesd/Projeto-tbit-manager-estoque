@@ -93,20 +93,34 @@ class tela_produto_adm:
         self.combobox_fornecedor.configure(values=filtrados)
         self.combobox_fornecedor.set(filtrados[0])
 
+    def get_id_fornecedor(self):
+        nome_fornecedor = self.combobox_fornecedor.get()
+        busca = listar_fornecedores_db()
+
+        for fornecedor in busca:
+            if nome_fornecedor == fornecedor[1]:
+                id_fornecedor = fornecedor[0]
+                return id_fornecedor
+
     # Método usado quando o botao 'Cadastrar' é clicado
     def registrar_no_banco(self):
         nome_produto = self.box_nome.get().title() # Pega o valor que esta dentro da box de nome
         descricao_produto = self.box_descricao.get() # Pega o valor que esta dentro da box de descricao
         valor_produto = self.box_valor.get() # Pega o valor que esta dentro da box de valor
 
-        if nome_produto and descricao_produto and valor_produto: # Verifica se todas as variaveis carregam um valor diferente de nulo
-            registrar_produto_db(nome_produto, descricao_produto, valor_produto) # Executa o metodo que se conecta com o banco
+        id_fornecedor = self.get_id_fornecedor()
 
-            self.limpar_campos() # Executa o metodo que limpa os campos
+        if nome_produto and descricao_produto and valor_produto and id_fornecedor: # Verifica se todas as variaveis carregam um valor diferente de nulo
+            try:
+                registrar_produto_db(nome_produto, descricao_produto, valor_produto, id_fornecedor) # Executa o metodo que se conecta com o banco
 
-            messagebox.showinfo("Sucesso", "Produto cadastrado com sucesso!") # Mensagem lançada na tela do usuario
+                self.limpar_campos() # Executa o metodo que limpa os campos
 
-            self.listar_do_banco() # Lista novamente todos os itens presentes na tabela 'produto'
+                messagebox.showinfo("Sucesso", "Produto cadastrado com sucesso!") # Mensagem lançada na tela do usuario
+
+                self.listar_do_banco() # Lista novamente todos os itens presentes na tabela 'produto'
+            except:
+                messagebox.showerror("Error 212", "Erro ao tentar cadastrar no banco de dados!")
         else:
             messagebox.showerror("Error", "Todos os campos são obrigatorios") # Mensagem lançada na tela do usuario
 

@@ -502,11 +502,11 @@ def delete_fornecedor_db(id_fornecedor):
 
 #Funções da tabela produto
 
-def registrar_produto_db(nome_produto, descricao, valor):
+def registrar_produto_db(nome_produto, descricao, valor, id_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "INSERT INTO produto (nome_produto, descricao_produto, valor_produto)VALUES(%s, %s, %s)"
-    cursor.execute(query, (nome_produto, descricao, valor))
+    query = "INSERT INTO produto (nome_produto, descricao_produto, valor_produto, idFornecedor)VALUES(%s, %s, %s, %s)"
+    cursor.execute(query, (nome_produto, descricao, valor, id_fornecedor))
 
     conn.commit()
     cursor.close()
