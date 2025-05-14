@@ -13,9 +13,10 @@ from tela_dashboard import tela_dashboard
 class menu_admin:
     def __init__(self, root):
         self.root = root
-        self.root.title("TBit Manager by TerraBytes - Menu Principal - Administrador") 
+        self.root.title("Menu Principal - Administrador                                                                   TBit Manager by TerraBytes") 
         self.create_widget()
         self.root.geometry("700x500")
+         #self.root.geometry(f"{largura}x{altura}+0+0") 
         self.root.resizable(width=False, height=False)
 
     def create_widget(self):

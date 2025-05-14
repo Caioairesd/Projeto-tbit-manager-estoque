@@ -26,30 +26,30 @@ class login_menu:
     def create_widget(self):
       
 
-        self.right_frame = ctk.CTkFrame(self.root, width=400, height=300, fg_color="gray")# definir o tamanho e cor do fundo da frame
+        self.right_frame = ctk.CTkFrame(self.root, width=400, height=300, fg_color="#A0A0A0")# definir o tamanho e cor do fundo da frame
         self.right_frame.pack(padx=0, pady=0, expand=True, fill="both")# definir a expanção da frame
 
         #self.right_frame.pack(side=RIGHT) # Posiciona o frame à esquerda
 
-        self.usuario_label = ctk.CTkLabel(self.right_frame, text="B e m    V i n d o",font=("Garamond", 30), fg_color="gray", text_color='black') # Cria um label para o usuario
+        self.usuario_label = ctk.CTkLabel(self.right_frame, text="B e m    V i n d o",font=("Garamond", 30), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
         self.usuario_label.place(x=210, y=50) # Posiciona o label o frame direito
         
 
 
 
-        self.usuario_label = ctk.CTkLabel(self.right_frame, text="Usuario:", font=("Times New Roman", 20), fg_color="gray", text_color='black') # Cria um label para o usuario
+        self.usuario_label = ctk.CTkLabel(self.right_frame, text="Usuario:", font=("Times New Roman", 20), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
         self.usuario_label.place(x=150, y=140) # Posiciona o label o frame direito
 
-        self.usuario_entry = ctk.CTkEntry(self.right_frame, width=140,height=30, fg_color='lightgray') # Cria um campo de entrada para o usuario
+        self.usuario_entry = ctk.CTkEntry(self.right_frame, text_color='black',width=140,height=30, fg_color='lightgray') # Cria um campo de entrada para o usuario
         self.usuario_entry.place(x=225, y=140) # Posiciona o campo de entrada
 
-        self.senha_label = ctk.CTkLabel(self.right_frame, text="Senha:", font=("Times New Roman", 20), fg_color="gray", text_color="black") # Cria um label para a senha
+        self.senha_label = ctk.CTkLabel(self.right_frame, text="Senha:", font=("Times New Roman", 20), fg_color="#A0A0A0", text_color="black") # Cria um label para a senha
         self.senha_label.place(x=160, y=190) # Posiciona o label no frame direito
 
-        self.senha_entry = ctk.CTkEntry(self.right_frame, width=140,height=30, fg_color='lightgray',show="*") # Cria um campo de entrada para a senha
+        self.senha_entry = ctk.CTkEntry(self.right_frame,text_color='black', width=140,height=30, fg_color='lightgray',show="*") # Cria um campo de entrada para a senha
         self.senha_entry.place(x=225, y=190)       
         
-        self.login_button = ctk.CTkButton(self.right_frame, text="LOGIN",text_color='black' ,width=15,fg_color='darkgray', command=self.login_user) # Cria um botao de login
+        self.login_button = ctk.CTkButton(self.right_frame, text="LOGIN",text_color='black' ,width=15,fg_color='#404040', command=self.login_user) # Cria um botao de login
         self.login_button.place(x=225, y=240)
 
     def login_user(self):

@@ -8,7 +8,7 @@ class tela_estoque:
 
         #Define os parâmetros de interface da janela
         self.root.geometry("900x700")
-
+        self.root.configure(fg_color= '#A0A0A0')
         self.root.title("TBit Manager - Estoque")
         self.root.resizable(width=False,height=False)
         
@@ -16,8 +16,8 @@ class tela_estoque:
         self.root.transient(root)  # Faz com que a nova janela fique acima da principal
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
-        voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', width=20, command=self.voltar_menu)
-        voltar_menu_button.place(x=800, y=600)
+        voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', width=80,height=30, text_color= 'black',fg_color= '#404040',command=self.voltar_menu)
+        voltar_menu_button.place(x=790, y=640)
 
     def voltar_menu(self):
         
