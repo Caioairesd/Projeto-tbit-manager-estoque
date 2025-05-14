@@ -23,7 +23,7 @@ class menu_usuario:
 
     def create_widgets(self):
 
-        self.label_text = ctk.CTkLabel(self.root, text="M E N U P R I N C I P A L - U S U Á R I O", font=("Times New Roman", 20), fg_color="#A0A0A0", text_color='black') # Cria um label para o texto
+        self.label_text = ctk.CTkLabel(self.root, text="M E N U  P R I N C I P A L - U S U Á R I O", font=("Times New Roman", 20), fg_color="#A0A0A0", text_color='black') # Cria um label para o texto
         self.label_text.place(x=150, y=50) # Posiciona o texto
       
 
