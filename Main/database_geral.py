@@ -399,10 +399,10 @@ class tbit_db:
                     delimiter $$
 
                     create trigger reabastecer_estoque
-                    after insert on Estoque
+                    after insert on estoque
                     FOR EACH ROW
                     begin
-                        update Produto
+                        update produto
                         set quantidade_produto = quantidade_produto + new.quantidade_estoque
                         where id_produto = new.id_produto;
                     end;
@@ -631,3 +631,28 @@ def listar_funcionarios_db():
     cursor.close()
     conn.close()
     return result
+
+# FUNÇÕES USADAS NA TELA DE REABASTECIMENTO
+def consultar_estoque_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_produto, nome_produto, quantidade_produto FROM produto"
+
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return result
+
+def registrar_reabastecimento_db(id_produto, quantidade_recebida):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "INSERT INTO estoque(id_produto, quantidade_estoque) VALUES (%s, %s)"
+
+    cursor.execute(query, (id_produto, quantidade_recebida,))
+    conn.commit()
+    cursor.close()
+    conn.close()
