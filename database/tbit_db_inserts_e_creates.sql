@@ -1,12 +1,12 @@
 -- OBS!!!!! É só clicar no raio que vai executar tudo perfeitamente, tmj
 
 -- Criação do database
-CREATE DATABASE IF NOT EXISTS tbit_db;
+create database if not exists tbit_db;
 
-USE tbit_db;
+use tbit_db;
 
 -- Criação das tabelas
-CREATE TABLE Fornecedor 
+CREATE TABLE if not exists Fornecedor 
 ( 
  id_fornecedor INT not null auto_increment,  
  nome_fornecedor varchar(40),  
@@ -14,12 +14,11 @@ CREATE TABLE Fornecedor
  email_fornecedor varchar(50),  
  telefone_fornecedor varchar(20),  
  pais_fornecedor varchar(30),  
- 
-cidade_fornecedor varchar(30),
+ cidade_fornecedor varchar(30),
  constraint pk_fornecedor primary key (id_fornecedor) 
 ); 
 
-CREATE TABLE Produto 
+CREATE TABLE if not exists Produto 
 ( 
  id_produto INT not null auto_increment,  
  nome_produto varchar(40),  
@@ -31,7 +30,7 @@ CREATE TABLE Produto
  constraint fk_fornecedor_produto foreign key (idFornecedor) references Fornecedor(id_fornecedor)
 ); 
 
-CREATE TABLE Cliente 
+CREATE TABLE if not exists Cliente 
 ( 
  id_cliente INT not null auto_increment,  
  nome_cliente varchar(40),  
@@ -40,17 +39,18 @@ CREATE TABLE Cliente
  constraint pk_cliente primary key (id_cliente)
 ); 
 
-CREATE TABLE Pedido 
+CREATE TABLE if not exists Pedido 
 (
- id_compra int not null auto_increment,
+ id_pedido int not null auto_increment,
+ quantidade_pedido int,
  idProduto int not null,  
  idCliente int not null,
- constraint pk_compra primary key (id_compra),
- constraint fk_produto_compra foreign key (idProduto) references Produto(id_produto),
- constraint fk_cliente_compra foreign key (idCliente) references Cliente(id_cliente)
+ constraint pk_pedido primary key (id_pedido),
+ constraint fk_produto_pedido foreign key (idProduto) references Produto(id_produto),
+ constraint fk_cliente_pedido foreign key (idCliente) references Cliente(id_cliente)
 ); 
 
-CREATE TABLE Funcionario 
+CREATE TABLE if not exists Funcionario 
 ( 
  id_funcionario INT not null auto_increment,  
  nome_funcionario varchar(40),  
@@ -61,13 +61,12 @@ CREATE TABLE Funcionario
  estado_funcionario varchar(30),  
  telefone_funcionario varchar(15),  
  email_funcionario varchar(50),  
- usuario_funcionario varchar(30),
- perfil_funcionario varchar(30),  
+ usuario_funcionario varchar(30),  
  senha_funcionario varchar(30),
  constraint pk_funcionario primary key (id_funcionario)
 ); 
 
-CREATE TABLE Cadastro 
+CREATE TABLE if not exists Cadastro 
 ( 
  id_cadastro int not null auto_increment,
  idFuncionario INT not null,  
@@ -77,14 +76,53 @@ CREATE TABLE Cadastro
  constraint fk_cliente_cadastro foreign key (idCliente) references Cliente(id_cliente)
 ); 
 
-CREATE TABLE Estoque
+CREATE TABLE if not exists Estoque
 (
 id_estoque INT not null auto_increment,
-id_produto INT not null,
+IdProduto INT not null,
 quantidade_estoque INT not null,
 constraint pk_estoque primary key (id_estoque),
-constraint fk_produto_estoque foreign key (id_produto) references Produto(id_produto)
+constraint fk_produto_estoque foreign key (IdProduto) references Produto(id_produto)
 );
+
+-- Triggers
+delimiter $$
+create trigger reabastecer_estoque
+after insert on Estoque
+FOR EACH ROW
+begin
+    update Produto
+    set quantidade_produto = quantidade_produto + new.quantidade_estoque
+    where id_produto = new.IdProduto;
+end;
+$$
+
+create trigger diminuir_quantidade_produto
+after insert on pedido
+for each row
+begin
+    update Produto
+    set quantidade_produto = quantidade_produto - new.quantidade_pedido
+    where id_produto = new.IdProduto;
+end;
+$$
+delimiter ;
+
+delimiter $$
+create procedure delete_fornecedor_e_produtos(IDfornecedor INT)
+BEGIN
+
+    DELETE FROM Pedido
+    WHERE idProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
+
+    DELETE FROM Produto
+    WHERE idFornecedor = IDfornecedor;
+
+    DELETE FROM Fornecedor
+    WHERE id_fornecedor = IDfornecedor;
+END;
+$$
+delimiter ;
 
 -- Inserção de dados na tabela Fornecedor (60 registros)
 INSERT INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
@@ -338,7 +376,7 @@ INSERT INTO Produto (nome_produto, descricao_produto, quantidade_produto, valor_
 ('Controle Remoto', 'Controle remoto universal', 70, 49.90, 59),
 ('Antena Digital', 'Antena digital interna', 60, 79.90, 60);
 
--- Inserção de dados na tabela Compra (60 registros)
+-- Inserção de dados na tabela pedido (60 registros)
 INSERT INTO Pedido (idProduto, idCliente) VALUES
 (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10),
 (11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20),

@@ -1,10 +1,8 @@
-drop database tbit_db;
-
-create database tbit_db;
+create database if not exists tbit_db;
 
 use tbit_db;
 
-CREATE TABLE Fornecedor 
+CREATE TABLE if not exists Fornecedor 
 ( 
  id_fornecedor INT not null auto_increment,  
  nome_fornecedor varchar(40),  
@@ -16,7 +14,7 @@ CREATE TABLE Fornecedor
  constraint pk_fornecedor primary key (id_fornecedor) 
 ); 
 
-CREATE TABLE Produto 
+CREATE TABLE if not exists Produto 
 ( 
  id_produto INT not null auto_increment,  
  nome_produto varchar(40),  
@@ -28,7 +26,7 @@ CREATE TABLE Produto
  constraint fk_fornecedor_produto foreign key (idFornecedor) references Fornecedor(id_fornecedor)
 ); 
 
-CREATE TABLE Cliente 
+CREATE TABLE if not exists Cliente 
 ( 
  id_cliente INT not null auto_increment,  
  nome_cliente varchar(40),  
@@ -37,17 +35,18 @@ CREATE TABLE Cliente
  constraint pk_cliente primary key (id_cliente)
 ); 
 
-CREATE TABLE Compra 
+CREATE TABLE if not exists Pedido 
 (
- id_compra int not null auto_increment,
+ id_pedido int not null auto_increment,
+ quantidade_pedido int,
  idProduto int not null,  
  idCliente int not null,
- constraint pk_compra primary key (id_compra),
- constraint fk_produto_compra foreign key (idProduto) references Produto(id_produto),
- constraint fk_cliente_compra foreign key (idCliente) references Cliente(id_cliente)
+ constraint pk_pedido primary key (id_pedido),
+ constraint fk_produto_pedido foreign key (idProduto) references Produto(id_produto),
+ constraint fk_cliente_pedido foreign key (idCliente) references Cliente(id_cliente)
 ); 
 
-CREATE TABLE Funcionario 
+CREATE TABLE if not exists Funcionario 
 ( 
  id_funcionario INT not null auto_increment,  
  nome_funcionario varchar(40),  
@@ -63,7 +62,7 @@ CREATE TABLE Funcionario
  constraint pk_funcionario primary key (id_funcionario)
 ); 
 
-CREATE TABLE Cadastro 
+CREATE TABLE if not exists Cadastro 
 ( 
  id_cadastro int not null auto_increment,
  idFuncionario INT not null,  
@@ -73,11 +72,49 @@ CREATE TABLE Cadastro
  constraint fk_cliente_cadastro foreign key (idCliente) references Cliente(id_cliente)
 ); 
 
-CREATE TABLE Estoque
+CREATE TABLE if not exists Estoque
 (
 id_estoque INT not null auto_increment,
-id_produto INT not null,
+IdProduto INT not null,
 quantidade_estoque INT not null,
 constraint pk_estoque primary key (id_estoque),
-constraint fk_produto_estoque foreign key (id_produto) references Produto(id_produto)
+constraint fk_produto_estoque foreign key (IdProduto) references Produto(id_produto)
 );
+
+delimiter $$
+create trigger reabastecer_estoque
+after insert on Estoque
+FOR EACH ROW
+begin
+    update Produto
+    set quantidade_produto = quantidade_produto + new.quantidade_estoque
+    where id_produto = new.IdProduto;
+end;
+$$
+
+create trigger diminuir_quantidade_produto
+after insert on pedido
+for each row
+begin
+    update Produto
+    set quantidade_produto = quantidade_produto - new.quantidade_pedido
+    where id_produto = new.IdProduto;
+end;
+$$
+delimiter ;
+
+delimiter $$
+create procedure delete_fornecedor_e_produtos(IDfornecedor INT)
+BEGIN
+
+    DELETE FROM Pedido
+    WHERE idProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
+
+    DELETE FROM Produto
+    WHERE idFornecedor = IDfornecedor;
+
+    DELETE FROM Fornecedor
+    WHERE id_fornecedor = IDfornecedor;
+END;
+$$
+delimiter ;
