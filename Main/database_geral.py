@@ -425,6 +425,8 @@ class tbit_db:
 
                     delimiter ;
                 """
+
+                
             ]
 # joins
 #   pedido - join cliente e produto
