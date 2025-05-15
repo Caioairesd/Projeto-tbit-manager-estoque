@@ -632,7 +632,7 @@ def listar_funcionarios_db():
     conn.close()
     return result
 
-# FUNÇÕES USADAS NA TELA DE REABASTECIMENTO
+# FUNÇÕES USADAS NA TELA DE REABASTECIMENTO E ESTOQUE
 def consultar_estoque_db():
     conn = get_connection()
     cursor = conn.cursor()
@@ -656,3 +656,63 @@ def registrar_reabastecimento_db(id_produto, quantidade_recebida):
     conn.commit()
     cursor.close()
     conn.close()
+
+# FUNÇÕES USADAS NA TELA DE CLIENTE
+def registrar_cliente_db(nome_cliente, descricao_cliete, cnpj_cliente):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "INSERT INTO cliente (nome_cliente, descricao_cliente, cnpj_cliente) VALUES (%s, %s, %s)"
+
+    cursor.execute(query, (nome_cliente, descricao_cliete, cnpj_cliente,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def update_cliente_db(nome_cliente, descricao_cliete, cnpj_cliente, id_usuario):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "UPDATE cliente SET nome_cliente = %s, descricao_cliente = %s, cnpj_cliente = %s WHERE id_cliente = %s"
+
+    cursor.execute(query, (nome_cliente, descricao_cliete, cnpj_cliente, id_usuario,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def delete_cliente_db(id_cliente):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "DELETE FROM cliente WHERE id_cliente = %s"
+
+    cursor.execute(query, (id_cliente,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def get_clientes_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM cliente"
+
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return result
+
+def pesquisar_cliente_db(cliente_procurado):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_cliente, nome_cliente, descricao_cliente, cnpj_cliente FROM cliente WHERE id_cliente = %s"
+
+    cursor.execute(query, (cliente_procurado,))
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return result
