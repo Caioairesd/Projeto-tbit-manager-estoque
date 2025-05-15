@@ -170,16 +170,16 @@ class tela_fornecedor_adm:
 
         #variáveis recebem os dados inseridos nos campos de textos
         id_fornecedor = self.id_fornecedor_entry.get()
-        confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse formecedor?")
-        if confirmacao  == True:
-            if id_fornecedor:
+        if id_fornecedor:
+            confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse formecedor?")
+            if confirmacao  == True:
                 delete_fornecedor_db(id_fornecedor)
 
                 self.id_fornecedor_entry.delete(0,ctk.END)
                 self.listar_fornecedor()
                 messagebox.showinfo("Sucesso","Fornecedor deletado com sucesso!")
-            else:
-                messagebox.showerror("Erro","ID do fornecedor é obrigatório!")
+        else:
+            messagebox.showerror("Erro","ID do fornecedor é obrigatório!")
 
 
     #Função responsável por limpar os campos de texto

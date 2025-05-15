@@ -684,9 +684,9 @@ def delete_cliente_db(id_cliente):
     conn = get_connection()
     cursor = conn.cursor()
 
-    query = "DELETE FROM cliente WHERE id_cliente = %s"
+    query = "DELETE FROM cliente WHERE id_cliente = %s OR nome_cliente = %s"
 
-    cursor.execute(query, (id_cliente,))
+    cursor.execute(query, (id_cliente, id_cliente,))
     conn.commit()
     cursor.close()
     conn.close()
@@ -711,7 +711,7 @@ def pesquisar_cliente_db(cliente_procurado):
     query = "SELECT id_cliente, nome_cliente, descricao_cliente, cnpj_cliente FROM cliente WHERE id_cliente = %s"
 
     cursor.execute(query, (cliente_procurado,))
-    result = cursor.fetchall()
+    result = cursor.fetchone()
     cursor.close()
     conn.close()
 
