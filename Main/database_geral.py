@@ -622,3 +622,36 @@ def listar_funcionarios_db():
     cursor.close()
     conn.close()
     return result
+
+        
+def montante_pedidos():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """
+    SELECT SUM(pr.valor_produto * pe.quantidade_produto_item) 
+    FROM produto pr 
+    JOIN pedido pe ON pr.id_produto = pe.IdProduto;
+    """
+    cursor.execute(query)
+    result = cursor.fetchone()[0]  # Pegando apenas o primeiro valor retornado
+    cursor.close()
+    conn.close()
+
+    return float(result) if result else 0.0  # Convertendo para número puro
+
+def total_vendas():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """
+    SELECT count(id_pedido) from Pedido;
+    """
+    cursor.execute(query)
+    result = cursor.fetchone()[0] # Pegando apenas o primeiro valor retornado
+    cursor.close()
+    conn.close()
+    
+    return int(result )  if result else 0
+
+
+
+        

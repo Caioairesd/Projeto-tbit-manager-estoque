@@ -38,7 +38,7 @@ CREATE TABLE if not exists Cliente
 CREATE TABLE if not exists Pedido 
 (
  id_pedido int not null auto_increment,
- quantidade_pedido int,
+ quantidade_produto_item int,
  idProduto int not null,  
  idCliente int not null,
  constraint pk_pedido primary key (id_pedido),
@@ -59,6 +59,7 @@ CREATE TABLE if not exists Funcionario
  email_funcionario varchar(50),  
  usuario_funcionario varchar(30),  
  senha_funcionario varchar(30),
+ perfil_funcionario varchar(30),
  constraint pk_funcionario primary key (id_funcionario)
 ); 
 

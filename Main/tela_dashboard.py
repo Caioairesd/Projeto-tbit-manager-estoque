@@ -1,7 +1,8 @@
 import customtkinter as ctk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from database_dashboard import produtos_vendidos, clientes_mais_compras,Vendas_marca,total_vendas
+from database_dashboard import produtos_vendidos, clientes_mais_compras,Vendas_marca
+from database_geral import montante_pedidos, total_vendas
 
 plt.rcParams["axes.prop_cycle"] = plt.cycler(
 color = ["#4C2A88","#BE96FF","#957DAD","#5E366E","#A98CCC"])
@@ -9,9 +10,9 @@ color = ["#4C2A88","#BE96FF","#957DAD","#5E366E","#A98CCC"])
 class tela_dashboard:
 
     def __init__(self,root):
+        ctk.set_appearance_mode("dark")
         self.menu_root = root  
         self.root = ctk.CTkToplevel(root)
-
         largura = self.root.winfo_screenwidth()
         altura = self.root.winfo_screenheight()
         self.root.geometry(f"{largura}x{altura}+0+0")
@@ -54,15 +55,25 @@ class tela_dashboard:
         ax3.pie(clientes_mais_compras.values(),labels = clientes_mais_compras.keys(),autopct='%1.1f%%')
         ax3.set_title("Clientes compras")
         
+        valor = montante_pedidos()
+
         fig4, ax4 = plt.subplots(figsize=(5,2))
-        ax4.text(0.5, 0.5, f"R$ {total_vendas:,.2f}", fontsize=30, ha='center', va='center', color="#4C2A85")
-        ax4.set_title("Total de Vendas", fontsize=16)
+        ax4.text(0.5, 0.5, f"R$ {valor}", fontsize=30, ha='center', va='center', color="#4C2A85")
+        ax4.set_title("Valor total", fontsize=16)
         ax4.axis("off")
+
+        fig5, ax5 = plt.subplots(figsize=(5,2))
+        ax5.text(0.5, 0.5, f"{total_vendas()}", fontsize=30, ha='center', va='center', color="#4C2A85")
+        ax5.set_title("Número de Vendas", fontsize=16)
+        ax5.axis("off")
+        
+
 
         self.exibir_grafico(fig1,1250,100)
         self.exibir_grafico(fig2,550,100)
         self.exibir_grafico(fig3,10,500)
         self.exibir_grafico(fig4, x=600, y=10)
+        self.exibir_grafico(fig5, x=10, y=10)
 
     def exibir_grafico(self, fig, x, y):
         canvas = FigureCanvasTkAgg(fig, master=self.root)

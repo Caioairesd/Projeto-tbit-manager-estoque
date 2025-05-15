@@ -42,7 +42,7 @@ CREATE TABLE if not exists Cliente
 CREATE TABLE if not exists Pedido 
 (
  id_pedido int not null auto_increment,
- quantidade_pedido int,
+ quantidade_produto_item int,
  idProduto int not null,  
  idCliente int not null,
  constraint pk_pedido primary key (id_pedido),
@@ -63,6 +63,7 @@ CREATE TABLE if not exists Funcionario
  email_funcionario varchar(50),  
  usuario_funcionario varchar(30),  
  senha_funcionario varchar(30),
+ perfil_funcionario varchar(30),
  constraint pk_funcionario primary key (id_funcionario)
 ); 
 
@@ -76,13 +77,13 @@ CREATE TABLE if not exists Cadastro
  constraint fk_cliente_cadastro foreign key (idCliente) references Cliente(id_cliente)
 ); 
 
-CREATE TABLE if not exists Estoque
+CREATE TABLE Estoque
 (
-id_estoque INT not null auto_increment,
-IdProduto INT not null,
-quantidade_estoque INT not null,
-constraint pk_estoque primary key (id_estoque),
-constraint fk_produto_estoque foreign key (IdProduto) references Produto(id_produto)
+ id_estoque INT not null auto_increment,
+ IdProduto INT not null,
+ quantidade_estoque INT not null,
+ constraint pk_estoque primary key (id_estoque),
+ constraint fk_produto_estoque foreign key (IdProduto) references Produto(id_produto)
 );
 
 -- Triggers
@@ -102,7 +103,7 @@ after insert on pedido
 for each row
 begin
     update Produto
-    set quantidade_produto = quantidade_produto - new.quantidade_pedido
+    set quantidade_produto = quantidade_produto - new.quantidade_produto_item
     where id_produto = new.IdProduto;
 end;
 $$
@@ -377,13 +378,13 @@ INSERT INTO Produto (nome_produto, descricao_produto, quantidade_produto, valor_
 ('Antena Digital', 'Antena digital interna', 60, 79.90, 60);
 
 -- Inserção de dados na tabela pedido (60 registros)
-INSERT INTO Pedido (idProduto, idCliente) VALUES
-(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10),
-(11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20),
-(21, 21), (22, 22), (23, 23), (24, 24), (25, 25), (26, 26), (27, 27), (28, 28), (29, 29), (30, 30),
-(31, 31), (32, 32), (33, 33), (34, 34), (35, 35), (36, 36), (37, 37), (38, 38), (39, 39), (40, 40),
-(41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
-(51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
+INSERT INTO Pedido (idProduto, idCliente, quantidade_produto_item) VALUES
+(1, 1, 1), (2, 2, 2), (3, 3, 3), (4, 4, 4), (5, 5, 5), (6, 6, 6), (7, 7, 7), (8, 8, 8), (9, 9, 8), (10, 10, 8),
+(11, 11, 8), (12, 12, 8), (13, 13, 8), (14, 14, 8), (15, 15, 8), (16, 16, 8), (17, 17, 8), (18, 18, 8), (19, 19, 8), (20, 20, 8),
+(21, 21, 8), (22, 22, 8), (23, 23, 8), (24, 24, 8), (25, 25, 8), (26, 26, 8), (27, 27, 8), (28, 28, 8), (29, 29, 8), (30, 30, 8),
+(31, 31, 8), (32, 32, 8), (33, 33, 8), (34, 34, 8), (35, 35, 8), (36, 36, 8), (37, 37, 8), (38, 38, 8), (39, 39, 8), (40, 40, 8),
+(41, 41, 8), (42, 42, 8), (43, 43, 8), (44, 44, 8), (45, 45, 8), (46, 46, 8), (47, 47, 8), (48, 48, 8), (49, 49, 8), (50, 50, 8),
+(51, 51, 8), (52, 52, 8), (53, 53, 8), (54, 54, 8), (55, 55, 8), (56, 56, 8), (57, 57, 8), (58, 58, 8), (59, 59, 8), (60, 60, 8);
 
 -- Inserção de dados na tabela Cadastro (60 registros)
 INSERT INTO Cadastro (idFuncionario, idCliente) VALUES
@@ -394,10 +395,19 @@ INSERT INTO Cadastro (idFuncionario, idCliente) VALUES
 (41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
 (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
 
-INSERT INTO Estoque (id_produto, quantidade_estoque) VALUES
+INSERT INTO Estoque (IdProduto, quantidade_estoque) VALUES
 (1, 50), (2, 120), (3, 35), (4, 28), (5, 75), (6, 40), (7, 30), (8, 25), (9, 60), (10, 45), 
 (11, 55), (12, 40), (13, 100), (14, 30), (15, 200), (16, 80), (17, 60), (18, 45), (19, 50), (20, 35),
 (21, 70), (22, 40), (23, 25), (24, 90), (25, 60), (26, 50), (27, 15), (28, 20), (29, 65), (30, 30),
 (31, 18), (32, 45), (33, 40), (34, 22), (35, 50), (36, 35), (37, 25), (38, 40), (39, 30), (40, 10), 
 (41, 40), (42, 60), (43, 15), (44, 25), (45, 20), (46, 30), (47, 25), (48, 18), (49, 40), (50, 50), 
 (51, 80), (52, 60), (53, 45), (54, 30), (55, 20), (56, 50), (57, 15), (58, 40), (59, 70), (60, 60);
+
+select descricao_produto from Produto where descricao_produto like 'Notebook Dell%';
+
+-- Script para dash de produtos mais vendidos
+
+select distinct pr.nome_produto, count(pe.id_pedido) from pedido pe
+join produto pr on pe.idProduto = pr.id_produto 
+group by pr.id_produto 
+order by pe.id_pedido limit 5 ;
