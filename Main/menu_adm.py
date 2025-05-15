@@ -31,37 +31,37 @@ class menu_admin:
         self.titulo = ctk.CTkLabel(self.root, text='M E N U  P R I N C I P A L - A D M I N I S T R A D O R',font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
         self.titulo.place(x=280, y=60) # Posiciona o label 
         
-        self.right_frame = ctk.CTkFrame(self.root, width=500, height=500, fg_color="gray")# definir o tamanho e cor do fundo da frame
-        self.right_frame.place(x=700, y=350)# definir a expanção da frame
+        self.right_frame = ctk.CTkFrame(self.root, width=400, height=400, fg_color="#808080")# definir o tamanho e cor do fundo da frame
+        self.right_frame.place(x=725, y=350)# definir a expanção da frame
 
 
 
 
-        funcionario_button = ctk.CTkButton(self.root, text='Funcionario', text_color='black',width=80, height= 40, fg_color= '#404040', bg_color= 'gray',command=self.abrir_tela_funcionario)
-        funcionario_button.place(x=740, y=40)
+        funcionario_button = ctk.CTkButton(self.root, text='Funcionario', text_color='black',width=110, height= 40, fg_color= '#404040', bg_color= '#808080',command=self.abrir_tela_funcionario)
+        funcionario_button.place(x=760, y=400)
         
-        fornecedor_button = ctk.CTkButton(self.root, text='Fornecedor', text_color='black',width=80, height= 40, fg_color= '#404040', bg_color= 'gray',command=self.abrir_tela_fornecedor_admin)
-        fornecedor_button.place(x=275, y=80)
+        fornecedor_button = ctk.CTkButton(self.root, text='Fornecedor', text_color='black',width=110, height= 40, fg_color= '#404040', bg_color= '#808080',command=self.abrir_tela_fornecedor_admin)
+        fornecedor_button.place(x=760, y=460)
 
-        produto_button = ctk.CTkButton(self.root, text='Produtos', text_color='black',width=80, height= 40, fg_color= '#404040', bg_color= 'gray',command=self.abrir_tela_produto_admin)
-        produto_button.place(x=275, y=120)
+        produto_button = ctk.CTkButton(self.root, text='Produtos', text_color='black',width=110, height= 40, fg_color= '#404040', bg_color= '#808080',command=self.abrir_tela_produto_admin)
+        produto_button.place(x=760, y=520)
 
-        cliente_button = ctk.CTkButton(self.root, text='Cliente', text_color='black',width=80, height= 40, fg_color= '#404040', bg_color= 'gray',command=self.abrir_tela_cliente)
-        cliente_button.place(x=275, y=160)
+        cliente_button = ctk.CTkButton(self.root, text='Cliente', text_color='black',width=110, height= 40, fg_color= '#404040', bg_color= '#808080',command=self.abrir_tela_cliente)
+        cliente_button.place(x=760, y=580)
         
-        estoque_button = ctk.CTkButton(self.root, text='Estoque', text_color='black',width=80, height= 40, fg_color= '#404040', bg_color= 'gray',command=self.abrir_tela_estoque)
-        estoque_button.place(x=275, y=200)
+        estoque_button = ctk.CTkButton(self.root, text='Estoque', text_color='black',width=110, height= 40, fg_color= '#404040', bg_color= '#808080',command=self.abrir_tela_estoque)
+        estoque_button.place(x=980, y=400)
 
-        pedido_button = ctk.CTkButton(self.root, text='Pedido', text_color='black',width=80, height= 40, fg_color= '#404040', bg_color= 'gray',command=self.abrir_tela_pedido)
-        pedido_button.place(x=275, y=240)
+        pedido_button = ctk.CTkButton(self.root, text='Pedido', text_color='black',width=110, height= 40, fg_color= '#404040', bg_color= '#808080',command=self.abrir_tela_pedido)
+        pedido_button.place(x=980, y=460)
 
-        reabastecimento_button = ctk.CTkButton(self.root, text='Reabastecimento',text_color='black', width=80, fg_color= '#404040', bg_color= 'gray',height= 40, command=self.abrir_tela_reabastecimento)
-        reabastecimento_button.place(x=275, y=280)
+        reabastecimento_button = ctk.CTkButton(self.root, text='Reabastecimento',text_color='black', width=110, fg_color= '#404040', bg_color= '#808080',height= 40, command=self.abrir_tela_reabastecimento)
+        reabastecimento_button.place(x=980, y=520)
 
-        dashboard_button = ctk.CTkButton(self.root, text='Dashboard', text_color='black',width=80, height= 40,fg_color= '#404040', bg_color= 'gray', command=self.abrir_tela_dashboard)
-        dashboard_button.place(x=275, y=320)
+        dashboard_button = ctk.CTkButton(self.root, text='Dashboard', text_color='black',width=110, height= 40,fg_color= '#404040', bg_color= '#808080', command=self.abrir_tela_dashboard)
+        dashboard_button.place(x=980, y=580)
 
-        logout_button = ctk.CTkButton(self.root, text='Logout',text_color='black', width=100, height= 40,fg_color= '#404040', bg_color= 'gray', command=self.logout_admin)
+        logout_button = ctk.CTkButton(self.root, text='Logout',text_color='black', width=100, height= 40,fg_color= '#404040', bg_color= '#808080', command=self.logout_admin)
         logout_button.place(x=1700, y=900)
 
         
