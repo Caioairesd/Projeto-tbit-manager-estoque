@@ -399,10 +399,10 @@ class tbit_db:
                     delimiter $$
 
                     create trigger reabastecer_estoque
-                    after insert on estoque
+                    after insert on Estoque
                     FOR EACH ROW
                     begin
-                        update produto
+                        update Produto
                         set quantidade_produto = quantidade_produto + new.quantidade_estoque
                         where id_produto = new.id_produto;
                     end;
@@ -712,6 +712,44 @@ def pesquisar_cliente_db(cliente_procurado):
 
     cursor.execute(query, (cliente_procurado,))
     result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    return result
+
+# FUNCOES USADAS NA TELA DE "PEDIDO"
+def fazer_pedido_db(quantidade_produto_item, idProduto, idCliente):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "INSERT INTO pedido (quantidade_produto_item, idProduto, idCliente) VALUES (%s, %s, %s)"
+
+    cursor.execute(query, (quantidade_produto_item, idProduto, idCliente,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def get_id_nome_produtos_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_produto, nome_produto, quantidade_produto FROM produto"
+
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return result
+
+def get_id_nome_clientes_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_cliente, nome_cliente FROM cliente"
+
+    cursor.execute(query)
+    result = cursor.fetchall()
     cursor.close()
     conn.close()
 
