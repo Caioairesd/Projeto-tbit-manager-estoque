@@ -3,6 +3,7 @@ import customtkinter as ctk
 from tkinter import messagebox
 from database_geral import register_funcionario_db, delete_funcionario_db, update_funcionario_db, pesquisar_funcionario_db, listar_funcionarios_db
 
+
 #from tkinter import *
 
 
@@ -19,11 +20,9 @@ class tela_funcionario_adm:
         altura = self.root.winfo_screenheight()# Expandir tela altura
         self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
 
-         # Mantém a janela no topo
-
-
         #self.root.config(bg="#003366")
         self.create_widgets()
+        
 
         self.listar_funcionarios()
 
@@ -92,7 +91,7 @@ class tela_funcionario_adm:
         ctk.CTkButton(self.right_frame, text="EXCLUIR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=90, height= 40,command=self.delete_funcionario).place(x=200, y=560)
         ctk.CTkButton(self.right_frame, text="EDITAR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=90, height= 40,command=self.update_funcionario).place(x=310, y=560)
         ctk.CTkButton(self.right_frame, text="BUSCAR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=50, height= 30,command=self.pesquisar_funcionario).place(x=300, y=650)
-        ctk.CTkButton(self.root, text='Voltar',text_color='black',fg_color= '#404040', bg_color= '#A0A0A0', width=90, height= 40, command=self.voltar_menu).place(x=1810, y=900)
+        ctk.CTkButton(self.root, text='Voltar',text_color='black',fg_color= '#404040', bg_color= '#A0A0A0', width=90, height= 40, command=self.voltar_menu).place(x=1810, y=920)
        
         #Text Area para exibir a tabela em tempo real do Banco de Dados
         self.text_area = ctk.CTkTextbox(self.root,text_color='black', width=800,height=800, fg_color="gray")

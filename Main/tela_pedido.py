@@ -6,18 +6,21 @@ class tela_pedido:
         self.menu_root = root  
         self.root = ctk.CTkToplevel(root)
         self.root.configure(fg_color="#A0A0A0")
-        #Define os parâmetros de interface da janela
-        self.root.geometry("900x700")
 
-        self.root.title("TBit Manager - Pedido")
-        self.root.resizable(width=False,height=False)
+        #ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
+
+        largura = self.root.winfo_screenwidth()# Expandir tela largura
+        altura = self.root.winfo_screenheight()# Expandir tela altura
+        self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
+
+   
         
-
-        self.root.transient(root)  # Faz com que a nova janela fique acima da principal
+        self.root.title("TBit Manager - Pedido")
+        
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
-        voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', text_color="black",fg_color='#404040',width=80, height=30, command=self.voltar_menu)
-        voltar_menu_button.place(x=790, y=640)
+        voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', text_color="black",fg_color='#404040',width=90, height=40, command=self.voltar_menu)
+        voltar_menu_button.place(x=1700, y=900)
 
     def voltar_menu(self):
         

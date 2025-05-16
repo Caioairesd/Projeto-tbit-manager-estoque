@@ -9,58 +9,68 @@ class tela_fornecedor_adm:
         self.root = ctk.CTkToplevel(root)
         self.root.configure(fg_color='#A0A0A0')
         #Define os parâmetros de interface da janela
-        self.root.geometry("900x700")
+        largura = self.root.winfo_screenwidth()# Expandir tela largura
+        altura = self.root.winfo_screenheight()# Expandir tela altura
+        self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
+        #ctk.set_appearance_mode('dark')
+    
         self.root.title("TBit Manager - Menu de fornecedor")
-        #self.root.configure(background="white")
-        self.root.resizable(width=False,height=False)
-        #self.root.attributes("-alpha",1.0)
-        #self.root.config(bg="#003366")
+     
+    
+       
 
-        self.root.transient(root)  # Faz com que a nova janela fique acima da principal
+       
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
         self.create_widgets()
         self.listar_fornecedor()
 
     def create_widgets(self):
-        #Criação de labels
+        
+        self.titulo = ctk.CTkLabel(self.root, text='F O R N E C E D O R - A D M I N I S T R A D O R',font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
+        self.titulo.place(x=280, y=60) # Posiciona o label 
+
+        #cria o frame como fundo para deixar um fundo para as labls e caixas de textos
+        self.right_frame = ctk.CTkFrame(self.root, width=800, height=800, fg_color="gray")# definir o tamanho e cor do fundo da frame
+        self.right_frame.place(x=600, y=160)# definir a expanção da frame
+
 
         #Criação de botões
-        ctk.CTkButton(self.root,text="Cadastrar",width=15,height=1,command=self.create_fornecedor).place(x=160,y=280)
-        ctk.CTkButton(self.root,text="Alterar",width=15,height=1,command=self.update_fornecedor).place(x=320,y=280)
-        ctk.CTkButton(self.root,text="Excluir",width=15,height=1,command=self.delete_fornecedor).place(x=480,y=280)
-        ctk.CTkButton(self.root,text="Cancelar",width=15,height=1,command=self.cancelar_operacao).place(x=640,y=280)
-        ctk.CTkButton(self.root,text="Pesquisar e inserir dados\n(Nome ou ID)",width=30,height=2,command=self.pesquisar_fornecedor).place(x=135,y=355)
-        ctk.CTkButton(self.root, text='Voltar', width=20, command=self.voltar_menu).place(x=800, y=600)
+        ctk.CTkButton(self.root,text="Cadastrar",width=90,height=40,text_color='black', fg_color='#404040', bg_color='gray',command=self.create_fornecedor).place(x=650,y=590)
+        ctk.CTkButton(self.root,text="Alterar",width=90,height=40,text_color='black', fg_color='#404040',command=self.update_fornecedor).place(x=320,y=400)
+        ctk.CTkButton(self.root,text="Excluir",width=90,height=40,text_color='black', fg_color='#404040',command=self.delete_fornecedor).place(x=480,y=400)
+        ctk.CTkButton(self.root,text="Cancelar",width=90,height=40,text_color='black', fg_color='#404040',command=self.cancelar_operacao).place(x=0,y=400)
+        ctk.CTkButton(self.root,text="Pesquisar por\n(Nome ou ID)",text_color='black',fg_color='#404040',width=90,height=40,command=self.pesquisar_fornecedor).place(x=135,y=355)
+        ctk.CTkButton(self.root, text='Voltar', width=90, height=40, text_color='black',fg_color='#404040', command=self.voltar_menu).place(x=1700, y=900)
         
         #Criação de labels
-        ctk.CTkLabel(self.root,text="Fornecedor:",fg_color="blue", text_color='white').place(x=300,y=30)
-        ctk.CTkLabel(self.root,text="Marca:",fg_color="blue", text_color='white').place(x=300,y=60)
-        ctk.CTkLabel(self.root,text="Email:",fg_color="blue", text_color='white').place(x=300,y=90)
-        ctk.CTkLabel(self.root,text="Telefone:",fg_color="blue", text_color='white').place(x=300,y=120)
-        ctk.CTkLabel(self.root,text="Cidade:",fg_color="blue", text_color='white').place(x=300,y=150)
-        ctk.CTkLabel(self.root,text="País:",fg_color="blue", text_color='white').place(x=300,y=180)
-        ctk.CTkLabel(self.root,text="ID:",fg_color="blue", text_color='white').place(x=300,y=210)
+        ctk.CTkLabel(self.root,text="Fornecedor :",fg_color="gray",text_color='black',font=('Times New Roman', 23)).place(x=650,y=230)
+        ctk.CTkLabel(self.root,text="CNPJ :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=650,y=280)
+        ctk.CTkLabel(self.root,text="Email :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=650,y=330)
+        ctk.CTkLabel(self.root,text="Telefone :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=650,y=380)
+        ctk.CTkLabel(self.root,text="Cidade :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=650,y=430)
+        ctk.CTkLabel(self.root,text="País :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=650,y=480)
+        ctk.CTkLabel(self.root,text="id :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=650,y=530)
 
 
         #Criação de campos de entrada de dados
-        self.fornecedor_entry = ctk.CTkEntry(self.root)
-        self.marca_fornecedor_entry = ctk.CTkEntry(self.root)
-        self.email_fornecedor_entry = ctk.CTkEntry(self.root)
-        self.telefone_fornecedor_entry = ctk.CTkEntry(self.root)
-        self.cidade_fornecedor_entry = ctk.CTkEntry(self.root)
-        self.pais_fornecedor_entry = ctk.CTkEntry(self.root)
-        self.id_fornecedor_entry = ctk.CTkEntry(self.root)
+        self.fornecedor_entry = ctk.CTkEntry(self.root, fg_color='lightgray',bg_color='gray')
+        self.marca_fornecedor_entry = ctk.CTkEntry(self.root,fg_color='lightgray',bg_color='gray')
+        self.email_fornecedor_entry = ctk.CTkEntry(self.root,fg_color='lightgray',bg_color='gray')
+        self.telefone_fornecedor_entry = ctk.CTkEntry(self.root,fg_color='lightgray',bg_color='gray')
+        self.cidade_fornecedor_entry = ctk.CTkEntry(self.root,fg_color='lightgray',bg_color='gray')
+        self.pais_fornecedor_entry = ctk.CTkEntry(self.root,fg_color='lightgray',bg_color='gray')
+        self.id_fornecedor_entry = ctk.CTkEntry(self.root,fg_color='lightgray',bg_color='gray')
         self.pesquisar_entry = ctk.CTkEntry(self.root,width=300,height=30)
 
         #Definindo localização dos campos na tela
-        self.fornecedor_entry.place(x=400,y=30)
-        self.marca_fornecedor_entry.place(x=400,y=60)
-        self.email_fornecedor_entry.place(x=400,y=90)
-        self.telefone_fornecedor_entry.place(x=400,y=120)
-        self.cidade_fornecedor_entry.place(x=400,y=150)
-        self.pais_fornecedor_entry.place(x=400,y=180)
-        self.id_fornecedor_entry.place(x=400,y=210)
+        self.fornecedor_entry.place(x=780,y=230)
+        self.marca_fornecedor_entry.place(x=780,y=280)
+        self.email_fornecedor_entry.place(x=780,y=330)
+        self.telefone_fornecedor_entry.place(x=780,y=380)
+        self.cidade_fornecedor_entry.place(x=780,y=430)
+        self.pais_fornecedor_entry.place(x=780,y=480)
+        self.id_fornecedor_entry.place(x=780,y=530)
         self.pesquisar_entry.place(x=360,y=360)
 
         #Criação da área de texto responsável por exibir informações dos fornecedores
