@@ -92,10 +92,10 @@ class tela_funcionario_adm:
         ctk.CTkButton(self.right_frame, text="EXCLUIR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=90, height= 40,command=self.delete_funcionario).place(x=200, y=560)
         ctk.CTkButton(self.right_frame, text="EDITAR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=90, height= 40,command=self.update_funcionario).place(x=310, y=560)
         ctk.CTkButton(self.right_frame, text="BUSCAR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=50, height= 30,command=self.pesquisar_funcionario).place(x=300, y=650)
-        ctk.CTkButton(self.root, text='Voltar',text_color='black',fg_color= '#404040', bg_color= '#A0A0A0', width=90, height= 40, command=self.voltar_menu).place(x=1700, y=900)
+        ctk.CTkButton(self.root, text='Voltar',text_color='black',fg_color= '#404040', bg_color= '#A0A0A0', width=90, height= 40, command=self.voltar_menu).place(x=1810, y=900)
        
         #Text Area para exibir a tabela em tempo real do Banco de Dados
-        self.text_area = ctk.CTkTextbox(self.root,text_color='black', width=800,height=400, fg_color="gray")
+        self.text_area = ctk.CTkTextbox(self.root,text_color='black', width=800,height=800, fg_color="gray")
         self.text_area.place(x=1000, y=160)
 
 
