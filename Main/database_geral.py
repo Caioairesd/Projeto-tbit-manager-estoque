@@ -63,6 +63,7 @@ class tbit_db:
                     CREATE TABLE Pedido 
                     (
                     id_compra int not null auto_increment,
+                    quantidade_produto_item int,
                     idProduto int not null,  
                     idCliente int not null,
                     constraint pk_compra primary key (id_compra),
@@ -84,8 +85,8 @@ class tbit_db:
                     telefone_funcionario varchar(15),  
                     email_funcionario varchar(50),  
                     usuario_funcionario varchar(30),
-                    perfil_funcionario varchar(30),  
                     senha_funcionario varchar(30),
+                    perfil_funcionario varchar(30),  
                     constraint pk_funcionario primary key (id_funcionario)
                     );
                 """
@@ -623,7 +624,9 @@ def listar_funcionarios_db():
     conn.close()
     return result
 
-        
+       
+# Funções referentes ao dashboard 
+
 def montante_pedidos():
     conn = get_connection()
     cursor = conn.cursor()
@@ -652,6 +655,71 @@ def total_vendas():
     
     return int(result )  if result else 0
 
+def produtos_mais_vendidos():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """
+    SELECT pr.nome_produto, COUNT(pe.id_pedido) AS total_vendas
+    FROM pedido pe
+    JOIN produto pr ON pe.idProduto = pr.id_produto
+    GROUP BY pr.id_produto
+    ORDER BY COUNT(pe.id_pedido) DESC
+    LIMIT 5;
+    """
+    cursor.execute(query)
+    
+    # Pegando todas as linhas da consulta
+    resultados = cursor.fetchall()
+    
+    # Transformando em dicionário
+    dados_produtos_mais_vendidos = [dict(nome=row[0], total_vendas=row[1]) for row in resultados]
 
+    cursor.close()
+    conn.close()
+    return dados_produtos_mais_vendidos
+
+def clientes_mais_pedidos():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """
+    SELECT cl.nome_cliente, COUNT(pe.id_pedido) AS total_vendas 
+    FROM pedido pe JOIN cliente cl 
+    ON pe.idCliente = cl.id_cliente 
+    GROUP BY cl.nome_cliente 
+    ORDER BY COUNT(pe.id_pedido) desc limit 5;
+    """
+    cursor.execute(query)
+    
+    
+    resultados = cursor.fetchall()
+    
+    dados_clientes_mais_pedidos = [dict(nome_cliente=row[0], total_vendas=row[1]) for row in resultados]
+
+    cursor.close()
+    conn.close()
+    return dados_clientes_mais_pedidos
+
+def Categorias_mais_vendidas():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """ SELECT pr.categoria_produto, COUNT(pe.id_pedido) AS pedidos_categoria
+    FROM pedido pe JOIN produto pr 
+    ON pr.id_produto = pe.idProduto 
+    GROUP BY pr.categoria_produto 
+    ORDER BY COUNT(pe.id_pedido) desc ;
+    """
+    cursor.execute(query)
+    
+    
+    resultados = cursor.fetchall()
+    
+    dados_categorias_mais_vendidas = [dict(categoria_produto=row[0], pedidos_categoria=row[1]) for row in resultados]
+
+    cursor.close()
+    conn.close()
+    return dados_categorias_mais_vendidas
+
+
+    
 
         

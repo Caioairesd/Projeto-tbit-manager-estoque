@@ -1,8 +1,9 @@
 import customtkinter as ctk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from database_dashboard import produtos_vendidos, clientes_mais_compras,Vendas_marca
-from database_geral import montante_pedidos, total_vendas
+from matplotlib.backends.backend_tkagg import NavigationToolbar2Tk
+from database_geral import montante_pedidos, total_vendas, produtos_mais_vendidos,clientes_mais_pedidos, Categorias_mais_vendidas
+
 
 plt.rcParams["axes.prop_cycle"] = plt.cycler(
 color = ["#4C2A88","#BE96FF","#957DAD","#5E366E","#A98CCC"])
@@ -34,25 +35,43 @@ class tela_dashboard:
     def criar_widgets(self):
 
         voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', width=20, command=self.voltar_menu)
-        voltar_menu_button.place(x=1350, y=1000)
+        voltar_menu_button.place(x=1800, y=1000)
 
     def gerar_graficos(self):
+       
 
+        dados_vendas = produtos_mais_vendidos()  # Chama a função corretamente
+
+        # Separando os dados para o gráfico
+        nomes_produtos = [item["nome"] for item in dados_vendas]
+        quantidades_vendas = [item["total_vendas"] for item in dados_vendas]
+
+        # Criando o gráfico
         fig1, ax1 = plt.subplots()
-        ax1.bar(produtos_vendidos.keys(),produtos_vendidos.values())
-        ax1.set_title("Produtos vendidos")
+        ax1.bar(nomes_produtos, quantidades_vendas)
+
+        ax1.set_title("Produtos Vendidos")
         ax1.set_xlabel("Produtos")
         ax1.set_ylabel("Vendas")
+        ax1.tick_params(axis='x', rotation=45)  # Melhorando a visualização dos rótulos no eixo X
+
+
+        dados_Vendas_clientes = clientes_mais_pedidos()
+        nomes_clientes = [item["nome_cliente"] for item in dados_Vendas_clientes]
+        quantidades_pedidos = [item["total_vendas"] for item in dados_Vendas_clientes]
 
         fig2, ax2 = plt.subplots()
-        ax2.barh(Vendas_marca.keys(),Vendas_marca.values())
+        ax2.barh(nomes_clientes,quantidades_pedidos)
         ax2.set_title("Vendas por marca")
         ax2.set_xlabel("Marca")
         ax2.set_ylabel("Vendas")
 
+        dados_categorias_pedidos = Categorias_mais_vendidas()
+        nome_categoria = [item["categoria_produto"] for item in dados_categorias_pedidos]
+        pedidos_categoria = [item["pedidos_categoria"] for item in dados_categorias_pedidos]
 
-        fig3, ax3 = plt.subplots()
-        ax3.pie(clientes_mais_compras.values(),labels = clientes_mais_compras.keys(),autopct='%1.1f%%')
+        fig3, ax3 = plt.subplots(figsize=(10,10))
+        ax3.pie(pedidos_categoria,labels = nome_categoria,autopct='%1.1f%%')
         ax3.set_title("Clientes compras")
         
         valor = montante_pedidos()
@@ -70,8 +89,8 @@ class tela_dashboard:
 
 
         self.exibir_grafico(fig1,1250,100)
-        self.exibir_grafico(fig2,550,100)
-        self.exibir_grafico(fig3,10,500)
+        self.exibir_grafico(fig2,1250,500)
+        self.exibir_grafico(fig3,-40,60)
         self.exibir_grafico(fig4, x=600, y=10)
         self.exibir_grafico(fig5, x=10, y=10)
 
@@ -80,6 +99,10 @@ class tela_dashboard:
         canvas.get_tk_widget().place(x=x, y=y)
         canvas.draw()
 
+        # Adicionando a barra de ferramentas para zoom e pan
+        toolbar = NavigationToolbar2Tk(canvas, self.root, pack_toolbar=False)
+        toolbar.place(x=x, y=y + fig.get_size_inches()[1] * 100)  # Ajusta a posição da toolbar
+        toolbar.update()
 
 
 
