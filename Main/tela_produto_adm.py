@@ -13,6 +13,7 @@ class tela_produto_adm:
         self.menu_root = root  
         # Definições da janela
         self.root = ctk.CTkToplevel()
+        self.root.configure(fg_color='#A0A0A0')
         self.root.title("TBit Manager - Menu de produtos")
         self.root.resizable(width=False, height=False)
         self.root.geometry("900x700")

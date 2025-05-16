@@ -8,7 +8,7 @@ class tela_dashboard:
 
         #Define os parâmetros de interface da janela
         self.root.geometry("900x700")
-
+        self.root.configure(fg_color='#A0A0A0')
         self.root.title("TBit Manager - Dashboard")
         self.root.resizable(width=False,height=False)
         

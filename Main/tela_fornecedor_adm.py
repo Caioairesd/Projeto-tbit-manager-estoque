@@ -7,7 +7,7 @@ class tela_fornecedor_adm:
     def __init__(self,root):
         self.menu_root = root  
         self.root = ctk.CTkToplevel(root)
-
+        self.root.configure(fg_color='#A0A0A0')
         #Define os parâmetros de interface da janela
         self.root.geometry("900x700")
         self.root.title("TBit Manager - Menu de fornecedor")

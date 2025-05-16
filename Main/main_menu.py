@@ -11,36 +11,26 @@ class login_menu:
         
         self.root = root
         self.root.title("TBit Manager by TerraBytes")
-        
+
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura
         self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
-
-        ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
         
+        self.root.configure(fg_color='#A0A0A0')
+        ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
 
         self.create_widget()
-        #self.root.geometry(f"{largura}x{altura}+0+0") 
-
-        #self.root.resizable( width = False, height = False)# Tirar a possibilidade de maximizar e minimizar  a tela
         pass
 
     def create_widget(self):
       
 
-        self.right_frame = ctk.CTkFrame(self.root, width=400, height=300, fg_color="#A0A0A0")# definir o tamanho e cor do fundo da frame
-        self.right_frame.pack(padx=0, pady=0, expand=True, fill="both")# definir a expanção da frame
+        self.right_frame = ctk.CTkFrame(self.root, width=400, height=300, fg_color="gray")# definir o tamanho e cor do fundo da frame
+        self.right_frame.place(relx=0.5, rely=0.5, anchor="center")
 
-        #self.right_frame.pack(side=RIGHT) # Posiciona o frame à esquerda
-
-        self.titulo = ctk.CTkLabel(self.right_frame, text="T B I T  M A N A G E R",font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
+        self.titulo = ctk.CTkLabel(self.root, text="T B I T  M A N A G E R",font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
         self.titulo.place(x=680, y=60) # Posiciona o label o frame direito
         
-        self.right_frame = ctk.CTkFrame(self.right_frame, width=370, height=290, fg_color="gray")# definir o tamanho e cor do fundo da frame
-        self.right_frame.place(x=750, y=350)# definir a expanção da frame
-
-
-
         self.usuario_label = ctk.CTkLabel(self.right_frame, text="Usuario:", font=("Times New Roman", 30), fg_color="gray", text_color='black') # Cria um label para o usuario
         self.usuario_label.place(x=50, y=90) # Posiciona o label o frame direito
 
