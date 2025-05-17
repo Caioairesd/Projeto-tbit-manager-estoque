@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from tkinter import messagebox
 from database_geral import consultar_estoque_db, registrar_reabastecimento_db
+from tkinter import ttk
 
 class tela_reabastecimento:
 
@@ -22,20 +23,57 @@ class tela_reabastecimento:
 
         # ELEMENTOS NÃO POSICIONADOS, SOMENTE CRIADOS PARA DESENVOLVIMENTO DO BACK
         self.combobox_produtos = ctk.CTkComboBox(self.root, height=30, width=180, values=self.produtos_combobox())
-        self.pesquisar_produto_entry = ctk.CTkEntry(self.root, height=30, width=150)
+        self.pesquisar_produto_entry = ctk.CTkEntry(self.root, height=30, width=250, placeholder_text="Pesquise um produto pelo seu nome...")
         self.quantidade_entrou_entry = ctk.CTkEntry(self.root, height=30, width=150)
         self.novo_reabastecimento_button = ctk.CTkButton(self.root, text="Novo Reabastecimento", command=self.chamado_reabastecer, height=30, width=120)
+
+        self.pesquisar_produto_entry.bind("<KeyRelease>", self.filtrar_tabela)
 
         self.combobox_produtos.place(x=150, y=100)
         self.quantidade_entrou_entry.place(x=350, y=100)
         self.novo_reabastecimento_button.place(x=550, y=100)
-
-        # TEXT AREA PARA EXEMPLO
-        self.text = ctk.CTkTextbox(self.root, width=300, height=300)
-        self.text.place(x=300, y=300)
+        self.pesquisar_produto_entry.place(x=100, y=260)
         
-        self.consultar_estoque()
+        self.criar_tabelao()
 
+    def criar_tabelao(self):
+        self.treeview = ttk.Treeview(self.root, columns=("id_produto", "nome_produto", "quantidade_estoque"), show="headings", height=15)
+
+        self.treeview.heading("id_produto", text="ID do produto")
+        self.treeview.heading("nome_produto", text="Nome do produto")
+        self.treeview.heading("quantidade_estoque", text="Quantidade em estoque")
+
+        estoque = consultar_estoque_db()
+        for produto in estoque:
+            self.treeview.insert("", "end", values=produto)
+        
+        self.treeview.bind("<ButtonRelease-1>", self.click_na_linha)
+
+        self.treeview.place(x=100, y=300)
+
+    def atualizar_tabela(self, produtos):
+         for item in self.treeview.get_children():
+            self.treeview.delete(item)
+
+         for produto in produtos:
+            self.treeview.insert("", "end", values=produto)
+
+    def filtrar_tabela(self, event):
+        estoque = consultar_estoque_db()
+        produto_pesquisado = self.pesquisar_produto_entry.get().lower()
+
+        filtragem = [produto for produto in estoque if produto_pesquisado in produto[1].lower()]
+
+        self.atualizar_tabela(filtragem)
+    
+    def click_na_linha(self, event):
+        linha_selecionada = self.treeview.focus()
+
+        if linha_selecionada:
+            valores = self.treeview.item(linha_selecionada, "values")
+            if valores:
+                self.combobox_produtos.set(valores[1])
+                
     def produtos_combobox(self):
         estoque = consultar_estoque_db()
         nomes_produtos = [nome[1] for nome in estoque]
@@ -58,14 +96,13 @@ class tela_reabastecimento:
                 registrar_reabastecimento_db(id_produto, quantidade)
                 messagebox.showinfo("Sucesso", "Chamado cadastrado! Banco de dados atualizando...")
 
-                self.consultar_estoque()
+                estoque = consultar_estoque_db()
+                self.atualizar_tabela(estoque)
+
+                self.pesquisar_produto_entry.delete(0, ctk.END)
+                self.quantidade_entrou_entry.delete(0, ctk.END)
         else:
             messagebox.showerror("Error", "Ocorreu um erro na tentativa de cadastrar novo chamado!")
-
-    def consultar_estoque(self):
-        estoque = consultar_estoque_db()
-        for produto in estoque:
-            self.text.insert(ctk.END, f"Produto: {produto[1]}, ID Produto: {produto[0]}, Qnt: {produto[2]}\n\n")
 
     def voltar_menu(self):
         
