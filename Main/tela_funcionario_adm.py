@@ -78,10 +78,10 @@ class tela_funcionario_adm:
         self.usuario_funcionario_entry.place(x=190, y=440)#
         self.senha_funcionario_entry.place(x=190, y=490)#
         #Posicionamento das caixas de textos especialmente para nao dar conflito com o GET = PEGAR
-        self.buscar_funcionario_entry.place(x=200, y=650)
+        self.buscar_funcionario_entry.place(x=190, y=640)
         
         #Posicionamento das caixas de textos especialmente para nao dar conflito com o GET = PEGAR
-        ctk.CTkLabel(self.right_frame, text="Busca por id:",text_color='black',font=('Times New Roman', 20), fg_color="gray").place(x=90, y=650)
+        ctk.CTkLabel(self.right_frame, text="Busca por :\n(id)   ",text_color='black',font=('Times New Roman', 20), fg_color="gray").place(x=90, y=640)
         self.id_funcionario_entry = ctk.CTkEntry(self.right_frame, fg_color="white")
 
 
@@ -90,7 +90,7 @@ class tela_funcionario_adm:
         ctk.CTkButton(self.right_frame, text="REGISTRAR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=90, height= 40,command=self.registrar_funcionario).place(x=90, y=560)
         ctk.CTkButton(self.right_frame, text="EXCLUIR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=90, height= 40,command=self.delete_funcionario).place(x=200, y=560)
         ctk.CTkButton(self.right_frame, text="EDITAR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=90, height= 40,command=self.update_funcionario).place(x=310, y=560)
-        ctk.CTkButton(self.right_frame, text="BUSCAR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=50, height= 30,command=self.pesquisar_funcionario).place(x=300, y=650)
+        ctk.CTkButton(self.right_frame, text="BUSCAR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=50, height= 30,command=self.pesquisar_funcionario).place(x=300, y=640)
         ctk.CTkButton(self.root, text='Voltar',text_color='black',fg_color= '#404040', bg_color= '#A0A0A0', width=90, height= 40, command=self.voltar_menu).place(x=1810, y=920)
        
         #Text Area para exibir a tabela em tempo real do Banco de Dados
