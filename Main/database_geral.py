@@ -21,7 +21,7 @@ class tbit_db:
             comandos_sql = [
                 
                 """
-                    CREATE TABLE Fornecedor 
+                    CREATE TABLE IF NOT EXISTS Fornecedor 
                     ( 
                     id_fornecedor INT not null auto_increment,  
                     nome_fornecedor varchar(40),  
@@ -35,7 +35,7 @@ class tbit_db:
                 """
 
                 """
-                    CREATE TABLE Produto 
+                    CREATE TABLE IF NOT EXISTS Produto 
                     ( 
                     id_produto INT not null auto_increment,  
                     nome_produto varchar(40),  
@@ -49,7 +49,7 @@ class tbit_db:
                 """
 
                 """
-                    CREATE TABLE Cliente 
+                    CREATE TABLE IF NOT EXISTS Cliente 
                     ( 
                     id_cliente INT not null auto_increment,  
                     nome_cliente varchar(40),  
@@ -60,19 +60,20 @@ class tbit_db:
                 """
 
                 """
-                    CREATE TABLE Pedido 
+                    CREATE TABLE IF NOT EXISTS Pedido 
                     (
-                    id_compra int not null auto_increment,
+                    id_pedido int not null auto_increment,
+                    quantidade_produto_item int,
                     idProduto int not null,  
                     idCliente int not null,
-                    constraint pk_compra primary key (id_compra),
-                    constraint fk_produto_compra foreign key (idProduto) references Produto(id_produto),
-                    constraint fk_cliente_compra foreign key (idCliente) references Cliente(id_cliente)
+                    constraint pk_pedido primary key (id_pedido),
+                    constraint fk_produto_pedido foreign key (idProduto) references Produto(id_produto),
+                    constraint fk_cliente_pedido foreign key (idCliente) references Cliente(id_cliente)
                     );
                 """
 
                 """
-                    CREATE TABLE Funcionario 
+                    CREATE TABLE IF NOT EXISTS Funcionario 
                     ( 
                     id_funcionario INT not null auto_increment,  
                     nome_funcionario varchar(40),  
@@ -91,7 +92,7 @@ class tbit_db:
                 """
 
                 """
-                    CREATE TABLE Cadastro 
+                    CREATE TABLE IF NOT EXISTS Cadastro 
                     ( 
                     id_cadastro int not null auto_increment,
                     idFuncionario INT not null,  
@@ -103,7 +104,7 @@ class tbit_db:
                 """
                 
                 """
-                    CREATE TABLE Estoque
+                    CREATE TABLE IF NOT EXISTS Estoque
                     (
                     id_estoque INT not null auto_increment,
                     id_produto INT not null,
@@ -369,13 +370,13 @@ class tbit_db:
                 """
 
                 """
-                    INSERT INTO Pedido (idProduto, idCliente) VALUES
-                    (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10),
-                    (11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20),
-                    (21, 21), (22, 22), (23, 23), (24, 24), (25, 25), (26, 26), (27, 27), (28, 28), (29, 29), (30, 30),
-                    (31, 31), (32, 32), (33, 33), (34, 34), (35, 35), (36, 36), (37, 37), (38, 38), (39, 39), (40, 40),
-                    (41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
-                    (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
+                    INSERT INTO Pedido (idProduto, idCliente, quantidade_produto_item) VALUES
+                    (1, 1, 1), (2, 2, 2), (3, 3, 3), (4, 4, 4), (5, 5, 5), (6, 6, 6), (7, 7, 7), (8, 8, 8), (9, 9, 8), (10, 10, 8),
+                    (11, 11, 8), (12, 12, 8), (13, 13, 8), (14, 14, 8), (15, 15, 8), (16, 16, 8), (17, 17, 8), (18, 18, 8), (19, 19, 8), (20, 20, 8),
+                    (21, 21, 8), (22, 22, 8), (23, 23, 8), (24, 24, 8), (25, 25, 8), (26, 26, 8), (27, 27, 8), (28, 28, 8), (29, 29, 8), (30, 30, 8),
+                    (31, 31, 8), (32, 32, 8), (33, 33, 8), (34, 34, 8), (35, 35, 8), (36, 36, 8), (37, 37, 8), (38, 38, 8), (39, 39, 8), (40, 40, 8),
+                    (41, 41, 8), (42, 42, 8), (43, 43, 8), (44, 44, 8), (45, 45, 8), (46, 46, 8), (47, 47, 8), (48, 48, 8), (49, 49, 8), (50, 50, 8),
+                    (51, 51, 8), (52, 52, 8), (53, 53, 8), (54, 54, 8), (55, 55, 8), (56, 56, 8), (57, 57, 8), (58, 58, 8), (59, 59, 8), (60, 60, 8);
                 """
                 """
                     INSERT INTO Cadastro (idFuncionario, idCliente) VALUES
@@ -423,6 +424,23 @@ class tbit_db:
                     end;
                     $$
 
+                    delimiter ;
+                """
+                """
+                    delimiter $$
+                    create procedure delete_fornecedor_e_produtos(IDfornecedor INT)
+                    BEGIN
+
+                        DELETE FROM Pedido
+                        WHERE idProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
+
+                        DELETE FROM Produto
+                        WHERE idFornecedor = IDfornecedor;
+
+                        DELETE FROM Fornecedor
+                        WHERE id_fornecedor = IDfornecedor;
+                    END;
+                    $$
                     delimiter ;
                 """
             ]
