@@ -82,7 +82,7 @@ class tela_funcionario_adm:
         
         #Posicionamento das caixas de textos especialmente para nao dar conflito com o GET = PEGAR
         ctk.CTkLabel(self.right_frame, text="Busca por :\n(id)   ",text_color='black',font=('Times New Roman', 20), fg_color="gray").place(x=90, y=640)
-        self.id_funcionario_entry = ctk.CTkEntry(self.right_frame, fg_color="LIGHTGRAY")
+        self.id_funcionario_entry = ctk.CTkEntry(self.right_frame, fg_color="white")
 
 
         # Botões de funções

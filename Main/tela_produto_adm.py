@@ -11,15 +11,16 @@ class tela_produto_adm:
     # Construtor da classe, carrega as informações básicas de carregamento
     def __init__(self, root):
         self.menu_root = root  
+
         # Definições da janela
         self.root = ctk.CTkToplevel()
         self.root.configure(fg_color='#A0A0A0')
         self.root.title("TBit Manager - Menu de produtos")
-        self.root.resizable(width=False, height=False)
-        self.root.geometry("900x700")
 
-       #self.root.config(bg="")
-        self.root.transient(root)  # Faz com que a nova janela fique acima da principal
+        largura = self.root.winfo_screenwidth()# Expandir tela largura
+        altura = self.root.winfo_screenheight()# Expandir tela altura
+        self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
+        
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
     
         # Carrega os widgets da tela
@@ -28,19 +29,32 @@ class tela_produto_adm:
         self.listar_do_banco()
 
     def criando_widgets(self):
+
+
+        self.titulo = ctk.CTkLabel(self.root, text='P R O D U T O - A D M I N I S T R A D O R',font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
+        self.titulo.place(x=380, y=60) # Posiciona o label 
+
+        #cria o frame como fundo para deixar um fundo para as labls e caixas de textos
+        self.right_frame = ctk.CTkFrame(self.root, width=600, height=600, fg_color="gray")# definir o tamanho e cor do fundo da frame
+        self.right_frame.place(x=100, y=160)# definir a expanção da frame
+
+
         # Criando os botoes que carregam as funcoes necessarias e seus posicionamentos
-        ctk.CTkButton(self.root, text="Cadastrar produto", command=self.registrar_no_banco, width=15, height=1).place(x=160, y=280) # Botao para cadastrar produto
-        ctk.CTkButton(self.root, text="Alterar produto", command=self.alterar_no_banco, width=15, height=1).place(x=320, y=280) # Botao para alterar produto
-        ctk.CTkButton(self.root, text="Deletar produto", command=self.deletar_do_banco, width=15, height=1).place(x=480, y=280) # Botao para deletar produto
-        ctk.CTkButton(self.root, text="Cancelar operção", command=self.cancelar_operacao, width=15, height=1).place(x=640, y=280) # Botao para cancelar/voltar ao padrao
-        ctk.CTkButton(self.root, text="Pesquisar produto e\nAutopreencher (ID ou NOME)", command=self.pesquisar_produto_especifico, width=30, height=2).place(x=135, y=355)
-        ctk.CTkButton(self.root, text='Voltar', width=20, command=self.voltar_menu).place(x=800, y=600)
+        ctk.CTkButton(self.root, text="Cadastrar produto", command=self.registrar_no_banco, width=90,height= 40,fg_color='#404040',text_color='black').place(x=160, y=280) # Botao para cadastrar produto
+        ctk.CTkButton(self.root, text="Alterar produto", command=self.alterar_no_banco, width=90,height= 40,fg_color='#404040',text_color='black').place(x=320, y=280) # Botao para alterar produto
+        ctk.CTkButton(self.root, text="Deletar produto", command=self.deletar_do_banco, width=90,height= 40,fg_color='#404040',text_color='black').place(x=480, y=280) # Botao para deletar produto
+        ctk.CTkButton(self.root, text="Cancelar operção", command=self.cancelar_operacao, width=90,height= 40,fg_color='#404040',text_color='black').place(x=640, y=280) # Botao para cancelar/voltar ao padrao
+        ctk.CTkButton(self.root, text="buscar por :\nA (id/nome)", command=self.pesquisar_produto_especifico, width=30,fg_color='#404040',text_color='black', height=2).place(x=135, y=355)
+        ctk.CTkButton(self.root, text='Voltar', width=90,fg_color='#404040',text_color='black', height=40, command=self.voltar_menu).place(x=1700, y=900)
+        
+        
+        
 
         # Labels usados para identificar as caixas de texto e seus posicionamentos
-        ctk.CTkLabel(self.root, text="Nome do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=50)
-        ctk.CTkLabel(self.root, text="Descrição do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=90)
-        ctk.CTkLabel(self.root, text="Quantidade do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=130)
-        ctk.CTkLabel(self.root, text="Valor do Produto:",fg_color="#00284d", text_color='white').place(x=280, y=170)
+        ctk.CTkLabel(self.root, text="Nome do Produto:",fg_color="gray",font=('times New Roman', 20), text_color='black').place(x=280, y=50)
+        ctk.CTkLabel(self.root, text="Descrição do Produto:",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=280, y=90)
+        ctk.CTkLabel(self.root, text="Quantidade do Produto:",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=280, y=130)
+        ctk.CTkLabel(self.root, text="Valor do Produto:",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=280, y=170)
 
         # Entrys usados para o usuario digitar e seus posicionamentos
         # Entry 'nome do produto'

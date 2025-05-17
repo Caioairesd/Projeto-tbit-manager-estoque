@@ -45,10 +45,8 @@ class tela_fornecedor_adm:
         ctk.CTkButton(self.right_frame,text="Alterar",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.update_fornecedor).place(x=210,y=420)
         ctk.CTkButton(self.right_frame,text="Excluir",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.delete_fornecedor).place(x=320,y=420)
         ctk.CTkButton(self.right_frame,text="Cancelar",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.cancelar_operacao).place(x=430,y=420)
-        ctk.CTkButton(self.right_frame, text='Voltar', width=90, height=40, text_color='black',fg_color='#404040', bg_color='gray',command=self.voltar_menu).place(x=1700, y=900)
         ctk.CTkButton(self.right_frame,text="Buscar",text_color='black',fg_color='#404040',width=50,height=30,bg_color='gray',command=self.pesquisar_fornecedor).place(x=460,y=540)
-
-
+        ctk.CTkButton(self.root, text='Voltar', width=90, height=40, text_color='black',fg_color='#404040', bg_color='gray',command=self.voltar_menu).place(x=1810, y=920)
         #Criação de campos de entrada de dados
         self.fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
         self.marca_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
@@ -70,7 +68,7 @@ class tela_fornecedor_adm:
         self.pesquisar_entry.place(x=240,y=540)
 
         #Criação da área de texto responsável por exibir informações dos fornecedores
-        self.search_area = ctk.CTkTextbox(self.root,width=800,height=800, fg_color='gray')
+        self.search_area = ctk.CTkTextbox(self.root,text_color='black',width=800,height=800, fg_color='gray')
         self.search_area.place(x=1000, y=160)
 
     #função responsável por criar um fornecedor 
