@@ -7,7 +7,7 @@ class tela_pedido:
         self.root = ctk.CTkToplevel(root)
         self.root.configure(fg_color="#A0A0A0")
 
-        #ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
+        ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
 
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura

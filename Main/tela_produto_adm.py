@@ -35,51 +35,53 @@ class tela_produto_adm:
         self.titulo.place(x=380, y=60) # Posiciona o label 
 
         #cria o frame como fundo para deixar um fundo para as labls e caixas de textos
-        self.right_frame = ctk.CTkFrame(self.root, width=600, height=600, fg_color="gray")# definir o tamanho e cor do fundo da frame
-        self.right_frame.place(x=100, y=160)# definir a expanção da frame
+        self.right_frame = ctk.CTkFrame(self.root, width=700, height=700, fg_color="gray")# definir o tamanho e cor do fundo da frame
+        self.right_frame.place(x=200, y=160)# definir a expanção da frame
 
 
         # Criando os botoes que carregam as funcoes necessarias e seus posicionamentos
-        ctk.CTkButton(self.root, text="Cadastrar produto", command=self.registrar_no_banco, width=90,height= 40,fg_color='#404040',text_color='black').place(x=160, y=280) # Botao para cadastrar produto
-        ctk.CTkButton(self.root, text="Alterar produto", command=self.alterar_no_banco, width=90,height= 40,fg_color='#404040',text_color='black').place(x=320, y=280) # Botao para alterar produto
-        ctk.CTkButton(self.root, text="Deletar produto", command=self.deletar_do_banco, width=90,height= 40,fg_color='#404040',text_color='black').place(x=480, y=280) # Botao para deletar produto
-        ctk.CTkButton(self.root, text="Cancelar operção", command=self.cancelar_operacao, width=90,height= 40,fg_color='#404040',text_color='black').place(x=640, y=280) # Botao para cancelar/voltar ao padrao
-        ctk.CTkButton(self.root, text="buscar por :\nA (id/nome)", command=self.pesquisar_produto_especifico, width=30,fg_color='#404040',text_color='black', height=2).place(x=135, y=355)
-        ctk.CTkButton(self.root, text='Voltar', width=90,fg_color='#404040',text_color='black', height=40, command=self.voltar_menu).place(x=1700, y=900)
+        ctk.CTkButton(self.right_frame, text="Cadastrar", command=self.registrar_no_banco, width=90,height= 40,fg_color='#404040',text_color='black', border_color='gray').place(x=50, y=290) # Botao para cadastrar 
+        ctk.CTkButton(self.right_frame, text="Editar", command=self.alterar_no_banco, width=90,height= 40,fg_color='#404040',text_color='black', border_color='gray').place(x=160, y=290) # Botao para alterar 
+        ctk.CTkButton(self.right_frame, text="Excluir", command=self.deletar_do_banco, width=90,height= 40,fg_color='#404040',text_color='black', border_color='gray').place(x=270, y=290) # Botao para deletar produto
+        ctk.CTkButton(self.right_frame, text="Cancelar", command=self.cancelar_operacao, width=90,height= 40,fg_color='#404040',text_color='black', border_color='gray').place(x=380, y=290) # Botao para cancelar/voltar ao padrao
+        ctk.CTkButton(self.right_frame, text="Buscar", command=self.pesquisar_produto_especifico, width=50,fg_color='#404040',text_color='black', border_color='gray', height=30).place(x=380, y=370)
+        ctk.CTkButton(self.root, text='Voltar', width=90,fg_color='#404040',text_color='black', border_color='gray', height=40, command=self.voltar_menu).place(x=1700, y=900)
         
         
         
 
         # Labels usados para identificar as caixas de texto e seus posicionamentos
-        ctk.CTkLabel(self.root, text="Nome do Produto:",fg_color="gray",font=('times New Roman', 20), text_color='black').place(x=280, y=50)
-        ctk.CTkLabel(self.root, text="Descrição do Produto:",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=280, y=90)
-        ctk.CTkLabel(self.root, text="Quantidade do Produto:",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=280, y=130)
-        ctk.CTkLabel(self.root, text="Valor do Produto:",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=280, y=170)
+        ctk.CTkLabel(self.root, text="Nome :",fg_color="gray",font=('times New Roman', 20), text_color='black').place(x=250, y=210)
+        ctk.CTkLabel(self.root, text="Descrição :",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=250, y=260)
+        ctk.CTkLabel(self.root, text="Quantidade : ",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=250, y=310)
+        ctk.CTkLabel(self.root, text="Valor :",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=250, y=360)
+        ctk.CTkLabel(self.right_frame, text="Buscar por:\n(nome/id)  ",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=50, y=370)
 
         # Entrys usados para o usuario digitar e seus posicionamentos
         # Entry 'nome do produto'
-        self.box_nome = ctk.CTkEntry(self.root, width=25,height=30)
-        self.box_nome.place(x=420, y=50)
+        self.box_nome = ctk.CTkEntry(self.right_frame,text_color='black', width=300,height=30, fg_color='lightgray', bg_color='gray', border_color='gray')
+        self.box_nome.place(x=170, y=50)
 
         # Entry 'descrição do produto'
-        self.box_descricao = ctk.CTkEntry(self.root, width=25,height=30)
-        self.box_descricao.place(x=420, y=90)
+        self.box_descricao = ctk.CTkEntry(self.right_frame,text_color='black', width=300,height=30, fg_color='lightgray', bg_color='gray', border_color='gray')
+        self.box_descricao.place(x=170, y=100)
 
         # Entry 'quantidade do produto'
-        self.box_quantidade = ctk.CTkEntry(self.root, width=25,height=30)
-        self.box_quantidade.place(x=420, y=130)
+        self.box_quantidade = ctk.CTkEntry(self.right_frame,text_color='black', width=300,height=30, fg_color='lightgray', bg_color='gray', border_color='gray')
+        self.box_quantidade.place(x=170, y=150)
 
         # Entry 'valor do produto'
-        self.box_valor = ctk.CTkEntry(self.root, width=25,height=30)
-        self.box_valor.place(x=420, y=170)
+        self.box_valor = ctk.CTkEntry(self.right_frame,text_color='black', width=300,height=30, fg_color='lightgray', bg_color='gray', border_color='gray')
+        self.box_valor.place(x=170, y=200)
         
         # Entry usado para pesquisar de forma individual
-        self.box_pesquisar = ctk.CTkEntry(self.root, width=40, height=30)
-        self.box_pesquisar.place(x=360, y=360 )
+        self.box_pesquisar = ctk.CTkEntry(self.right_frame,text_color='black', width=200,height=30, fg_color='lightgray', bg_color='gray', border_color='gray')
+        self.box_pesquisar.place(x=160, y=370 )
+    
 
         # Text area usado para retornar dados ja existentes
-        self.text_area = ctk.CTkTextbox(self.root, width=80, height=15)
-        self.text_area.place(x=135, y=400)
+        self.text_area = ctk.CTkTextbox(self.root, width=700,text_color='black',height=700, fg_color='gray', border_color='gray')
+        self.text_area.place(x=1005, y=160)
 
     # Método usado quando o botao 'Cadastrar' é clicado
     def registrar_no_banco(self):
@@ -127,7 +129,7 @@ class tela_produto_adm:
             self.text_area.delete(1.0, ctk.END)
 
             for produto in produtos:
-                self.text_area.insert(ctk.END, f"-ID: {produto[0]} | Nome: {produto[1]} | Descrição: {produto[2]} | Quantidade: {produto[3]} | Valor: {produto[4]}\n")
+                self.text_area.insert(ctk.END,text='BANCO DE DADOS'f"\n\n-ID: {produto[0]} | Nome: {produto[1]} | Descrição: {produto[2]} | Quantidade: {produto[3]} | Valor: {produto[4]}\n\n")
     
     def deletar_do_banco(self):
         produto = self.box_nome.get()
