@@ -47,8 +47,6 @@ class menu_usuario:
         tela_estoque(self.root)
         self.root.withdraw()
 
-
-
     def logout_usuario(self):
         from main_menu import login_menu
         menu = ctk.CTk()

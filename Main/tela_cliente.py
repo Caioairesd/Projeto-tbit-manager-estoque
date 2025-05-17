@@ -61,6 +61,7 @@ class tela_cliente:
             try:
                 registrar_cliente_db(nome_cliente, descricao_cliente, cnpj_cliente)
                 messagebox.showinfo("Sucesso", "Cadastro do cliente foi efetuado com sucesso!")
+                self.limpar_campos()
             except:
                 messagebox.showerror("Error", "Erro na tentativa de cadastrar um novo cliente!")
         else:
@@ -76,6 +77,7 @@ class tela_cliente:
             try:
                 update_cliente_db(nome_cliente, descricao_cliente, cnpj_cliente, id_cliente)
                 messagebox.showinfo("Sucesso", "Informações alteradas com sucesso!")
+                self.limpar_campos()
             except:
                 messagebox.showerror("Error", "Erro na tentativa de alterar informações!")
         else:
@@ -106,6 +108,12 @@ class tela_cliente:
 
         for cliente in clientes:
             return f"ID: {cliente[0]}, Nome: {cliente[1]}, Descrição: {cliente[2]}, CNPJ: {cliente[3]}"
+
+    def limpar_campos(self):
+        self.id_cliente_entry.delete(0, ctk.END)
+        self.nome_cliente_entry.delete(0, ctk.END)
+        self.cnpj_cliente_entry.delete(0, ctk.END)
+        self.descricao_cliente_entry.delete(0, ctk.END)
 
     def voltar_menu(self):
        # from menu_adm import menu_admin

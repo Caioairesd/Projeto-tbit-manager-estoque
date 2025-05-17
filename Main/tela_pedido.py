@@ -54,7 +54,6 @@ class tela_pedido:
         else:
             messagebox.showerror("Error", "Insira um valor INTEIRO na quantidade!")
 
-
     # CONJUNTO DE FUNÇÕES USADAS PARA A COMBO BOX!!!
     def listar_clientes(self):
         busca = get_id_nome_clientes_db()
@@ -102,6 +101,10 @@ class tela_pedido:
                 id_produto = produto[0]
                 return id_produto
     # FIM DO CONJUNTO DE FUNÇÕES 
+
+    def limpar_campos(self):
+        self.nome_cliente_entry.delete(0, ctk.END)
+        self.nome_produto_entry.delete(0, ctk.END)
 
     def voltar_menu(self):
        # from menu_adm import menu_admin
