@@ -55,13 +55,12 @@ class tela_reabastecimento:
         id_produto = self.get_id_produto()
 
         if id_produto and quantidade:
-            try:
                 registrar_reabastecimento_db(id_produto, quantidade)
                 messagebox.showinfo("Sucesso", "Chamado cadastrado! Banco de dados atualizando...")
 
                 self.consultar_estoque()
-            except:
-                messagebox.showerror("Error", "Ocorreu um erro na tentativa de cadastrar novo chamado!")
+        else:
+            messagebox.showerror("Error", "Ocorreu um erro na tentativa de cadastrar novo chamado!")
 
     def consultar_estoque(self):
         estoque = consultar_estoque_db()

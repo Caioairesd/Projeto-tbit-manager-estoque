@@ -520,21 +520,21 @@ def delete_fornecedor_db(id_fornecedor):
 
 #Funções da tabela produto
 
-def registrar_produto_db(nome_produto, descricao, valor, id_fornecedor):
+def registrar_produto_db(nome_produto, descricao, categoria, quantidade, valor, id_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "INSERT INTO produto (nome_produto, descricao_produto, valor_produto, idFornecedor)VALUES(%s, %s, %s, %s)"
-    cursor.execute(query, (nome_produto, descricao, valor, id_fornecedor))
+    query = "INSERT INTO produto (nome_produto, descricao_produto, categoria_produto, quantidade_produto, valor_produto, idFornecedor)VALUES(%s, %s, %s, %s, %s, %s)"
+    cursor.execute(query, (nome_produto, descricao, categoria, quantidade, valor, id_fornecedor))
 
     conn.commit()
     cursor.close()
     conn.close()
 
-def atualizar_produto_db(nome_produto, descricao, valor):
+def atualizar_produto_db(nome_produto, descricao, categoria, valor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "UPDATE produto SET nome_produto = %s, descricao_produto = %s, valor_produto = %s WHERE nome_produto LIKE %s"
-    cursor.execute(query, (nome_produto, descricao, valor, nome_produto))
+    query = "UPDATE produto SET nome_produto = %s, descricao_produto = %s, categoria_produto = %s, valor_produto = %s WHERE nome_produto LIKE %s"
+    cursor.execute(query, (nome_produto, descricao, categoria, valor, nome_produto))
 
     conn.commit()
     cursor.close()
@@ -543,7 +543,8 @@ def atualizar_produto_db(nome_produto, descricao, valor):
 def listar_produtos_db():
     conn = get_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM produto"
+    query = """SELECT p.id_produto, p.nome_produto, p.descricao_produto, p.categoria_produto, p.quantidade_produto, p.valor_produto, f.nome_fornecedor FROM produto as p 
+    JOIN fornecedor AS f ON f.id_fornecedor = p.idFornecedor"""
     cursor.execute(query)
     busca = cursor.fetchall()
     conn.commit()
@@ -656,7 +657,6 @@ def consultar_estoque_db():
     cursor = conn.cursor()
 
     query = "SELECT id_produto, nome_produto, quantidade_produto FROM produto"
-
     cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()
@@ -668,7 +668,7 @@ def registrar_reabastecimento_db(id_produto, quantidade_recebida):
     conn = get_connection()
     cursor = conn.cursor()
 
-    query = "INSERT INTO estoque(id_produto, quantidade_estoque) VALUES (%s, %s)"
+    query = "INSERT INTO estoque(idProduto, quantidade_estoque) VALUES (%s, %s)"
 
     cursor.execute(query, (id_produto, quantidade_recebida,))
     conn.commit()
