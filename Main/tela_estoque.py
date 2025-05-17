@@ -26,6 +26,7 @@ class tela_estoque:
 
         self.criar_tabelao()
 
+    # CONJUNTO DE FUNÇÕES USADOS NO TREEVIEW
     def criar_tabelao(self):
         self.treeview = ttk.Treeview(self.root, columns=("id_produto", "nome_produto", "quantidade_estoque"), show="headings")
 
@@ -53,6 +54,7 @@ class tela_estoque:
         filtragem = [produto for produto in estoque if produto_pesquisado in produto[1].lower()]
 
         self.atualizar_tabela(filtragem)
+    # FIM DO CONJUNTO
 
     def voltar_menu(self):
         
