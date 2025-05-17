@@ -1,6 +1,6 @@
 import customtkinter as ctk
-from database_geral import fazer_pedido_db, get_id_nome_clientes_db, get_id_nome_produtos_db
-from tkinter import messagebox
+from database_geral import fazer_pedido_db, get_id_nome_clientes_db, get_id_nome_produtos_db, get_pedidos_db
+from tkinter import messagebox, ttk
 
 class tela_pedido:
 
@@ -17,6 +17,10 @@ class tela_pedido:
         self.root.transient(root)  # Faz com que a nova janela fique acima da principal
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
+        self.create_widgets()
+        self.criar_tabelao()
+
+    def create_widgets(self):
         voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', width=20, command=self.voltar_menu)
         voltar_menu_button.place(x=800, y=600)
 
@@ -49,6 +53,9 @@ class tela_pedido:
                 id_cliente = self.get_id_cliente()
                 fazer_pedido_db(quantidade, id_produto, id_cliente)
                 messagebox.showinfo("Sucesso", "Pedido cadastrado com sucesso!")
+
+                pedidos = get_pedidos_db()
+                self.atualizar_tabela(pedidos)
             except:
                 messagebox.showerror("Error", "Ocorreu erro ao cadastrar no banco de dados! Tente novamente...")
         else:
@@ -77,7 +84,7 @@ class tela_pedido:
     def filtrar_nomes_produtos(self, event):
         produtos = get_id_nome_produtos_db()
 
-        texto = self.nome_cliente_entry.get().lower()
+        texto = self.nome_produto_entry.get().lower()
 
         filtrados = [nome[1] for nome in produtos if texto in nome[1].lower()]
         self.nome_produto_combobox.configure(values=filtrados)
@@ -100,7 +107,42 @@ class tela_pedido:
             if nome_produto == produto[1]:
                 id_produto = produto[0]
                 return id_produto
-    # FIM DO CONJUNTO DE FUNÇÕES 
+    # FIM DO CONJUNTO DE FUNÇÕES PARA COMBO BOX
+
+    # CONJUNTO DE FUNÇÕES USADOS PARA A CRIAÇÃO E MODELAGEM DA TABELA
+    def criar_tabelao(self):
+        self.treeview = ttk.Treeview(self.root, columns=("id_pedido", "cliente_pediu", "produto_pedido", "quantidade_pedida"), show="headings", height=15)
+
+        self.treeview.heading("id_pedido", text="ID pedido")
+        self.treeview.heading("cliente_pediu", text="Cliente que pediu")
+        self.treeview.heading("produto_pedido", text="Produto pedido")
+        self.treeview.heading("quantidade_pedida", text="Quantidade pedida")
+
+        self.treeview.column("id_pedido", width=150)
+        self.treeview.column("cliente_pediu", width=150)
+        self.treeview.column("produto_pedido", width=150)
+        self.treeview.column("quantidade_pedida", width=150)
+
+        pedidos = get_pedidos_db()
+        for pedido in pedidos:
+            self.treeview.insert("", "end", values=pedido)
+
+        self.treeview.place(x=100, y=300)
+
+    def atualizar_tabela(self, pedidos):
+         for item in self.treeview.get_children():
+            self.treeview.delete(item)
+
+         for pedido in pedidos:
+            self.treeview.insert("", "end", values=pedido)
+
+    """def filtrar_tabela(self, event):
+        pedidos = get_pedidos_db()
+        produto_pesquisado = self.pesquisar_produto_entry.get().lower()
+
+        filtragem = [produto for produto in estoque if produto_pesquisado in produto[1].lower()]
+
+        self.atualizar_tabela(filtragem)"""
 
     def limpar_campos(self):
         self.nome_cliente_entry.delete(0, ctk.END)

@@ -74,6 +74,7 @@ class tela_reabastecimento:
             if valores:
                 self.combobox_produtos.set(valores[1])
                 
+    # CONJUNTO DE FUNÇÕES USADOS PARA A COMBO BOX
     def produtos_combobox(self):
         estoque = consultar_estoque_db()
         nomes_produtos = [nome[1] for nome in estoque]

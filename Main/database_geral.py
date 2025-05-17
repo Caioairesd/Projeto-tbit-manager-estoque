@@ -772,3 +772,18 @@ def get_id_nome_clientes_db():
     conn.close()
 
     return result
+
+def get_pedidos_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = """SELECT pe.id_pedido, ci.nome_cliente, po.nome_produto, pe.quantidade_produto_item FROM pedido AS pe
+            JOIN produto AS po ON po.id_produto = pe.idProduto
+            JOIN cliente AS ci ON pe.idCliente = ci.id_cliente"""
+
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return result
