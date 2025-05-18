@@ -616,6 +616,18 @@ def pesquisar_produto_db(produto_requisitado):
 
     return busca
 
+def listar_fornecedores_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "SELECT id_fornecedor, nome_fornecedor FROM fornecedor"
+    cursor.execute(query)
+    busca = cursor.fetchall()
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return busca
+
 # funções da tabela  funcionario
 
 # Função para criar um novo funcionário no banco de dados

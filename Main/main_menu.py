@@ -6,8 +6,6 @@ from menu_user import menu_usuario
 
 class login_menu:
     def __init__(self,root):
-        database = tbit_db()
-        cursor = database.cursor
 
         self.root = root
         self.root.title("TBit Manager by TerraBytes")

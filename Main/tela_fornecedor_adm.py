@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from database_geral import register_fornecedor_db,listar_fornecedor_db,update_fornecedor_db,delete_fornecedor_db,pesquisar_fornecedor_db
 
 class tela_fornecedor_adm:
@@ -19,7 +19,7 @@ class tela_fornecedor_adm:
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
         self.create_widgets()
-        self.listar_fornecedor()
+        self.criar_tabela()
 
     def create_widgets(self):
         
@@ -45,11 +45,10 @@ class tela_fornecedor_adm:
         ctk.CTkButton(self.right_frame,text="Alterar",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.update_fornecedor).place(x=210,y=420)
         ctk.CTkButton(self.right_frame,text="Excluir",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.delete_fornecedor).place(x=320,y=420)
         ctk.CTkButton(self.right_frame,text="Cancelar",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.cancelar_operacao).place(x=430,y=420)
-        ctk.CTkButton(self.right_frame,text="Buscar",text_color='black',fg_color='#404040',width=50,height=30,bg_color='gray',command=self.pesquisar_fornecedor).place(x=460,y=540)
         ctk.CTkButton(self.root, text='Voltar', width=90, height=40, text_color='black',fg_color='#404040', bg_color='gray',command=self.voltar_menu).place(x=1810, y=920)
         #Criação de campos de entrada de dados
         self.fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
-        self.marca_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
+        self.cnpj_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
         self.email_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
         self.telefone_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
         self.cidade_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
@@ -59,7 +58,7 @@ class tela_fornecedor_adm:
 
         #Definindo localização dos campos na tela
         self.fornecedor_entry.place(x=240,y=50)
-        self.marca_fornecedor_entry.place(x=240,y=100)
+        self.cnpj_fornecedor_entry.place(x=240,y=100)
         self.email_fornecedor_entry.place(x=240,y=150)
         self.telefone_fornecedor_entry.place(x=240,y=200)
         self.cidade_fornecedor_entry.place(x=240,y=250)
@@ -67,30 +66,87 @@ class tela_fornecedor_adm:
         self.id_fornecedor_entry.place(x=240,y=350)
         self.pesquisar_entry.place(x=240,y=540)
 
-        #Criação da área de texto responsável por exibir informações dos fornecedores
-        self.search_area = ctk.CTkTextbox(self.root,text_color='black',width=800,height=800, fg_color='gray')
-        self.search_area.place(x=1000, y=160)
+    # CONJUNTO DE FUNÇÕES USADAS PARA A CRIAÇÃO E MODELAGEM DA TABELA
+    def criar_tabela(self):
+        self.treeview = ttk.Treeview(self.root, columns=("id_fornecedor", "nome_fornecedor", "cnpj_fornecedor", "email_fornecedor", "telefone_fornecedor", "pais_fornecedor", "cidade_fornecedor"), show="headings", height=15)
+
+        self.treeview.heading("id_fornecedor", text="ID")
+        self.treeview.heading("nome_fornecedor", text="Nome")
+        self.treeview.heading("cnpj_fornecedor", text="CNPJ")
+        self.treeview.heading("email_fornecedor", text="Email")
+        self.treeview.heading("telefone_fornecedor", text="Telefone")
+        self.treeview.heading("pais_fornecedor", text="Pais")
+        self.treeview.heading("cidade_fornecedor", text="Cidade")
+
+        self.treeview.column("id_fornecedor", width=80) # Altera a largura da coluna "id"
+        self.treeview.column("nome_fornecedor", width=120) # Altera a largura da coluna "nome"
+        self.treeview.column("cnpj_fornecedor", width=120) # Altera a largura da coluna "cnpj"
+        self.treeview.column("email_fornecedor", width=210) # Altera a largura da coluna "email"
+        self.treeview.column("telefone_fornecedor", width=120) # Altera a largura da coluna "telefone"
+        self.treeview.column("pais_fornecedor", width=80) # Altera a largura da coluna "pais"
+        self.treeview.column("cidade_fornecedor", width=100) # Altera a largura da coluna "cidade"
+
+        fornecedores = listar_fornecedor_db()
+        for fornecedor in fornecedores:
+            self.treeview.insert("", "end", values=fornecedor)
+
+        self.treeview.bind("<ButtonRelease-1>", self.click_na_linha)
+        
+        self.treeview.place(x=500, y=350) # Posiciona a tabela
+
+    def atualizar_tabela(self, fornecedores):
+         for item in self.treeview.get_children():
+            self.treeview.delete(item)
+
+         for fornecedor in fornecedores:
+            self.treeview.insert("", "end", values=fornecedor)
+
+    def filtrar_tabela(self, event):
+        fornecedores = listar_fornecedor_db()
+        fornecedor_pesquisado = self.pesquisar_entry.get().lower()
+
+        filtragem = [fornecedor for fornecedor in fornecedores if fornecedor_pesquisado in fornecedor[1].lower()]
+
+        self.atualizar_tabela(filtragem)
+
+    def click_na_linha(self, event):
+        linha_selecionada = self.treeview.focus()
+
+        if linha_selecionada:
+            valores = self.treeview.item(linha_selecionada, "values")
+
+            if valores:
+                self.limpar_campos()
+
+                self.id_fornecedor_entry.insert(0, valores[0])
+                self.fornecedor_entry.insert(0, valores[1])
+                self.cnpj_fornecedor_entry.insert(0, valores[2])
+                self.email_fornecedor_entry.insert(0, valores[3])
+                self.telefone_fornecedor_entry.insert(0, valores[4])
+                self.pais_fornecedor_entry.insert(0, valores[5])
+                self.cidade_fornecedor_entry.insert(0, valores[6])
 
     #função responsável por criar um fornecedor 
     def create_fornecedor(self):
         
         #variáveis recebem o valor inserido no campo de texto
         nome_fornecedor = self.fornecedor_entry.get()
-        marca_fornecedor = self.marca_fornecedor_entry.get()
+        cnpj_fornecedor = self.cnpj_fornecedor_entry.get()
         email_fornecedor = self.email_fornecedor_entry.get()
         telefone_fornecedor = self.telefone_fornecedor_entry.get()
-        cidade_fornecedor = self.cidade_fornecedor_entry.get()
-        pais_fornecedor = self.pais_fornecedor_entry.get()
+        cidade_fornecedor = self.pais_fornecedor_entry.get()
+        pais_fornecedor = self.cidade_fornecedor_entry.get()
        
         #Condicional responsável por acionar função do banco de dados
-        if nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
-            register_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
+        if nome_fornecedor and cnpj_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
+            register_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
 
             #Chama a função de limpar campos de texto
             self.limpar_campos()
 
             #Chama a função de listar para poder atualizar a lista de fornecederores exibida
-            self.listar_fornecedor()
+            fornecedores = listar_fornecedor_db()
+            self.atualizar_tabela(fornecedores)
 
             messagebox.showinfo("Sucesso","Fornecedor cadastrado com sucesso!")
 
@@ -98,69 +154,22 @@ class tela_fornecedor_adm:
 
             messagebox.showerror("Erro","Todos os campos são obrigatórios!")
     
-    #função responsável por exibir/listar os fornecedores cadastrados no banco de dados          
-    def listar_fornecedor(self):
-        
-        fornecedores = listar_fornecedor_db()
-        self.search_area.delete(1.0,ctk.END)
-      
-
-        for fornecedor in fornecedores:
-                    self.search_area.insert(ctk.END,f"ID: {fornecedor[0]},Fornecedor: {fornecedor[1]},CNPJ:{fornecedor[2]},Email:{fornecedor[3]},Telefone:{fornecedor[4]},Cidade:{fornecedor[5]},Cidade:{fornecedor[6]}\n\n")
-                    
-
     #função responsável por exibir e setar os valores relacionados ao id ou nome inserido ao usuário
     # como não realizamos ainda a máteria de banco de dados não é possível vincular tabela.         
-    def pesquisar_fornecedor(self):         
-        
-        #pesquisa recebe valor inserido no campo de texto de id
-        pesquisa = self.pesquisar_entry.get()
-
-        self.pesquisar_entry.delete(0,ctk.END)
-
-            
-        if pesquisa:
-
-            id_solicitado = pesquisar_fornecedor_db(pesquisa)
-           
-            if id_solicitado:
-
-                
-                messagebox.showinfo("Sucesso!","{}Fornecedor encontrado com sucesso!\nVerifique a caixa de texto".format(id_solicitado))
-                #Retira de exibição os fornecedores cadastrados deixando somente o pesquisado           
-                self.search_area.delete(1.0,ctk.END)
-
-                #Insere os dados do fornecedor pesquisado no campo de exibição
-                self.search_area.insert(ctk.END,f"ID: {id_solicitado[0]},Fornecedor: {id_solicitado[1]},Marca:{id_solicitado[2]},Email:{id_solicitado[3]},Telefone:{id_solicitado[4]},Cidade:{id_solicitado[5]},Cidade:{id_solicitado[6]}\n")
-                
-
-                #Insere os dados do fornecedor pesquisado nos campos de texto para possível edição  
-                self.id_fornecedor_entry.insert(0,id_solicitado[0])
-                self.fornecedor_entry.insert(0,id_solicitado[1])
-                self.marca_fornecedor_entry.insert(0,id_solicitado[2])
-                self.email_fornecedor_entry.insert(0,id_solicitado[3])
-                self.telefone_fornecedor_entry.insert(0,id_solicitado[4])
-                self.cidade_fornecedor_entry.insert(0,id_solicitado[5])
-                self.pais_fornecedor_entry.insert(0,id_solicitado[6])
-            else:
-                messagebox.showerror("Erro","Fornecedor não encontrado!")
-        else:
-            messagebox.showerror("Erro","Campo de pesquisa deve estar preenchido!")
-
     #Função responsável por atualizar os dados dos fornecedores cadastrados
     def update_fornecedor(self):
 
         #variáveis recebem os dados inseridos nos campos de textos
         id_fornecedor = self.id_fornecedor_entry.get() 
         nome_fornecedor=self.fornecedor_entry.get()
-        marca_fornecedor =self.marca_fornecedor_entry.get()        
+        cnpj_fornecedor =self.cnpj_fornecedor_entry.get()        
         email_fornecedor =self.email_fornecedor_entry.get()
         telefone_fornecedor =self.telefone_fornecedor_entry.get()
-        cidade_fornecedor =self.cidade_fornecedor_entry.get()
-        pais_fornecedor = self.pais_fornecedor_entry.get()
+        cidade_fornecedor =self.pais_fornecedor_entry.get()
+        pais_fornecedor = self.cidade_fornecedor_entry.get()
         
-        if  id_fornecedor and nome_fornecedor and marca_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
-            update_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor)
+        if  id_fornecedor and nome_fornecedor and cnpj_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
+            update_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor)
             
             messagebox.showinfo("Sucess","informações alteradas com sucesso!")
         else:
@@ -170,34 +179,37 @@ class tela_fornecedor_adm:
         self.limpar_campos()
 
         #Chama a função de listar para poder atualizar a lista de fornecederores exibida
-        self.listar_fornecedor()
-        
+        fornecedores = listar_fornecedor_db()
+        self.atualizar_tabela(fornecedores)
 
     #Função responsável por deletar os fornecedores
     def delete_fornecedor(self):
 
         #variáveis recebem os dados inseridos nos campos de textos
         id_fornecedor = self.id_fornecedor_entry.get()
-        confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse formecedor?")
-        if confirmacao  == True:
-            if id_fornecedor:
+        if id_fornecedor:
+            confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse formecedor?")
+            if confirmacao  == True:
                 delete_fornecedor_db(id_fornecedor)
 
                 self.id_fornecedor_entry.delete(0,ctk.END)
-                self.listar_fornecedor()
+                fornecedores = listar_fornecedor_db()
+                self.atualizar_tabela(fornecedores)
                 messagebox.showinfo("Sucesso","Fornecedor deletado com sucesso!")
-            else:
-                messagebox.showerror("Erro","ID do fornecedor é obrigatório!")
+        else:
+            messagebox.showerror("Erro","ID do fornecedor é obrigatório!")
 
-            #Função responsável por limpar os campos de texto
+
+    #Função responsável por limpar os campos de texto
     def limpar_campos(self):
         self.fornecedor_entry.delete(0,ctk.END)
-        self.marca_fornecedor_entry.delete(0,ctk.END)
+        self.cnpj_fornecedor_entry.delete(0,ctk.END)
         self.email_fornecedor_entry.delete(0,ctk.END)
         self.telefone_fornecedor_entry.delete(0,ctk.END)
-        self.cidade_fornecedor_entry.delete(0,ctk.END)
         self.pais_fornecedor_entry.delete(0,ctk.END)
+        self.cidade_fornecedor_entry.delete(0,ctk.END)
         self.id_fornecedor_entry.delete(0,ctk.END)
+        self.pesquisar_entry.delete(0, ctk.END)
 
     #Função responsável por cancelar a operação
     def cancelar_operacao(self):
@@ -207,7 +219,8 @@ class tela_fornecedor_adm:
         if confirmacao == True:
             
             self.limpar_campos()
-            self.listar_fornecedor()
+            fornecedores = listar_fornecedor_db()
+            self.atualizar_tabela(fornecedores)
 
     def voltar_menu(self):
         
