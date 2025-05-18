@@ -2,19 +2,18 @@ import mysql.connector
 
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = ''
+MYSQL_PASSWORD = 'root'
 MYSQL_DATABASE = 'tbit_db'
 
 class tbit_db:
     def __init__(self):
-        self.conn = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password=''
-        )
-        self.cursor = self.conn.cursor()
-
         try:
+            self.conn = mysql.connector.connect(
+                host='localhost',
+                user='root',
+                password='root'
+            )
+            self.cursor = self.conn.cursor()
             self.cursor.execute("create database if not exists tbit_db;")
             self.cursor.execute("USE tbit_db;")
 
@@ -109,49 +108,6 @@ class tbit_db:
                     constraint pk_estoque primary key (id_estoque),
                     constraint fk_produto_estoque foreign key (id_produto) references Produto(id_produto)
                     );
-                """
-                """
-                    delimiter $$
-                    create trigger reabastecer_estoque
-                    after insert on Estoque
-                    FOR EACH ROW
-                    begin
-                        update Produto
-                        set quantidade_produto = quantidade_produto + new.quantidade_estoque
-                        where id_produto = new.IdProduto;
-                    end;
-                    $$
-
-                    create trigger diminuir_quantidade_produto
-                    after insert on pedido
-                    for each row
-                    begin
-                        update Produto
-                        set quantidade_produto = quantidade_produto - new.quantidade_produto_item
-                        where id_produto = new.IdProduto;
-                    end;
-                    $$
-                    delimiter ;
-                """
-                """
-                    delimiter $$
-                    create procedure delete_fornecedor_e_produtos(IDfornecedor INT)
-                    BEGIN
-
-                        DELETE FROM Pedido
-                        WHERE idProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
-
-                        DELETE FROM Estoque
-                        WHERE IdProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
-
-                        DELETE FROM Produto
-                        WHERE idFornecedor = IDfornecedor;
-
-                        DELETE FROM Fornecedor
-                        WHERE id_fornecedor = IDfornecedor;
-                    END;
-                    $$
-                    delimiter ;
                 """
                 """
                     INSERT INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
@@ -480,6 +436,52 @@ class tbit_db:
 
             for comando in comandos_sql:
                 self.cursor.execute(comando)
+
+            self.cursor.close()
+            self.cursor = self.conn.cursor()
+
+            try:
+
+                self.cursor.execute("""
+                create trigger reabastecer_estoque
+                after insert on Estoque
+                FOR EACH ROW
+                begin
+                    update Produto
+                    set quantidade_produto = quantidade_produto + new.quantidade_estoque
+                    where id_produto = new.IdProduto;
+                end;
+                """)
+            except mysql.connector.Error:
+                pass # Trigger já existe
+
+
+            try:
+            
+                self.cursor.execute("""
+                create trigger diminuir_quantidade_produto
+                after insert on pedido
+                for each row
+                begin
+                    update Produto
+                    set quantidade_produto = quantidade_produto - new.quantidade_produto_item
+                    where id_produto = new.IdProduto;
+                end;
+                """)
+            except mysql.connector.Error:
+                pass # Trigger já existe
+
+            try:
+                self.cursor.execute("""
+                create procedure delete_fornecedor_e_produtos(IDfornecedor INT)
+                BEGIN
+                    DELETE FROM Pedido WHERE idProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
+                    DELETE FROM Estoque WHERE IdProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
+                    DELETE FROM Produto WHERE idFornecedor = IDfornecedor;
+                    DELETE FROM Fornecedor WHERE id_fornecedor = IDfornecedor;
+                END;""")
+            except mysql.connector.Error:
+                pass # Procedure já existe
 
             self.conn.commit()
             print("Banco de dados e tabelas criados com sucesso!")
