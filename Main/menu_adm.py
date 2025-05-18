@@ -25,17 +25,11 @@ class menu_admin:
         self.create_widget()
     def create_widget(self):
 
-        
-        
-
         self.titulo = ctk.CTkLabel(self.root, text='M E N U  P R I N C I P A L - A D M I N I S T R A D O R',font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
         self.titulo.place(x=280, y=60) # Posiciona o label 
         
         self.right_frame = ctk.CTkFrame(self.root, width=400, height=400, fg_color="gray")# definir o tamanho e cor do fundo da frame
         self.right_frame.place(x=725, y=350)# definir a expanção da frame
-
-
-
 
         funcionario_button = ctk.CTkButton(self.root, text='Funcionario', text_color='black',width=110, height= 45 , fg_color= '#404040', bg_color= 'gray',command=self.abrir_tela_funcionario)
         funcionario_button.place(x=760, y=400)
@@ -65,7 +59,6 @@ class menu_admin:
         logout_button.place(x=1700, y=900)
 
         
-
     # Classes responsáveis pelas transições de telas, atribuindo root
     def abrir_tela_funcionario(self):
         tela_funcionario_adm(self.root)

@@ -1,14 +1,14 @@
 import customtkinter as ctk
-from tkinter import messagebox, LEFT, RIGHT
+from tkinter import messagebox
 from database_geral import tbit_db
 from menu_adm import menu_admin
 from menu_user import menu_usuario
-from database_geral import __init__
 
 class login_menu:
     def __init__(self,root):
-        tbit_db.__init__(self)
-        
+        database = tbit_db()
+        cursor = database.cursor
+
         self.root = root
         self.root.title("TBit Manager by TerraBytes")
 
@@ -20,7 +20,6 @@ class login_menu:
         ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
 
         self.create_widget()
-        pass
 
     def create_widget(self):
       
@@ -29,7 +28,7 @@ class login_menu:
         self.right_frame.place(relx=0.5, rely=0.5, anchor="center")
 
         self.titulo = ctk.CTkLabel(self.root, text="T B I T  M A N A G E R",font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
-        self.titulo.place(x=680, y=60) # Posiciona o label o frame direito
+        self.titulo.place(relx=0.5, y=60, anchor="center") # Posiciona o label o frame direito
         
         self.usuario_label = ctk.CTkLabel(self.right_frame, text="Usuario:", font=("Times New Roman", 30), fg_color="gray", text_color='black') # Cria um label para o usuario
         self.usuario_label.place(x=50, y=90) # Posiciona o label o frame direito
