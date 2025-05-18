@@ -1,29 +1,25 @@
--- OBS!!!!! É só clicar no raio que vai executar tudo perfeitamente, tmj
+create database if not exists tbit_db;
 
--- Criação do database
-CREATE DATABASE IF NOT EXISTS tbit_db;
+use tbit_db;
 
-USE tbit_db;
-
--- Criação das tabelas
-CREATE TABLE Fornecedor 
+CREATE TABLE if not exists Fornecedor 
 ( 
  id_fornecedor INT not null auto_increment,  
- nome_fornecedor varchar(40),  
+ nome_fornecedor varchar(40) not null,  
  cnpj_fornecedor varchar(18),  
  email_fornecedor varchar(50),  
  telefone_fornecedor varchar(20),  
  pais_fornecedor varchar(30),  
- 
-cidade_fornecedor varchar(30),
+ cidade_fornecedor varchar(30),
  constraint pk_fornecedor primary key (id_fornecedor) 
 ); 
 
-CREATE TABLE Produto 
+CREATE TABLE if not exists Produto 
 ( 
  id_produto INT not null auto_increment,  
- nome_produto varchar(40),  
+ nome_produto varchar(40) not null,  
  descricao_produto varchar(200),  
+ categoria_produto varchar(50),
  quantidade_produto INT null,  
  valor_produto decimal(10,2),  
  idFornecedor INT not null,
@@ -31,29 +27,33 @@ CREATE TABLE Produto
  constraint fk_fornecedor_produto foreign key (idFornecedor) references Fornecedor(id_fornecedor)
 ); 
 
-CREATE TABLE Cliente 
+CREATE TABLE if not exists Cliente 
 ( 
  id_cliente INT not null auto_increment,  
- nome_cliente varchar(40),  
+ nome_cliente varchar(40) not null,  
  descricao_cliente varchar(200),  
  cnpj_cliente varchar(18),
  constraint pk_cliente primary key (id_cliente)
 ); 
 
-CREATE TABLE Pedido 
+CREATE TABLE if not exists Pedido 
 (
- id_compra int not null auto_increment,
+ id_pedido int not null auto_increment,
+ nota_fiscal varchar(20),
+ data_pedido date,   
+ forma_pagamento varchar(20),
+ quantidade_produto_item int,
  idProduto int not null,  
  idCliente int not null,
- constraint pk_compra primary key (id_compra),
- constraint fk_produto_compra foreign key (idProduto) references Produto(id_produto),
- constraint fk_cliente_compra foreign key (idCliente) references Cliente(id_cliente)
+ constraint pk_pedido primary key (id_pedido),
+ constraint fk_produto_pedido foreign key (idProduto) references Produto(id_produto),
+ constraint fk_cliente_pedido foreign key (idCliente) references Cliente(id_cliente)
 ); 
 
-CREATE TABLE Funcionario 
+CREATE TABLE if not exists Funcionario 
 ( 
  id_funcionario INT not null auto_increment,  
- nome_funcionario varchar(40),  
+ nome_funcionario varchar(40) not null,  
  data_nascimento_funcionario date,  
  data_admissao_funcionario date,  
  cpf_funcionario varchar(14),  
@@ -61,13 +61,13 @@ CREATE TABLE Funcionario
  estado_funcionario varchar(30),  
  telefone_funcionario varchar(15),  
  email_funcionario varchar(50),  
- usuario_funcionario varchar(30),
- perfil_funcionario varchar(30),  
+ usuario_funcionario varchar(30),  
  senha_funcionario varchar(30),
+ perfil_funcionario varchar(30),
  constraint pk_funcionario primary key (id_funcionario)
 ); 
 
-CREATE TABLE Cadastro 
+CREATE TABLE if not exists Cadastro 
 ( 
  id_cadastro int not null auto_increment,
  idFuncionario INT not null,  
@@ -77,14 +77,55 @@ CREATE TABLE Cadastro
  constraint fk_cliente_cadastro foreign key (idCliente) references Cliente(id_cliente)
 ); 
 
-CREATE TABLE Estoque
+CREATE TABLE if not exists Estoque
 (
 id_estoque INT not null auto_increment,
-id_produto INT not null,
+IdProduto INT not null,
 quantidade_estoque INT not null,
 constraint pk_estoque primary key (id_estoque),
-constraint fk_produto_estoque foreign key (id_produto) references Produto(id_produto)
+constraint fk_produto_estoque foreign key (IdProduto) references Produto(id_produto)
 );
+
+delimiter $$
+create trigger reabastecer_estoque
+after insert on Estoque
+FOR EACH ROW
+begin
+    update Produto
+    set quantidade_produto = quantidade_produto + new.quantidade_estoque
+    where id_produto = new.IdProduto;
+end;
+$$
+
+create trigger diminuir_quantidade_produto
+after insert on pedido
+for each row
+begin
+    update Produto
+    set quantidade_produto = quantidade_produto - new.quantidade_produto_item
+    where id_produto = new.IdProduto;
+end;
+$$
+delimiter ;
+
+delimiter $$
+create procedure delete_fornecedor_e_produtos(IDfornecedor INT)
+BEGIN
+
+    DELETE FROM Pedido
+    WHERE idProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
+
+    DELETE FROM Estoque
+    WHERE IdProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
+
+    DELETE FROM Produto
+    WHERE idFornecedor = IDfornecedor;
+
+    DELETE FROM Fornecedor
+    WHERE id_fornecedor = IDfornecedor;
+END;
+$$
+delimiter ;
 
 -- Inserção de dados na tabela Fornecedor (60 registros)
 INSERT INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
@@ -276,76 +317,120 @@ INSERT INTO Funcionario (nome_funcionario, data_nascimento_funcionario, data_adm
 ('Beatriz Costa', '1985-12-02', '2020-02-05', '515.151.515-15', 'Salvador', 'BA', '(71) 91234-5678', 'beatriz.costa@empresa.com', 'beatriz.costa', 'senha012', 'Usuario simples');
 
 -- Inserção de dados na tabela Produto (60 registros)
-INSERT INTO Produto (nome_produto, descricao_produto, quantidade_produto, valor_produto, idFornecedor) VALUES
-('Notebook Dell', 'Notebook Dell Inspiron 15 i5 8GB 256GB SSD', 50, 3499.90, 1),
-('Mouse Logitech', 'Mouse sem fio Logitech M170', 120, 79.90, 2),
-('Teclado Mecânico', 'Teclado mecânico Redragon Kumara', 35, 279.90, 3),
-('Monitor 24"', 'Monitor LG 24" Full HD IPS', 28, 899.90, 4),
-('SSD 480GB', 'SSD Kingston 480GB SATA', 75, 249.90, 5),
-('Smartphone Samsung', 'Samsung Galaxy A54 128GB', 40, 1899.90, 6),
-('Tablet Amazon', 'Fire HD 10 32GB', 30, 999.90, 7),
-('Impressora HP', 'Impressora HP DeskJet 2776', 25, 499.90, 8),
-('Headphone Sony', 'Fone de ouvido Sony WH-CH510', 60, 199.90, 9),
-('Webcam Logitech', 'Webcam Logitech C920 HD Pro', 45, 399.90, 10),
-('Roteador TP-Link', 'Roteador Wi-Fi TP-Link Archer C6', 55, 299.90, 11),
-('HD Externo Seagate', 'HD Externo Seagate 1TB USB 3.0', 40, 349.90, 12),
-('Pendrive Kingston', 'Pendrive Kingston 64GB USB 3.0', 100, 59.90, 13),
-('Cooler para Notebook', 'Cooler para Notebook com 3 ventoinhas', 30, 89.90, 14),
-('Cabo HDMI', 'Cabo HDMI 2.0 2 metros', 200, 39.90, 15),
-('Adaptador USB-C', 'Adaptador USB-C para HDMI/VGA', 80, 129.90, 16),
-('Mousepad Gamer', 'Mousepad Gamer grande 90x40cm', 60, 49.90, 17),
-('Suporte para Notebook', 'Suporte ajustável para notebook', 45, 79.90, 18),
-('Carregador Portátil', 'Carregador portátil 10000mAh', 50, 149.90, 19),
-('Fonte Notebook', 'Fonte para notebook universal 65W', 35, 119.90, 20),
-('Hub USB', 'Hub USB 3.0 com 4 portas', 70, 69.90, 21),
-('Caixa de Som Bluetooth', 'Caixa de som JBL Go 2', 40, 199.90, 22),
-('Microfone Condensador', 'Microfone condensador USB', 25, 249.90, 23),
-('Tripé para Celular', 'Tripé ajustável para smartphone', 90, 39.90, 24),
-('Luminária USB', 'Luminária de mesa com USB', 60, 29.90, 25),
-('Filtro de Linha', 'Filtro de linha 6 tomadas', 50, 59.90, 26),
-('Cadeira Gamer', 'Cadeira gamer ergonômica', 15, 899.90, 27),
-('Mesa para Computador', 'Mesa para computador 120cm', 20, 399.90, 28),
-('Kit Teclado e Mouse', 'Kit teclado e mouse sem fio', 65, 129.90, 29),
-('Suporte para Monitor', 'Suporte articulado para monitor', 30, 199.90, 30),
-('Notebook Gamer', 'Notebook Gamer Acer Nitro 5', 18, 4999.90, 31),
-('Mouse Gamer', 'Mouse gamer Redragon Cobra', 45, 159.90, 32),
-('Teclado Gamer', 'Teclado gamer Redragon Kumara', 40, 279.90, 33),
-('Monitor Gamer', 'Monitor Gamer 24" 144Hz', 22, 1299.90, 34),
-('Headset Gamer', 'Headset gamer com microfone', 50, 199.90, 35),
-('Mousepad RGB', 'Mousepad gamer com iluminação RGB', 35, 89.90, 36),
-('Webcam Gamer', 'Webcam gamer Full HD', 25, 349.90, 37),
-('Controle Bluetooth', 'Controle Bluetooth para PC/Android', 40, 149.90, 38),
-('Joystick Gamer', 'Joystick gamer sem fio', 30, 229.90, 39),
-('Volante Gamer', 'Volante gamer com pedal', 10, 799.90, 40),
-('SSD NVMe', 'SSD NVMe 500GB', 40, 349.90, 41),
-('Memória RAM', 'Memória RAM 8GB DDR4', 60, 199.90, 42),
-('Placa de Vídeo', 'Placa de vídeo GTX 1650', 15, 1299.90, 43),
-('Processador', 'Processador Intel i5 10a geração', 25, 999.90, 44),
-('Placa-Mãe', 'Placa-mãe ATX LGA 1200', 20, 699.90, 45),
-('Fonte ATX', 'Fonte ATX 500W 80 Plus', 30, 299.90, 46),
-('Gabinete Gamer', 'Gabinete gamer com RGB', 25, 399.90, 47),
-('Water Cooler', 'Water cooler para processador', 18, 349.90, 48),
-('Hub USB-C', 'Hub USB-C 7 em 1', 40, 179.90, 49),
-('Carregador Wireless', 'Carregador wireless 10W', 50, 119.90, 50),
-('Cabo Lightning', 'Cabo Lightning original 1m', 80, 89.90, 51),
-('Capa para Notebook', 'Capa para notebook 15.6"', 60, 49.90, 52),
-('Suporte para Tablet', 'Suporte ajustável para tablet', 45, 39.90, 53),
-('Estação de Docking', 'Estação de docking USB-C', 30, 299.90, 54),
-('Scanner de Documentos', 'Scanner portátil de documentos', 20, 499.90, 55),
-('Leitor de Cartão', 'Leitor de cartão SD/CF', 50, 59.90, 56),
-('Projetor Mini', 'Projetor mini portátil', 15, 699.90, 57),
-('TV Box Android', 'TV Box Android 4GB RAM', 40, 299.90, 58),
-('Controle Remoto', 'Controle remoto universal', 70, 49.90, 59),
-('Antena Digital', 'Antena digital interna', 60, 79.90, 60);
+INSERT INTO Produto (id_produto, nome_produto, descricao_produto, categoria_produto, quantidade_produto, valor_produto, idFornecedor) VALUES
+(1, 'Notebook Dell', 'Notebook Dell Inspiron 15 i5 8GB 256GB SSD', 'Notebooks', 90, 3499.90, 1),
+(2, 'Mouse Logitech', 'Mouse sem fio Logitech M170', 'Periféricos', 238, 79.90, 2),
+(3, 'Teclado Mecânico', 'Teclado mecânico Redragon Kumara', 'Teclados', 67, 279.90, 3),
+(4, 'Monitor 24\"', 'Monitor LG 24\" Full HD IPS', 'Monitores', 52, 899.90, 4),
+(5, 'SSD 480GB', 'SSD Kingston 480GB SATA', 'Armazenamento', 145, 249.90, 5),
+(6, 'Smartphone Samsung', 'Samsung Galaxy A54 128GB', 'Smartphones', 74, 1899.90, 6),
+(7, 'Tablet Amazon', 'Fire HD 10 32GB', 'Tablets', 53, 999.90, 7),
+(8, 'Impressora HP', 'Impressora HP DeskJet 2776', 'Impressoras', 42, 499.90, 8),
+(9, 'Headphone Sony', 'Fone de ouvido Sony WH-CH510', 'Fones', 112, 199.90, 9),
+(10, 'Webcam Logitech', 'Webcam Logitech C920 HD Pro', 'Periféricos', 82, 399.90, 10),
+(11, 'Roteador TP-Link', 'Roteador Wi-Fi TP-Link Archer C6', 'Rede', 102, 299.90, 11),
+(12, 'HD Externo Seagate', 'HD Externo Seagate 1TB USB 3.0', 'Armazenamento', 72, 349.90, 12),
+(13, 'Pendrive Kingston', 'Pendrive Kingston 64GB USB 3.0', 'Armazenamento', 192, 59.90, 13),
+(14, 'Placa de Vídeo GTX 1650', 'Placa de vídeo GTX 1650 GDDR6', 'Placas de Vídeo', 22, 1299.90, 14),
+(15, 'Processador Intel i5 10ª geração', 'Processador Intel Core i5 10400F', 'Processadores', 42, 999.90, 15),
+(16, 'Placa-Mãe ATX LGA 1200', 'Placa-mãe ATX LGA 1200 para Intel', 'Placas-Mãe', 32, 699.90, 16),
+(17, 'Memória RAM DDR4 8GB', 'Memória RAM 8GB DDR4 3200MHz', 'Memória RAM', 112, 199.90, 17),
+(18, 'SSD NVMe 500GB', 'SSD NVMe 500GB PCIe Gen3', 'Armazenamento', 72, 349.90, 18),
+(19, 'Fonte ATX 500W 80 Plus', 'Fonte ATX 500W certificada', 'Fontes de Alimentação', 52, 299.90, 19),
+(20, 'Gabinete Gamer com RGB', 'Gabinete gamer ATX com iluminação RGB', 'Gabinetes', 42, 399.90, 20),
+(21, 'Water Cooler 240mm', 'Water cooler para processador', 'Coolers', 28, 349.90, 21),
+(22, 'Mouse Gamer Redragon Cobra', 'Mouse gamer Redragon Cobra', 'Periféricos', 82, 159.90, 22),
+(23, 'Teclado Gamer Redragon Kumara', 'Teclado gamer Redragon Kumara', 'Teclados', 72, 279.90, 23),
+(24, 'Monitor Gamer 24\" 144Hz', 'Monitor Gamer 24\" 144Hz', 'Monitores', 36, 1299.90, 24),
+(25, 'Headset Gamer', 'Headset gamer com microfone', 'Audio e Som', 92, 199.90, 25),
+(26, 'Mousepad RGB', 'Mousepad gamer com iluminação RGB', 'Periféricos', 62, 89.90, 26),
+(37, 'Webcam Gamer', 'Webcam gamer Full HD', 'Periféricos', 42, 349.90, 37),
+(38, 'Controle Bluetooth', 'Controle Bluetooth para PC/Android', 'Acessórios', 72, 149.90, 38),
+(39, 'Joystick Gamer', 'Joystick gamer sem fio', 'Acessórios', 52, 229.90, 39),
+(40, 'Volante Gamer', 'Volante gamer com pedal', 'Acessórios', 12, 799.90, 40),
+(41, 'SSD NVMe', 'SSD NVMe 500GB PCIe Gen3', 'Armazenamento', 72, 349.90, 41),
+(42, 'Memória RAM', 'Memória RAM 8GB DDR4 3200MHz', 'Memória RAM', 112, 199.90, 42),
+(43, 'Placa de Vídeo RTX 3060', 'Placa de vídeo NVIDIA RTX 3060', 'Placas de Vídeo', 30, 2499.90, 43),
+(44, 'Processador Ryzen 5 5600X', 'Processador AMD Ryzen 5 5600X', 'Processadores', 55, 1099.90, 44),
+(45, 'Placa-Mãe B550', 'Placa-Mãe B550 compatível com Ryzen', 'Placas-Mãe', 40, 799.90, 45),
+(46, 'Fonte ATX 750W Modular', 'Fonte ATX 750W Modular 80 Plus Gold', 'Fontes de Alimentação', 47, 599.90, 46),
+(47, 'Water Cooler 360mm', 'Water Cooler 360mm para Overclock', 'Resfriamento', 25, 499.90, 47),
+(48, 'Gabinete Full-Tower', 'Gabinete Full-Tower com vidro temperado', 'Gabinetes', 33, 699.90, 48),
+(49, 'Hub USB-C', 'Hub USB-C 7 em 1', 'Redes e Conectividade', 72, 179.90, 49),
+(50, 'Carregador Wireless', 'Carregador wireless 10W', 'Energia', 92, 119.90, 50),
+(51, 'Cabo Lightning', 'Cabo Lightning original 1m', 'Cabos e Conectividade', 152, 89.90, 51),
+(52, 'Capa para Notebook', 'Capa para notebook 15.6\"', 'Acessórios', 112, 49.90, 52),
+(53, 'Suporte para Tablet', 'Suporte ajustável para tablet', 'Móveis e Suportes', 82, 39.90, 53),
+(54, 'Estação de Docking', 'Estação de docking USB-C', 'Redes e Conectividade', 52, 299.90, 54),
+(55, 'Scanner de Documentos', 'Scanner portátil de documentos', 'Impressão e Digitalização', 32, 499.90, 55),
+(56, 'Leitor de Cartão', 'Leitor de cartão SD/CF', 'Acessórios', 92, 59.90, 56),
+(57, 'Projetor Mini', 'Projetor mini portátil', 'Monitores', 22, 699.90, 57),
+(58, 'TV Box Android', 'TV Box Android 4GB RAM', 'Monitores', 72, 299.90, 58),
+(59, 'Controle Remoto', 'Controle remoto universal', 'Acessórios', 132, 49.90, 59),
+(60, 'Antena Digital', 'Antena digital interna', 'Redes e Conectividade', 102, 79.90, 60);
 
--- Inserção de dados na tabela Compra (60 registros)
-INSERT INTO Pedido (idProduto, idCliente) VALUES
-(1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10),
-(11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20),
-(21, 21), (22, 22), (23, 23), (24, 24), (25, 25), (26, 26), (27, 27), (28, 28), (29, 29), (30, 30),
-(31, 31), (32, 32), (33, 33), (34, 34), (35, 35), (36, 36), (37, 37), (38, 38), (39, 39), (40, 40),
-(41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
-(51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
+-- Inserção de dados na tabela Pedido (60 registros)
+INSERT INTO Pedido (nota_fiscal, data_pedido, forma_pagamento, quantidade_produto_item, idProduto, idCliente) VALUES
+('NF1001', '2023-01-05', 'Cartão Crédito', 2, 1, 1),
+('NF1002', '2023-01-10', 'Boleto', 5, 2, 2),
+('NF1003', '2023-01-15', 'PIX', 1, 3, 3),
+('NF1004', '2023-01-20', 'Cartão Débito', 3, 4, 4),
+('NF1005', '2023-01-25', 'Cartão Crédito', 2, 5, 5),
+('NF1006', '2023-02-01', 'Boleto', 4, 6, 6),
+('NF1007', '2023-02-05', 'PIX', 1, 7, 7),
+('NF1008', '2023-02-10', 'Cartão Débito', 2, 8, 8),
+('NF1009', '2023-02-15', 'Cartão Crédito', 3, 9, 9),
+('NF1010', '2023-02-20', 'Boleto', 1, 10, 10),
+('NF1011', '2023-02-25', 'PIX', 2, 11, 11),
+('NF1012', '2023-03-01', 'Cartão Débito', 1, 12, 12),
+('NF1013', '2023-03-05', 'Cartão Crédito', 4, 13, 13),
+('NF1014', '2023-03-10', 'Boleto', 2, 14, 14),
+('NF1015', '2023-03-15', 'PIX', 1, 15, 15),
+('NF1016', '2023-03-20', 'Cartão Débito', 3, 16, 16),
+('NF1017', '2023-03-25', 'Cartão Crédito', 2, 17, 17),
+('NF1018', '2023-04-01', 'Boleto', 1, 18, 18),
+('NF1019', '2023-04-05', 'PIX', 5, 19, 19),
+('NF1020', '2023-04-10', 'Cartão Débito', 2, 20, 20),
+('NF1021', '2023-04-15', 'Cartão Crédito', 1, 21, 21),
+('NF1022', '2023-04-20', 'Boleto', 3, 22, 22),
+('NF1023', '2023-04-25', 'PIX', 2, 23, 23),
+('NF1024', '2023-05-01', 'Cartão Débito', 1, 24, 24),
+('NF1025', '2023-05-05', 'Cartão Crédito', 4, 25, 25),
+('NF1026', '2023-05-10', 'Boleto', 2, 26, 26),
+('NF1027', '2023-05-15', 'PIX', 1, 27, 27),
+('NF1028', '2023-05-20', 'Cartão Débito', 3, 28, 28),
+('NF1029', '2023-05-25', 'Cartão Crédito', 2, 29, 29),
+('NF1030', '2023-06-01', 'Boleto', 1, 30, 30),
+('NF1031', '2023-06-05', 'PIX', 2, 31, 31),
+('NF1032', '2023-06-10', 'Cartão Débito', 1, 32, 32),
+('NF1033', '2023-06-15', 'Cartão Crédito', 3, 33, 33),
+('NF1034', '2023-06-20', 'Boleto', 2, 34, 34),
+('NF1035', '2023-06-25', 'PIX', 1, 35, 35),
+('NF1036', '2023-07-01', 'Cartão Débito', 4, 36, 36),
+('NF1037', '2023-07-05', 'Cartão Crédito', 2, 37, 37),
+('NF1038', '2023-07-10', 'Boleto', 1, 38, 38),
+('NF1039', '2023-07-15', 'PIX', 3, 39, 39),
+('NF1040', '2023-07-20', 'Cartão Débito', 2, 40, 40),
+('NF1041', '2023-07-25', 'Cartão Crédito', 1, 41, 41),
+('NF1042', '2023-08-01', 'Boleto', 5, 42, 42),
+('NF1043', '2023-08-05', 'PIX', 2, 43, 43),
+('NF1044', '2023-08-10', 'Cartão Débito', 1, 44, 44),
+('NF1045', '2023-08-15', 'Cartão Crédito', 3, 45, 45),
+('NF1046', '2023-08-20', 'Boleto', 2, 46, 46),
+('NF1047', '2023-08-25', 'PIX', 1, 47, 47),
+('NF1048', '2023-09-01', 'Cartão Débito', 4, 48, 48),
+('NF1049', '2023-09-05', 'Cartão Crédito', 2, 49, 49),
+('NF1050', '2023-09-10', 'Boleto', 1, 50, 50),
+('NF1051', '2023-09-15', 'PIX', 3, 51, 51),
+('NF1052', '2023-09-20', 'Cartão Débito', 2, 52, 52),
+('NF1053', '2023-09-25', 'Cartão Crédito', 1, 53, 53),
+('NF1054', '2023-10-01', 'Boleto', 5, 54, 54),
+('NF1055', '2023-10-05', 'PIX', 2, 55, 55),
+('NF1056', '2023-10-10', 'Cartão Débito', 1, 56, 56),
+('NF1057', '2023-10-15', 'Cartão Crédito', 3, 57, 57),
+('NF1058', '2023-10-20', 'Boleto', 2, 58, 58),
+('NF1059', '2023-10-25', 'PIX', 1, 59, 59),
+('NF1060', '2023-11-01', 'Cartão Débito', 4, 60, 60);
 
 -- Inserção de dados na tabela Cadastro (60 registros)
 INSERT INTO Cadastro (idFuncionario, idCliente) VALUES
@@ -356,10 +441,11 @@ INSERT INTO Cadastro (idFuncionario, idCliente) VALUES
 (41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
 (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
 
-INSERT INTO Estoque (id_produto, quantidade_estoque) VALUES
-(1, 50), (2, 120), (3, 35), (4, 28), (5, 75), (6, 40), (7, 30), (8, 25), (9, 60), (10, 45), 
-(11, 55), (12, 40), (13, 100), (14, 30), (15, 200), (16, 80), (17, 60), (18, 45), (19, 50), (20, 35),
-(21, 70), (22, 40), (23, 25), (24, 90), (25, 60), (26, 50), (27, 15), (28, 20), (29, 65), (30, 30),
-(31, 18), (32, 45), (33, 40), (34, 22), (35, 50), (36, 35), (37, 25), (38, 40), (39, 30), (40, 10), 
-(41, 40), (42, 60), (43, 15), (44, 25), (45, 20), (46, 30), (47, 25), (48, 18), (49, 40), (50, 50), 
-(51, 80), (52, 60), (53, 45), (54, 30), (55, 20), (56, 50), (57, 15), (58, 40), (59, 70), (60, 60);
+-- Inserção de dados na tabela Estoque (60 registros)
+INSERT INTO Estoque (IdProduto, quantidade_estoque) VALUES
+(1, 30), (2, 80), (3, 20), (4, 15), (5, 50), (6, 25), (7, 18), (8, 12), (9, 40), (10, 30),
+(11, 35), (12, 25), (13, 70), (14, 18), (15, 150), (16, 50), (17, 40), (18, 30), (19, 35), (20, 20),
+(21, 45), (22, 25), (23, 15), (24, 60), (25, 40), (26, 30), (27, 8), (28, 12), (29, 45), (30, 18),
+(31, 10), (32, 30), (33, 25), (34, 12), (35, 35), (36, 20), (37, 15), (38, 25), (39, 18), (40, 5),
+(41, 25), (42, 40), (43, 8), (44, 15), (45, 10), (46, 18), (47, 15), (48, 10), (49, 25), (50, 35),
+(51, 60), (52, 40), (53, 30), (54, 18), (55, 12), (56, 35), (57, 8), (58, 25), (59, 50), (60, 40);
