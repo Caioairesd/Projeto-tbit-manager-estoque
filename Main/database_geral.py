@@ -106,7 +106,7 @@ class tbit_db:
                     IdProduto INT not null,
                     quantidade_estoque INT not null,
                     constraint pk_estoque primary key (id_estoque),
-                    constraint fk_produto_estoque foreign key (id_produto) references Produto(id_produto)
+                    constraint fk_produto_estoque foreign key (IdProduto) references Produto(id_produto)    
                     );
                 """
                 """
@@ -299,7 +299,7 @@ class tbit_db:
                     ('Beatriz Costa', '1985-12-02', '2020-02-05', '515.151.515-15', 'Salvador', 'BA', '(71) 91234-5678', 'beatriz.costa@empresa.com', 'beatriz.costa', 'senha012', 'Usuario simples');
                 """
                 """
-                    INSERT INTO Produto (id_produto, nome_produto, descricao_produto, categoria_produto, quantidade_produto, valor_produto, idFornecedor) VALUES
+                    INSERT INTO Produto (nome_produto, descricao_produto, categoria_produto, quantidade_produto, valor_produto, idFornecedor) VALUES
                     ( 'Notebook Dell', 'Notebook Dell Inspiron 15 i5 8GB 256GB SSD', 'Notebooks', 90, 3499.90, 1),
                     ( 'Mouse Logitech', 'Mouse sem fio Logitech M170', 'Periféricos', 238, 79.90, 2),
                     ( 'Teclado Mecânico', 'Teclado mecânico Redragon Kumara', 'Teclados', 67, 279.90, 3),
@@ -308,7 +308,7 @@ class tbit_db:
                     ( 'Smartphone Samsung', 'Samsung Galaxy A54 128GB', 'Smartphones', 74, 1899.90, 6),
                     ( 'Tablet Amazon', 'Fire HD 10 32GB', 'Tablets', 53, 999.90, 7),
                     ( 'Impressora HP', 'Impressora HP DeskJet 2776', 'Impressoras', 42, 499.90, 8),
-                    ( 'Headphone Sony', 'Fone de ouvido Sony WH-CH510', 'Fones', 112, 199.90, 9),
+                    ( 'Headphone Sony', 'Fone de ouvido Sony WH-CH510', 'Audio e Som', 112, 199.90, 9),
                     ( 'Webcam Logitech', 'Webcam Logitech C920 HD Pro', 'Periféricos', 82, 399.90, 10),
                     ( 'Roteador TP-Link', 'Roteador Wi-Fi TP-Link Archer C6', 'Rede', 102, 299.90, 11),
                     ( 'HD Externo Seagate', 'HD Externo Seagate 1TB USB 3.0', 'Armazenamento', 72, 349.90, 12),
@@ -326,21 +326,31 @@ class tbit_db:
                     ( 'Monitor Gamer 24\" 144Hz', 'Monitor Gamer 24\" 144Hz', 'Monitores', 36, 1299.90, 24),
                     ( 'Headset Gamer', 'Headset gamer com microfone', 'Audio e Som', 92, 199.90, 25),
                     ( 'Mousepad RGB', 'Mousepad gamer com iluminação RGB', 'Periféricos', 62, 89.90, 26),
+                    ( 'Webcam Gamer Full HD', 'Webcam gamer Full HD', 'Webcams', 42, 349.90, 27),
+                    ( 'Controle Bluetooth para PC/Android', 'Controle Bluetooth para PC/Android', 'Controles', 72, 149.90, 28),
+                    ( 'Joystick Gamer sem fio', 'Joystick gamer sem fio', 'Controles', 52, 229.90, 29),
+                    ( 'Memória RAM 32GB DDR4', 'Memória RAM 32GB DDR4 3600MHz', 'Armazenamento', 62, 429.90, 30),
+                    ( 'Notebook Gamer', 'Notebook Gamer Acer Nitro 5', 'Notebooks', 28, 4999.90, 31),
+                    ( 'Mouse Gamer', 'Mouse gamer Redragon Cobra', 'Periféricos', 82, 159.90, 32),
+                    ( 'Teclado Gamer', 'Teclado gamer Redragon Kumara', 'Teclados', 72, 279.90, 33),
+                    ( 'Monitor Gamer', 'Monitor Gamer 24\" 144Hz', 'Monitores', 36, 1299.90, 34),
+                    ( 'Headset Gamer', 'Headset gamer com microfone', 'Audio e Som', 92, 199.90, 35),
+                    ( 'Mousepad RGB', 'Mousepad gamer com iluminação RGB', 'Acessórios', 62, 89.90, 36),
                     ( 'Webcam Gamer', 'Webcam gamer Full HD', 'Periféricos', 42, 349.90, 37),
-                    ( 'Controle Bluetooth', 'Controle Bluetooth para PC/Android', 'Acessórios', 72, 149.90, 38),
-                    ( 'Joystick Gamer', 'Joystick gamer sem fio', 'Acessórios', 52, 229.90, 39),
-                    ( 'Volante Gamer', 'Volante gamer com pedal', 'Acessórios', 12, 799.90, 40),
+                    ( 'Controle Bluetooth', 'Controle Bluetooth para PC/Android', 'Controles', 72, 149.90, 38),
+                    ( 'Joystick Gamer', 'Joystick gamer sem fio', 'Controles', 52, 229.90, 39),
+                    ( 'Volante Gamer', 'Volante gamer com pedal', 'Controles', 12, 799.90, 40),
                     ( 'SSD NVMe', 'SSD NVMe 500GB PCIe Gen3', 'Armazenamento', 72, 349.90, 41),
-                    ( 'Memória RAM', 'Memória RAM 8GB DDR4 3200MHz', 'Memória RAM', 112, 199.90, 42),
+                    ( 'Memória RAM', 'Memória RAM 8GB DDR4 3200MHz', 'Armazenamento', 112, 199.90, 42),
                     ( 'Placa de Vídeo RTX 3060', 'Placa de vídeo NVIDIA RTX 3060', 'Placas de Vídeo', 30, 2499.90, 43),
                     ( 'Processador Ryzen 5 5600X', 'Processador AMD Ryzen 5 5600X', 'Processadores', 55, 1099.90, 44),
                     ( 'Placa-Mãe B550', 'Placa-Mãe B550 compatível com Ryzen', 'Placas-Mãe', 40, 799.90, 45),
                     ( 'Fonte ATX 750W Modular', 'Fonte ATX 750W Modular 80 Plus Gold', 'Fontes de Alimentação', 47, 599.90, 46),
-                    ( 'Water Cooler 360mm', 'Water Cooler 360mm para Overclock', 'Resfriamento', 25, 499.90, 47),
+                    ( 'Water Cooler 360mm', 'Water Cooler 360mm para Overclock', 'Coolers', 25, 499.90, 47),
                     ( 'Gabinete Full-Tower', 'Gabinete Full-Tower com vidro temperado', 'Gabinetes', 33, 699.90, 48),
                     ( 'Hub USB-C', 'Hub USB-C 7 em 1', 'Redes e Conectividade', 72, 179.90, 49),
                     ( 'Carregador Wireless', 'Carregador wireless 10W', 'Energia', 92, 119.90, 50),
-                    ( 'Cabo Lightning', 'Cabo Lightning original 1m', 'Cabos e Conectividade', 152, 89.90, 51),
+                    ( 'Cabo Lightning', 'Cabo Lightning original 1m', 'Cabos', 152, 89.90, 51),
                     ( 'Capa para Notebook', 'Capa para notebook 15.6\"', 'Acessórios', 112, 49.90, 52),
                     ( 'Suporte para Tablet', 'Suporte ajustável para tablet', 'Móveis e Suportes', 82, 39.90, 53),
                     ( 'Estação de Docking', 'Estação de docking USB-C', 'Redes e Conectividade', 52, 299.90, 54),
@@ -435,7 +445,9 @@ class tbit_db:
             ]
 
             for comando in comandos_sql:
-                self.cursor.execute(comando)
+                for stmt in comando.split(';'):
+                    if stmt.strip():
+                        self.cursor.execute(stmt + ';')
 
             self.cursor.close()
             self.cursor = self.conn.cursor()
