@@ -38,7 +38,10 @@ CREATE TABLE if not exists Cliente
 CREATE TABLE if not exists Pedido 
 (
  id_pedido int not null auto_increment,
- quantidade_pedido int,
+ nota_fiscal varchar(20),
+ data_pedido date,   
+ forma_pagamento varchar(20),
+ quantidade_pedido int, 
  idProduto int not null,  
  idCliente int not null,
  constraint pk_pedido primary key (id_pedido),
