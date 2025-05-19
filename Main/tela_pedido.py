@@ -24,7 +24,7 @@ class tela_pedido:
 
     def create_widgets(self):
         self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', text_color="black",fg_color='#404040',width=90, height=40, command=self.voltar_menu)
-        self.voltar_menu_button.place(x=1500, y=900)
+        self.voltar_menu_button.place(x=1700, y=900)
 
         self.fazer_pedido_button = ctk.CTkButton(self.root, text="Novo pedido", text_color="black",fg_color='#404040', width=150, height=30, command=self.fazer_pedido)
         self.fazer_pedido_button.place(x=300, y=800)

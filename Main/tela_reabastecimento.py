@@ -30,22 +30,44 @@ class tela_reabastecimento:
         self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar',text_color='black', width=90, height= 40,fg_color= '#404040', bg_color= 'gray', command=self.voltar_menu)
         self.voltar_menu_button.place(x=1700, y=900)
 
-        self.combobox_produtos = ctk.CTkComboBox(self.root, height=30, width=180, values=self.produtos_combobox())
-        self.pesquisar_produto_entry = ctk.CTkEntry(self.root, height=30, width=250, placeholder_text="Pesquise um produto pelo seu nome...")
-        self.quantidade_entrou_entry = ctk.CTkEntry(self.root, height=30, width=150)
-        self.novo_reabastecimento_button = ctk.CTkButton(self.root, text="Novo Reabastecimento", command=self.chamado_reabastecer, height=30, width=120)
+        self.combobox_produtos = ctk.CTkComboBox(
+        self.root,                          # widget pai
+        height=30,                          # altura do combobox
+        width=180,                          # largura do combobox
+        text_color='black',                 # cor do texto e da setinha da direita
+        fg_color="#404040",                 # fundo da caixa de seleção
+        border_color="#404040",             # cor da borda da caixa
+        button_color="#404040",             # fundo da área da setinha
+        button_hover_color="lightgray",     # cor de fundo ao passar mouse na setinha
+        dropdown_fg_color="gray",           # fundo da lista suspensa
+        dropdown_text_color="black",        # cor do texto das opções
+        dropdown_hover_color="#404040",     # fundo da opção ao passar o mouse
+    
+        values=self.produtos_combobox()     # lista de strings pra popular a lista
+        )
+        self.combobox_produtos.place(x=20, y=20)
+
+
+        self.pesquisar_produto_entry = ctk.CTkEntry(self.root, height=35, width=250, placeholder_text="Pesquise um produto pelo seu nome...", placeholder_text_color='lightgray')
+        self.quantidade_entrou_entry = ctk.CTkEntry(self.root, height=35,border_color='#A0A0A0',placeholder_text='Quantidade...',placeholder_text_color='lightgray',width=150)
+        self.novo_reabastecimento_button = ctk.CTkButton(self.root, text="Reabastecimento",fg_color='#404040', text_color='#000', command=self.chamado_reabastecer, height=35, width=50)
 
         self.pesquisar_produto_entry.bind("<KeyRelease>", self.filtrar_tabela)
 
-        self.combobox_produtos.place(x=150, y=100)
-        self.quantidade_entrou_entry.place(x=350, y=100)
-        self.novo_reabastecimento_button.place(x=550, y=100)
-        self.pesquisar_produto_entry.place(x=100, y=260)
+        self.combobox_produtos.place(x=100, y=100)
+        self.quantidade_entrou_entry.place(x=290, y=100)
+        self.novo_reabastecimento_button.place(x=450, y=100)
+        self.pesquisar_produto_entry.place(x=100, y=250)
 
     def criar_tabelao(self):
-        self.treeview = ttk.Treeview(self.root, columns=("id_produto", "nome_produto", "quantidade_estoque"), show="headings", height=15)
+        style = ttk.Style()
+        style.theme_use("alt")
+        style.configure("Treeview.Heading", background="gray", foreground="black", anchor="center")
+        style.configure("Treeview", background="gray", foreground="black", fieldbackground="gray", rowheight=25)
 
-        self.treeview.heading("id_produto", text="ID do produto")
+        self.treeview = ttk.Treeview(self.root, columns=("id_produto", "nome_produto", "quantidade_estoque"), show="headings", height=20)
+
+        self.treeview.heading("id_produto",text="ID do produto")
         self.treeview.heading("nome_produto", text="Nome do produto")
         self.treeview.heading("quantidade_estoque", text="Quantidade em estoque")
 
