@@ -23,12 +23,12 @@ class tela_fornecedor_adm:
 
     def create_widgets(self):
         
-        self.titulo = ctk.CTkLabel(self.root, text='F O R N E C E D O R - A D M I N I S T R A D O R',font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
-        self.titulo.place(x=280, y=60) # Posiciona o label 
+        self.titulo = ctk.CTkLabel(self.root, text='F O R N E C E D O R ',font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
+        self.titulo.place(x=680, y=60) # Posiciona o label 
 
         #cria o frame como fundo para deixar um fundo para as labls e caixas de textos
-        self.right_frame = ctk.CTkFrame(self.root, width=800, height=800, fg_color="gray")# definir o tamanho e cor do fundo da frame
-        self.right_frame.place(x=100, y=160)# definir a expanção da frame
+        self.right_frame = ctk.CTkFrame(self.root, width=600, height=600, fg_color="gray")# definir o tamanho e cor do fundo da frame
+        self.right_frame.place(x=250, y=160)# definir a expanção da frame
 
         #Criação de labels
         ctk.CTkLabel(self.right_frame,text="Fornecedor :",fg_color="gray",text_color='black',font=('Times New Roman', 23)).place(x=100,y=50)
@@ -38,14 +38,14 @@ class tela_fornecedor_adm:
         ctk.CTkLabel(self.right_frame,text="Cidade :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=100,y=250)
         ctk.CTkLabel(self.right_frame,text="País :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=100,y=300)
         ctk.CTkLabel(self.right_frame,text="id :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=100,y=350)
-        ctk.CTkLabel(self.right_frame,text="Buscar por :\n(nome/id)  ",fg_color="gray", text_color='black', font=('Times New Roman', 20)).place(x=100,y=540)
+        ctk.CTkLabel(self.right_frame,text="Buscar por :\n(nome/id)  ",fg_color="gray", text_color='black', font=('Times New Roman', 20)).place(x=100,y=500)
 
         #Criação de botões
         ctk.CTkButton(self.right_frame,text="Cadastrar",width=90,height=40,text_color='black', fg_color='#404040', bg_color='gray',command=self.create_fornecedor).place(x=100,y=420)
         ctk.CTkButton(self.right_frame,text="Alterar",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.update_fornecedor).place(x=210,y=420)
         ctk.CTkButton(self.right_frame,text="Excluir",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.delete_fornecedor).place(x=320,y=420)
         ctk.CTkButton(self.right_frame,text="Cancelar",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.cancelar_operacao).place(x=430,y=420)
-        ctk.CTkButton(self.root, text='Voltar', width=90, height=40, text_color='black',fg_color='#404040', bg_color='gray',command=self.voltar_menu).place(x=1810, y=920)
+        ctk.CTkButton(self.root, text='Voltar', width=90, height=40, text_color='black',fg_color='#404040', bg_color='gray',command=self.voltar_menu).place(x=1700, y=900)
         #Criação de campos de entrada de dados
         self.fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
         self.cnpj_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
@@ -64,10 +64,16 @@ class tela_fornecedor_adm:
         self.cidade_fornecedor_entry.place(x=240,y=250)
         self.pais_fornecedor_entry.place(x=240,y=300)
         self.id_fornecedor_entry.place(x=240,y=350)
-        self.pesquisar_entry.place(x=240,y=540)
+        self.pesquisar_entry.place(x=240,y=500)
 
     # CONJUNTO DE FUNÇÕES USADAS PARA A CRIAÇÃO E MODELAGEM DA TABELA
     def criar_tabela(self):
+        # Definir estilo
+        style = ttk.Style()
+        style.theme_use("alt")
+        style.configure("Treeview.Heading", background="gray", foreground="black", anchor="center")
+        style.configure("Treeview", background="gray", foreground="black", fieldbackground="gray", rowheight=25)
+
         self.treeview = ttk.Treeview(self.root, columns=("id_fornecedor", "nome_fornecedor", "cnpj_fornecedor", "email_fornecedor", "telefone_fornecedor", "pais_fornecedor", "cidade_fornecedor"), show="headings", height=15)
 
         self.treeview.heading("id_fornecedor", text="ID")
@@ -79,7 +85,7 @@ class tela_fornecedor_adm:
         self.treeview.heading("cidade_fornecedor", text="Cidade")
 
         self.treeview.column("id_fornecedor", width=80) # Altera a largura da coluna "id"
-        self.treeview.column("nome_fornecedor", width=120) # Altera a largura da coluna "nome"
+        self.treeview.column("nome_fornecedor", width=150) # Altera a largura da coluna "nome"
         self.treeview.column("cnpj_fornecedor", width=120) # Altera a largura da coluna "cnpj"
         self.treeview.column("email_fornecedor", width=210) # Altera a largura da coluna "email"
         self.treeview.column("telefone_fornecedor", width=120) # Altera a largura da coluna "telefone"
@@ -92,7 +98,7 @@ class tela_fornecedor_adm:
 
         self.treeview.bind("<ButtonRelease-1>", self.click_na_linha)
         
-        self.treeview.place(x=500, y=350) # Posiciona a tabela
+        self.treeview.place(x=900, y=160, width=850, height=600) # Posiciona a tabela
 
     def atualizar_tabela(self, fornecedores):
          for item in self.treeview.get_children():
