@@ -169,13 +169,13 @@ class tela_produto_adm:
          for produto in produtos:
             self.treeview.insert("", "end", values=produto)
 
-    def filtrar_tabela(self, event):
+    """def filtrar_tabela(self, event):
         estoque = listar_produtos_db()
         produto_pesquisado = self.box_pesquisar.get().lower()
 
         filtragem = [produto for produto in estoque if produto_pesquisado in produto[1].lower()]
 
-        self.atualizar_tabela(filtragem)
+        self.atualizar_tabela(filtragem)"""
 
     def click_na_linha(self, event):
         linha_selecionada = self.treeview.focus()
@@ -222,7 +222,7 @@ class tela_produto_adm:
         nome_produto = self.box_nome.get().title() # Resgata as informações que estão dentro da box 'Nome'
         descricao_produto = self.box_descricao.get() # Resgata as informações que estão dentro da box 'Descricao'
         valor_produto = self.box_valor.get() # Resgata as informações que estão dentro da box 'Valor'
-        categoria_produto = self.box_categoria.get()
+        categoria_produto = self.box_categoria.get().title()
 
         if nome_produto and descricao_produto and valor_produto and categoria_produto: # Verifica se alguma variavel esta vazia
             confirmacao = messagebox.askyesno("Confirmação", f"Você realmente deseja alterar as informações de '{nome_produto}'?") # Mensagem lançada na tela do usuario que recebe 'True' ou 'False'
@@ -250,7 +250,7 @@ class tela_produto_adm:
                 messagebox.showinfo("Success", "Produto excluido com sucesso!")
 
                 estoque = listar_produtos_db()
-                self.atualizar_estoque() # Lista novamente todos os itens presentes na tabela 'produto'
+                self.atualizar_tabela() # Lista novamente todos os itens presentes na tabela 'produto'
                 self.limpar_campos() # Metodo usado para limpar os campos
             
             else:
@@ -275,7 +275,6 @@ class tela_produto_adm:
         self.box_valor.delete(0, ctk.END)
         self.box_categoria.delete(0, ctk.END)
         self.box_fornecedor.delete(0, ctk.END)
-        self.box_pesquisar.delete(0, ctk.END)
        
     def voltar_menu(self):
         

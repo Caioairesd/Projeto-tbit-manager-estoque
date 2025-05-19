@@ -9,9 +9,9 @@ class tbit_db:
     def __init__(self):
         try:
             self.conn = mysql.connector.connect(
-                host='localhost',
-                user='',
-                password='root'
+                host=MYSQL_HOST,
+                user=MYSQL_USER,
+                password=MYSQL_PASSWORD
             )
             self.cursor = self.conn.cursor()
             self.cursor.execute("create database if not exists tbit_db;")
@@ -514,11 +514,11 @@ def get_connection():
     database = MYSQL_DATABASE)
 
 #Funções da tabela fornecedor
-def register_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
+def register_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "insert fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)VALUES(%s,%s,%s,%s,%s,%s)"
-    cursor.execute(query,(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor))
+    query = "insert fornecedor(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)VALUES(%s,%s,%s,%s,%s,%s)"
+    cursor.execute(query,(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor))
     conn.commit()
     cursor.close()
     conn.close()
@@ -544,11 +544,11 @@ def pesquisar_fornecedor_db(id_solicitado):
     return busca
 
 
-def update_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor):
+def update_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "UPDATE fornecedor SET nome_fornecedor = %s,marca_fornecedor = %s,email_fornecedor = %s,telefone_fornecedor = %s,cidade_fornecedor = %s,pais_fornecedor = %s WHERE id_fornecedor = %s"
-    cursor.execute(query,(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor))
+    query = "UPDATE fornecedor SET nome_fornecedor = %s,cnpj_fornecedor = %s,email_fornecedor = %s,telefone_fornecedor = %s,cidade_fornecedor = %s,pais_fornecedor = %s WHERE id_fornecedor = %s"
+    cursor.execute(query,(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor))
     conn.commit()
     cursor.close()
 
@@ -562,22 +562,21 @@ def delete_fornecedor_db(id_fornecedor):
 
 #Funções da tabela produto
 
-
-def registrar_produto_db(nome_produto, descricao, quantidade, valor):
+def registrar_produto_db(nome_produto, descricao, categoria, quantidade, valor, id_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "INSERT INTO produto (nome_produto, descricao_produto, quantidade_produto, valor_produto)VALUES(%s, %s, %s, %s)"
-    cursor.execute(query, (nome_produto, descricao, quantidade, valor))
+    query = "INSERT INTO produto (nome_produto, descricao_produto, categoria_produto, quantidade_produto, valor_produto, idFornecedor)VALUES(%s, %s, %s, %s, %s, %s)"
+    cursor.execute(query, (nome_produto, descricao, categoria, quantidade, valor, id_fornecedor))
 
     conn.commit()
     cursor.close()
     conn.close()
 
-def atualizar_produto_db(nome_produto, descricao, quantidade, valor):
+def atualizar_produto_db(nome_produto, descricao, categoria, valor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "UPDATE produto SET nome_produto = %s, descricao_produto = %s, quantidade_produto = %s, valor_produto = %s WHERE nome_produto LIKE %s"
-    cursor.execute(query, (nome_produto, descricao, quantidade, valor, nome_produto))
+    query = "UPDATE produto SET nome_produto = %s, descricao_produto = %s, categoria_produto = %s, valor_produto = %s WHERE nome_produto LIKE %s"
+    cursor.execute(query, (nome_produto, descricao, categoria, valor, nome_produto))
 
     conn.commit()
     cursor.close()
@@ -586,7 +585,8 @@ def atualizar_produto_db(nome_produto, descricao, quantidade, valor):
 def listar_produtos_db():
     conn = get_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM produto"
+    query = """SELECT p.id_produto, p.nome_produto, p.descricao_produto, p.categoria_produto, p.quantidade_produto, p.valor_produto, f.nome_fornecedor FROM produto as p 
+    JOIN fornecedor AS f ON f.id_fornecedor = p.idFornecedor"""
     cursor.execute(query)
     busca = cursor.fetchall()
     conn.commit()
