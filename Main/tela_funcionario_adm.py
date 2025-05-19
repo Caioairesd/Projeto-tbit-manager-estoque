@@ -12,7 +12,7 @@ class tela_funcionario_adm:
         self.menu_root = root  
         self.root = ctk.CTkToplevel(root) 
         self.root.title("TBit Manager - Menu de funcionário")
-        self.root.configure(fg_color="#A0A0A0")
+        self.root.configure(fg_color='#161B22')
 
         #ctk.set_appearance_mode('dark')
 
@@ -26,27 +26,27 @@ class tela_funcionario_adm:
 
     def create_widgets(self):
         #adciona um titulo 
-        self.titulo = ctk.CTkLabel(self.root, text='F U N C I O N A R I O ',font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
+        self.titulo = ctk.CTkLabel(self.root, text='F U N C I O N A R I O ',font=("Garamond", 60), fg_color="#161B22", text_color='#58A6FF') # Cria um label para o usuario
         self.titulo.place(x=680, y=60) # Posiciona o label do titulo
 
         #cria o frame como fundo para deixar um fundo para as labls e caixas de textos
-        self.right_frame = ctk.CTkFrame(self.root, width=600, height=700, fg_color="gray")# definir o tamanho e cor do fundo da frame
+        self.right_frame = ctk.CTkFrame(self.root, width=600, height=700, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
         self.right_frame.place(x=50, y=160)# definir a expanção da frame
 
 
 
         # Labels com o texto e sem fundo
-        ctk.CTkLabel(self.right_frame, text="Nome :",font=("Times New Roman", 20),fg_color="gray", text_color='black').place(x=90, y=40)
-        ctk.CTkLabel(self.right_frame, text="Data de Nascimento :",font=("Times New Roman", 20),fg_color="#808080", text_color='black',).place(x=90, y=90)
-        ctk.CTkLabel(self.right_frame, text="Data de Admissão :",font=("Times New Roman", 20),fg_color="#808080", text_color='black').place(x=90, y=140)
-        ctk.CTkLabel(self.right_frame, text="CPF :",font=("Times New Roman", 20),fg_color="#808080", text_color='black').place(x=90, y=190)
-        ctk.CTkLabel(self.right_frame, text="Cidade :",font=("Times New Roman", 20),fg_color="#808080", text_color='black').place(x=90, y=240)
-        ctk.CTkLabel(self.right_frame, text="Estado :",font=("Times New Roman", 20),fg_color="#808080", text_color='black').place(x=90, y=290)
-        ctk.CTkLabel(self.right_frame, text="Telefone :",font=("Times New Roman", 20),fg_color="#808080", text_color='black').place(x=90, y=340)
-        ctk.CTkLabel(self.right_frame, text="Email :",font=("Times New Roman", 20),fg_color="#808080", text_color='black').place(x=90, y=390)
-        ctk.CTkLabel(self.right_frame, text="Usuario :",font=("Times New Roman", 20),fg_color="#808080", text_color='black').place(x=90, y=440)
-        ctk.CTkLabel(self.right_frame, text="Senha :",font=("Times New Roman", 20),fg_color="#808080", text_color='black').place(x=90, y=490)
-        ctk.CTkLabel(self.right_frame, text="Escolher perfil :",font=("Times New Roman", 20),fg_color="#808080", text_color='black').place(x=90, y=540)
+        ctk.CTkLabel(self.right_frame, text="Nome :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=90, y=40)
+        ctk.CTkLabel(self.right_frame, text="Data de Nascimento :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9',).place(x=90, y=90)
+        ctk.CTkLabel(self.right_frame, text="Data de Admissão :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=90, y=140)
+        ctk.CTkLabel(self.right_frame, text="CPF :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=90, y=190)
+        ctk.CTkLabel(self.right_frame, text="Cidade :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=90, y=240)
+        ctk.CTkLabel(self.right_frame, text="Estado :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=90, y=290)
+        ctk.CTkLabel(self.right_frame, text="Telefone :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=90, y=340)
+        ctk.CTkLabel(self.right_frame, text="Email :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=90, y=390)
+        ctk.CTkLabel(self.right_frame, text="Usuario :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=90, y=440)
+        ctk.CTkLabel(self.right_frame, text="Senha :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=90, y=490)
+        ctk.CTkLabel(self.right_frame, text="Escolher perfil :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=90, y=540)
         
 
         # Caixas de textos
@@ -63,7 +63,7 @@ class tela_funcionario_adm:
 
         self.buscar_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray",border_color='gray', width=90,height=30)
        
-        self.perfil_funcionario_combobox = ctk.CTkComboBox(self.root,fg_color="#404040", border_color="gray",values=["Usuario simples", "Administrador"],dropdown_hover_color='darkgray',dropdown_text_color='black', width=150,height=30, dropdown_fg_color="#404040", text_color="black",button_color="#404040", button_hover_color="#404040", border_width=0, bg_color='gray')
+        self.perfil_funcionario_combobox = ctk.CTkComboBox(self.root,fg_color="#1B263B", border_color="#2C3E50",values=["Usuario simples", "Administrador"],dropdown_hover_color='#1B263B',dropdown_text_color='#C9D1D9', width=150,height=30, dropdown_fg_color="#161B22", text_color="black",button_color="#1B263B", button_hover_color="#1B263B", border_width=0, bg_color='#1B263B')
         #button_color="" --> cor do botão da seta
 
         #Posicionamento das caixas de textos especialmente para nao dar conflito com o GET = PEGAR
@@ -83,17 +83,17 @@ class tela_funcionario_adm:
         self.perfil_funcionario_combobox.place(x=300, y=700)
         
         #Posicionamento das caixas de textos especialmente para nao dar conflito com o GET = PEGAR
-        ctk.CTkLabel(self.right_frame, text="Busca por :\n(id)   ",text_color='black',font=('Times New Roman', 20), fg_color="gray").place(x=90, y=650)
-        self.id_funcionario_entry = ctk.CTkEntry(self.right_frame, fg_color="LIGHTGRAY")
+        ctk.CTkLabel(self.right_frame, text="Busca por :\n(id)   ",text_color='#C9D1D9',font=('Times New Roman', 20), fg_color="#2C3E50").place(x=90, y=650)
+        self.id_funcionario_entry = ctk.CTkEntry(self.right_frame, fg_color="#2C3E50")
 
 
         # Botões de funções
-        ctk.CTkButton(self.right_frame, text="CANCELAR",text_color='black' ,fg_color= '#404040', bg_color= '#808080', width=90, height= 40,command=self.cancelar).place(x=420, y=580)
-        ctk.CTkButton(self.right_frame, text="REGISTRAR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=90, height= 40,command=self.registrar_funcionario).place(x=90, y=580)
-        ctk.CTkButton(self.right_frame, text="EXCLUIR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=90, height= 40,command=self.delete_funcionario).place(x=200, y=580)
-        ctk.CTkButton(self.right_frame, text="EDITAR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=90, height= 40,command=self.update_funcionario).place(x=310, y=580)
-        ctk.CTkButton(self.right_frame, text="BUSCAR",text_color='black', fg_color= '#404040', bg_color= '#808080', width=50, height= 30,command=self.pesquisar_funcionario).place(x=300, y=650)
-        ctk.CTkButton(self.root, text='VOLTAR',text_color='black',fg_color= '#404040', bg_color= '#A0A0A0', width=90, height= 40, command=self.voltar_menu).place(x=1700, y=900)
+        ctk.CTkButton(self.right_frame, text="CANCELAR",text_color='#C9D1D9' ,fg_color= '#1B263B', bg_color= '#2C3E50', width=90, height= 40,command=self.cancelar).place(x=420, y=580)
+        ctk.CTkButton(self.right_frame, text="REGISTRAR",text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#2C3E50', width=90, height= 40,command=self.registrar_funcionario).place(x=90, y=580)
+        ctk.CTkButton(self.right_frame, text="EXCLUIR",text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#2C3E50', width=90, height= 40,command=self.delete_funcionario).place(x=200, y=580)
+        ctk.CTkButton(self.right_frame, text="EDITAR",text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#2C3E50', width=90, height= 40,command=self.update_funcionario).place(x=310, y=580)
+        ctk.CTkButton(self.right_frame, text="BUSCAR",text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#2C3E50', width=50, height= 30,command=self.pesquisar_funcionario).place(x=300, y=650)
+        ctk.CTkButton(self.root, text='VOLTAR',text_color='#C9D1D9',fg_color= '#1B263B', bg_color= '#161B22', width=90, height= 40, command=self.voltar_menu).place(x=1700, y=900)
 
 
     def registrar_funcionario(self):
@@ -231,8 +231,8 @@ class tela_funcionario_adm:
     def criar_tabela(self):
         style = ttk.Style()
         style.theme_use("alt")
-        style.configure("Treeview.Heading", background="gray", foreground="black", anchor="center")
-        style.configure("Treeview", background="gray", foreground="black", fieldbackground="gray", rowheight=25)
+        style.configure("Treeview.Heading", background="#1B263B", foreground="#C9D1D9", anchor="center")
+        style.configure("Treeview", background="#2C3E50", foreground="#C9D1D9", fieldbackground="gray", rowheight=25)
 
         self.treeview = ttk.Treeview(self.root, columns=("id_funcionario", "nome_funcionario", "data_nascimento", "data_admissao", "cpf_funcionario", "cidade_funcionario", "uf_funcionario", "telefone_funcionario", "email_funcionario", "usuario_funcionario", "senha_funcionario", "perfil_funcionario"), show="headings", height=15)
 
