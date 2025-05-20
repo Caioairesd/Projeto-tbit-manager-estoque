@@ -16,6 +16,7 @@ class tbit_db:
             self.cursor = self.conn.cursor()
             self.cursor.execute("create database if not exists tbit_db;")
             self.cursor.execute("USE tbit_db;")
+            self.conn.commit()  # <-- Adicionado para garantir que o banco foi criado antes dos inserts
 
             comandos_sql = [
                 """
@@ -26,11 +27,11 @@ class tbit_db:
                     cnpj_fornecedor varchar(18),  
                     email_fornecedor varchar(50),  
                     telefone_fornecedor varchar(20),  
-                    pais_fornecedor varchar(30),  
                     cidade_fornecedor varchar(30),
+                    pais_fornecedor varchar(30),  
                     constraint pk_fornecedor primary key (id_fornecedor) 
                     );
-                """
+                """,
                 """
                     CREATE TABLE if not exists Produto 
                     ( 
@@ -44,7 +45,7 @@ class tbit_db:
                     constraint pk_produto primary key (id_produto),
                     constraint fk_fornecedor_produto foreign key (idFornecedor) references Fornecedor(id_fornecedor)
                     );
-                """
+                """,
                 """
                     CREATE TABLE if not exists Cliente 
                     ( 
@@ -54,7 +55,7 @@ class tbit_db:
                     cnpj_cliente varchar(18),
                     constraint pk_cliente primary key (id_cliente)
                     );
-                """
+                """,
                 """
                     CREATE TABLE if not exists Pedido 
                     (
@@ -69,7 +70,7 @@ class tbit_db:
                     constraint fk_produto_compra foreign key (idProduto) references Produto(id_produto),
                     constraint fk_cliente_compra foreign key (idCliente) references Cliente(id_cliente)
                     );
-                """
+                """,
                 """
                     CREATE TABLE if not exists Funcionario 
                     ( 
@@ -87,7 +88,7 @@ class tbit_db:
                     perfil_funcionario varchar(30),  
                     constraint pk_funcionario primary key (id_funcionario)
                     );
-                """
+                """,
                 """
                     CREATE TABLE if not exists Cadastro 
                     ( 
@@ -98,7 +99,7 @@ class tbit_db:
                     constraint fk_funcionario_cadastro foreign key (idFuncionario) references Funcionario(id_funcionario),
                     constraint fk_cliente_cadastro foreign key (idCliente) references Cliente(id_cliente)
                     );
-                """
+                """,
                 """
                     CREATE TABLE if not exists Estoque
                     (
@@ -185,9 +186,11 @@ class tbit_db:
                     ('Componentes SC', '78.901.234/0001-57', 'contato@componentessc.com', '(48) 98765-1234', 'Brasil', 'São José'),
                     ('Digital Info', '89.012.345/0001-58', 'vendas@digitalinfo.com', '(41) 95678-9012', 'Brasil', 'Colombo'),
                     ('TechWales', '90.123.456/0001-59', 'contact@techwales.co.uk', '+44 29 8765 4321', 'Reino Unido', 'Cardiff'),
-                    ('Fukuoka Electronics', '01.234.567/0001-60', 'sales@fukuokaelec.com', '+81 92 9876 5432', 'Japão', 'Fukuoka');
+                    ('Fukuoka Electronics', '01.234.567/0001-60', 'sales@fukuokaelec.com', '+81 92 9876 5432', 'Japão', 'Fukuoka'),
+                    ('NovaTech', '61.111.222/0001-61', 'contato@novatech.com', '(11) 90000-0001', 'Brasil', 'São Paulo');
                 """)
-            
+                self.conn.commit()
+
             if tabela_vazia("Cliente"):
                 self.cursor.execute("""
                     INSERT  INTO Cliente (nome_cliente, descricao_cliente, cnpj_cliente) VALUES
@@ -244,15 +247,15 @@ class tbit_db:
                     ('Recycling Tech', 'Tecnologia para reciclagem', '51.525.252/0001-52'),
                     ('Farming Tech', 'Tecnologia para agricultura', '52.535.353/0001-53'),
                     ('Fishing Tech', 'Tecnologia para pesca', '53.545.454/0001-54'),
-                    ('Hunting Tech', 'Tecnologia para caça', '54.555.555/0001-55'),
-                    ('Camping Tech', 'Tecnologia para camping', '55.565.656/0001-56'),
-                    ('Diving Tech', 'Tecnologia para mergulho', '56.575.757/0001-57'),
-                    ('Flying Tech', 'Tecnologia para aviação', '57.585.858/0001-58'),
-                    ('Space Tech', 'Tecnologia espacial', '58.595.959/0001-59'),
-                    ('Future Tech', 'Tecnologias futuras e inovadoras', '59.606.060/0001-60'),
-                    ('Loja Exemplo', 'Cliente atacadista do setor têxtil', '12.345.678/0001-90');
+                    ('Future tech', 'Tecnologias futuras e inovadoras', '59.606.060/0001-60'),
+                    ('Nier Automata', 'Atacadista do setor de jogos e tecnologia', '12.345.678/0001-90'),
+                    ('Drakengard Games', 'Empresa independente de jogos', '61.111.222/0001-61'),
+                    ('Pro Beta Nothing Remains', 'Empresa de tecnologia', '62.222.333/0001-62'),
+                    ('Running Alone', 'Mercado de bairro', '63.333.444/0001-63'),
+                    ('Nova Era Games', 'Assistência técnica de informática', '64.444.555/0001-64');
                 """)
-            
+                self.conn.commit()
+
             if tabela_vazia("Funcionario"):
                 self.cursor.execute("""
                     INSERT  INTO Funcionario (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario) VALUES
@@ -314,10 +317,12 @@ class tbit_db:
                     ('Isabela Almeida', '1991-01-11', '2022-03-10', '474.747.474-74', 'Rio de Janeiro', 'RJ', '(21) 97890-1234', 'isabela.almeida@empresa.com', 'isabela.almeida', 'senha678', 'Usuario simples'),
                     ('Lucas Henrique', '1984-03-24', '2019-05-15', '484.848.484-84', 'Belo Horizonte', 'MG', '(31) 98901-2345', 'lucas.henrique@empresa.com', 'lucas.henrique', 'senha789', 'Usuario simples'),
                     ('Laura Santos', '1997-06-06', '2023-08-20', '494.949.494-94', 'Porto Alegre', 'RS', '(51) 99012-3456', 'laura.santos@empresa.com', 'laura.santos', 'senha890', 'Usuario simples'),
-                    ('Eduardo Oliveira', '1990-09-19', '2021-11-25', '505.050.505-05', 'Curitiba', 'PR', '(41) 90123-4567', 'eduardo.oliveira@empresa.com', 'eduardo.oliveira', 'senha901', 'Usuario simples'),
-                    ('Beatriz Costa', '1985-12-02', '2020-02-05', '515.151.515-15', 'Salvador', 'BA', '(71) 91234-5678', 'beatriz.costa@empresa.com', 'beatriz.costa', 'senha012', 'Usuario simples');
+                    ('André Matos', '1990-01-01', '2024-01-01', '616.161.616-16', 'São Paulo', 'SP', '(11) 90000-0003', 'lucas.teste@empresa.com', 'lucas.teste', 'senha123', 'Usuario simples'),
+                    ('Emi Evans', '1992-02-02', '2024-02-01', '626.262.626-26', 'Curitiba', 'PR', '(41) 90000-0004', 'ana.nova@empresa.com', 'ana.nova', 'senha456', 'Usuario simples'),
+                    ('Bruno Thuata', '1988-03-03', '2024-03-01', '636.363.636-36', 'Belo Horizonte', 'MG', '(31) 90000-0005', 'carlos.beta@empresa.com', 'carlos.beta', 'senha789', 'Usuario simples');
                 """)
-            
+                self.conn.commit()
+
             if tabela_vazia("Produto"):
                 self.cursor.execute("""
                     INSERT  INTO Produto (nome_produto, descricao_produto, categoria_produto, quantidade_produto, valor_produto, idFornecedor) VALUES
@@ -382,72 +387,8 @@ class tbit_db:
                     ( 'Controle Remoto', 'Controle remoto universal', 'Acessórios', 132, 49.90, 59),
                     ( 'Antena Digital', 'Antena digital interna', 'Redes e Conectividade', 102, 79.90, 60);
                 """)
-            
-            if tabela_vazia("Pedido"):
-                self.cursor.execute("""
-                    INSERT  INTO Pedido (nota_fiscal, data_pedido, forma_pagamento, quantidade_produto_item, idProduto, idCliente) VALUES
-                    ('NF1001', '2023-01-05', 'Cartão Crédito', 2, 1, 1),
-                    ('NF1002', '2023-01-10', 'Boleto', 5, 2, 2),
-                    ('NF1003', '2023-01-15', 'PIX', 1, 3, 3),
-                    ('NF1004', '2023-01-20', 'Cartão Débito', 3, 4, 4),
-                    ('NF1005', '2023-01-25', 'Cartão Crédito', 2, 5, 5),
-                    ('NF1006', '2023-02-01', 'Boleto', 4, 6, 6),
-                    ('NF1007', '2023-02-05', 'PIX', 1, 7, 7),
-                    ('NF1008', '2023-02-10', 'Cartão Débito', 2, 8, 8),
-                    ('NF1009', '2023-02-15', 'Cartão Crédito', 3, 9, 9),
-                    ('NF1010', '2023-02-20', 'Boleto', 1, 10, 10),
-                    ('NF1011', '2023-02-25', 'PIX', 2, 11, 11),
-                    ('NF1012', '2023-03-01', 'Cartão Débito', 1, 12, 12),
-                    ('NF1013', '2023-03-05', 'Cartão Crédito', 4, 13, 13),
-                    ('NF1014', '2023-03-10', 'Boleto', 2, 14, 14),
-                    ('NF1015', '2023-03-15', 'PIX', 1, 15, 15),
-                    ('NF1016', '2023-03-20', 'Cartão Débito', 3, 16, 16),
-                    ('NF1017', '2023-03-25', 'Cartão Crédito', 2, 17, 17),
-                    ('NF1018', '2023-04-01', 'Boleto', 1, 18, 18),
-                    ('NF1019', '2023-04-05', 'PIX', 5, 19, 19),
-                    ('NF1020', '2023-04-10', 'Cartão Débito', 2, 20, 20),
-                    ('NF1021', '2023-04-15', 'Cartão Crédito', 1, 21, 21),
-                    ('NF1022', '2023-04-20', 'Boleto', 3, 22, 22),
-                    ('NF1023', '2023-04-25', 'PIX', 2, 23, 23),
-                    ('NF1024', '2023-05-01', 'Cartão Débito', 1, 24, 24),
-                    ('NF1025', '2023-05-05', 'Cartão Crédito', 4, 25, 25),
-                    ('NF1026', '2023-05-10', 'Boleto', 2, 26, 26),
-                    ('NF1027', '2023-05-15', 'PIX', 1, 27, 27),
-                    ('NF1028', '2023-05-20', 'Cartão Débito', 3, 28, 28),
-                    ('NF1029', '2023-05-25', 'Cartão Crédito', 2, 29, 29),
-                    ('NF1030', '2023-06-01', 'Boleto', 1, 30, 30),
-                    ('NF1031', '2023-06-05', 'PIX', 2, 31, 31),
-                    ('NF1032', '2023-06-10', 'Cartão Débito', 1, 32, 32),
-                    ('NF1033', '2023-06-15', 'Cartão Crédito', 3, 33, 33),
-                    ('NF1034', '2023-06-20', 'Boleto', 2, 34, 34),
-                    ('NF1035', '2023-06-25', 'PIX', 1, 35, 35),
-                    ('NF1036', '2023-07-01', 'Cartão Débito', 4, 36, 36),
-                    ('NF1037', '2023-07-05', 'Cartão Crédito', 2, 37, 37),
-                    ('NF1038', '2023-07-10', 'Boleto', 1, 38, 38),
-                    ('NF1039', '2023-07-15', 'PIX', 3, 39, 39),
-                    ('NF1040', '2023-07-20', 'Cartão Débito', 2, 40, 40),
-                    ('NF1041', '2023-07-25', 'Cartão Crédito', 1, 41, 41),
-                    ('NF1042', '2023-08-01', 'Boleto', 5, 42, 42),
-                    ('NF1043', '2023-08-05', 'PIX', 2, 43, 43),
-                    ('NF1044', '2023-08-10', 'Cartão Débito', 1, 44, 44),
-                    ('NF1045', '2023-08-15', 'Cartão Crédito', 3, 45, 45),
-                    ('NF1046', '2023-08-20', 'Boleto', 2, 46, 46),
-                    ('NF1047', '2023-08-25', 'PIX', 1, 47, 47),
-                    ('NF1048', '2023-09-01', 'Cartão Débito', 4, 48, 48),
-                    ('NF1049', '2023-09-05', 'Cartão Crédito', 2, 49, 49),
-                    ('NF1050', '2023-09-10', 'Boleto', 1, 50, 50),
-                    ('NF1051', '2023-09-15', 'PIX', 3, 51, 51),
-                    ('NF1052', '2023-09-20', 'Cartão Débito', 2, 52, 52),
-                    ('NF1053', '2023-09-25', 'Cartão Crédito', 1, 53, 53),
-                    ('NF1054', '2023-10-01', 'Boleto', 5, 54, 54),
-                    ('NF1055', '2023-10-05', 'PIX', 2, 55, 55),
-                    ('NF1056', '2023-10-10', 'Cartão Débito', 1, 56, 56),
-                    ('NF1057', '2023-10-15', 'Cartão Crédito', 3, 57, 57),
-                    ('NF1058', '2023-10-20', 'Boleto', 2, 58, 58),
-                    ('NF1059', '2023-10-25', 'PIX', 1, 59, 59),
-                    ('NF1060', '2023-11-01', 'Cartão Débito', 4, 60, 60);
-                """)
-            
+                self.conn.commit()
+
             if tabela_vazia("Cadastro"):
                 self.cursor.execute("""
                     INSERT  INTO Cadastro (idFuncionario, idCliente) VALUES
@@ -458,7 +399,8 @@ class tbit_db:
                     (41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
                     (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
                 """)
-            
+                self.conn.commit()
+
             if tabela_vazia("Estoque"):
                 self.cursor.execute("""
                     INSERT  INTO Estoque (IdProduto, quantidade_estoque) VALUES
@@ -469,6 +411,73 @@ class tbit_db:
                     (41, 25), (42, 40), (43, 8), (44, 15), (45, 10), (46, 18), (47, 15), (48, 10), (49, 25), (50, 35),
                     (51, 60), (52, 40), (53, 30), (54, 18), (55, 12), (56, 35), (57, 8), (58, 25), (59, 50), (60, 40);
                 """)
+                self.conn.commit()
+
+            if tabela_vazia("Pedido"):
+                self.cursor.execute("""
+                    INSERT  INTO Pedido (nota_fiscal, data_pedido, forma_pagamento, quantidade_produto_item, idProduto, idCliente) VALUES
+                    ('NF2001', '2025-01-05', 'Cartão Crédito', 2, 1, 1),
+                    ('NF2002', '2024-01-10', 'Boleto', 5, 2, 2),
+                    ('NF2003', '2024-01-15', 'PIX', 1, 3, 3),
+                    ('NF2004', '2024-01-20', 'Cartão Débito', 3, 4, 4),
+                    ('NF2005', '2025-01-25', 'Cartão Crédito', 2, 5, 5),
+                    ('NF2006', '2024-02-01', 'Boleto', 4, 6, 6),
+                    ('NF2007', '2024-02-05', 'PIX', 1, 7, 7),
+                    ('NF2008', '2025-02-10', 'Cartão Débito', 2, 8, 8),
+                    ('NF2009', '2024-02-15', 'Cartão Crédito', 3, 9, 9),
+                    ('NF2010', '2024-02-20', 'Boleto', 1, 10, 10),
+                    ('NF2011', '2025-02-25', 'PIX', 2, 11, 11),
+                    ('NF2012', '2024-03-01', 'Cartão Débito', 1, 12, 12),
+                    ('NF2013', '2025-03-05', 'Cartão Crédito', 4, 13, 13),
+                    ('NF2014', '2024-03-10', 'Boleto', 2, 14, 14),
+                    ('NF2015', '2024-03-15', 'PIX', 1, 15, 15),
+                    ('NF2016', '2025-03-20', 'Cartão Débito', 3, 16, 16),
+                    ('NF2017', '2024-03-25', 'Cartão Crédito', 2, 17, 17),
+                    ('NF2018', '2024-04-01', 'Boleto', 1, 18, 18),
+                    ('NF2019', '2025-04-05', 'PIX', 5, 19, 19),
+                    ('NF2020', '2024-04-10', 'Cartão Débito', 2, 20, 20),
+                    ('NF2021', '2024-04-15', 'Cartão Crédito', 1, 21, 21),
+                    ('NF2022', '2024-04-20', 'Boleto', 3, 22, 22),
+                    ('NF2023', '2024-04-25', 'PIX', 2, 23, 23),
+                    ('NF2024', '2025-05-01', 'Cartão Débito', 1, 24, 24),
+                    ('NF2025', '2024-05-05', 'Cartão Crédito', 4, 25, 25),
+                    ('NF2026', '2024-05-10', 'Boleto', 2, 26, 26),
+                    ('NF2027', '2024-05-15', 'PIX', 1, 27, 27),
+                    ('NF2028', '2025-05-20', 'Cartão Débito', 3, 28, 28),
+                    ('NF2029', '2024-05-25', 'Cartão Crédito', 2, 29, 29),
+                    ('NF2030', '2024-06-01', 'Boleto', 1, 30, 30),
+                    ('NF2031', '2024-06-05', 'PIX', 2, 31, 31),
+                    ('NF2032', '2024-06-10', 'Cartão Débito', 1, 32, 32),
+                    ('NF2033', '2024-06-15', 'Cartão Crédito', 3, 33, 33),
+                    ('NF2034', '2024-06-20', 'Boleto', 2, 34, 34),
+                    ('NF2035', '2024-06-25', 'PIX', 1, 35, 35),
+                    ('NF2036', '2024-07-01', 'Cartão Débito', 4, 36, 36),
+                    ('NF2037', '2024-07-05', 'Cartão Crédito', 2, 37, 37),
+                    ('NF2038', '2024-07-10', 'Boleto', 1, 38, 38),
+                    ('NF2039', '2024-07-15', 'PIX', 3, 39, 39),
+                    ('NF2040', '2024-07-20', 'Cartão Débito', 2, 40, 40),
+                    ('NF2041', '2024-07-25', 'Cartão Crédito', 1, 41, 41),
+                    ('NF2042', '2024-08-01', 'Boleto', 5, 42, 42),
+                    ('NF2043', '2024-08-05', 'PIX', 2, 43, 43),
+                    ('NF2044', '2024-08-10', 'Cartão Débito', 1, 44, 44),
+                    ('NF2045', '2024-08-15', 'Cartão Crédito', 3, 45, 45),
+                    ('NF2046', '2024-08-20', 'Boleto', 2, 46, 46),
+                    ('NF2047', '2024-08-25', 'PIX', 1, 47, 47),
+                    ('NF2048', '2024-09-01', 'Cartão Débito', 4, 48, 48),
+                    ('NF2049', '2024-09-05', 'Cartão Crédito', 2, 49, 49),
+                    ('NF2050', '2023-09-10', 'Boleto', 1, 50, 50),
+                    ('NF2051', '2024-09-15', 'PIX', 3, 51, 51),
+                    ('NF2052', '2024-09-20', 'Cartão Débito', 2, 52, 52),
+                    ('NF2053', '2024-09-25', 'Cartão Crédito', 1, 53, 53),
+                    ('NF2054', '2024-10-01', 'Boleto', 5, 54, 54),
+                    ('NF2055', '2023-10-05', 'PIX', 2, 55, 55),
+                    ('NF2056', '2024-10-10', 'Cartão Débito', 1, 56, 56),
+                    ('NF2057', '2023-10-15', 'Cartão Crédito', 3, 57, 57),
+                    ('NF2058', '2024-10-20', 'Boleto', 2, 58, 58),
+                    ('NF2059', '2024-10-25', 'PIX', 1, 59, 59),
+                    ('NF2060', '2023-11-01', 'Cartão Débito', 4, 60, 60);
+                """)
+                self.conn.commit()
 
             self.cursor.close()
             self.cursor = self.conn.cursor()
@@ -536,11 +545,11 @@ def get_connection():
 
 
 #Funções da tabela fornecedor
-def register_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
+def register_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "insert fornecedor(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)VALUES(%s,%s,%s,%s,%s,%s)"
-    cursor.execute(query,(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor))
+    query = "insert fornecedor(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)VALUES(%s,%s,%s,%s,%s,%s)"
+    cursor.execute(query,(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor))
     conn.commit()
     cursor.close()
     conn.close()
@@ -566,40 +575,54 @@ def pesquisar_fornecedor_db(id_solicitado):
     return busca
 
 
-def update_fornecedor_db(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor):
+def update_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "UPDATE fornecedor SET nome_fornecedor = %s,marca_fornecedor = %s,email_fornecedor = %s,telefone_fornecedor = %s,cidade_fornecedor = %s,pais_fornecedor = %s WHERE id_fornecedor = %s"
-    cursor.execute(query,(nome_fornecedor,marca_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor))
+    query = "UPDATE fornecedor SET nome_fornecedor = %s,cnpj_fornecedor = %s,email_fornecedor = %s,telefone_fornecedor = %s,cidade_fornecedor = %s,pais_fornecedor = %s WHERE cnpj_fornecedor = %s"
+    cursor.execute(query,(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,cnpj_fornecedor,))
     conn.commit()
     cursor.close()
 
 def delete_fornecedor_db(id_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "DELETE FROM fornecedor WHERE id_fornecedor = %s"
-    cursor.execute(query,(id_fornecedor,))
+
+    cursor.callproc("delete_fornecedor_e_produtos", [id_fornecedor])
+
     conn.commit()
     cursor.close()
 
-#Funções da tabela produto
-
-
-def registrar_produto_db(nome_produto, descricao, quantidade, valor):
+def get_id_cnpj_db():
     conn = get_connection()
     cursor = conn.cursor()
-    query = "INSERT INTO produto (nome_produto, descricao_produto, quantidade_produto, valor_produto)VALUES(%s, %s, %s, %s)"
-    cursor.execute(query, (nome_produto, descricao, quantidade, valor))
+
+    query = "SELECT id_fornecedor, cnpj_fornecedor FROM fornecedor"
+
+    cursor.execute(query)
+    busca = cursor.fetchall()
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return busca
+
+#Funções da tabela produto
+
+def registrar_produto_db(nome_produto, descricao, categoria, quantidade, valor, id_fornecedor):
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "INSERT INTO produto (nome_produto, descricao_produto, categoria_produto, quantidade_produto, valor_produto, idFornecedor)VALUES(%s, %s, %s, %s, %s, %s)"
+    cursor.execute(query, (nome_produto, descricao, categoria, quantidade, valor, id_fornecedor))
 
     conn.commit()
     cursor.close()
     conn.close()
 
-def atualizar_produto_db(nome_produto, descricao, quantidade, valor):
+def atualizar_produto_db(nome_produto, descricao, categoria, valor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "UPDATE produto SET nome_produto = %s, descricao_produto = %s, quantidade_produto = %s, valor_produto = %s WHERE nome_produto LIKE %s"
-    cursor.execute(query, (nome_produto, descricao, quantidade, valor, nome_produto))
+    query = "UPDATE produto SET nome_produto = %s, descricao_produto = %s, categoria_produto = %s, valor_produto = %s WHERE nome_produto LIKE %s"
+    cursor.execute(query, (nome_produto, descricao, categoria, valor, nome_produto))
 
     conn.commit()
     cursor.close()
@@ -608,7 +631,10 @@ def atualizar_produto_db(nome_produto, descricao, quantidade, valor):
 def listar_produtos_db():
     conn = get_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM produto"
+    
+    query = """SELECT p.id_produto, p.nome_produto, p.descricao_produto, p.categoria_produto, p.quantidade_produto, p.valor_produto, f.nome_fornecedor FROM produto AS p 
+    JOIN fornecedor AS f ON f.id_fornecedor = p.idFornecedor"""
+
     cursor.execute(query)
     busca = cursor.fetchall()
     conn.commit()
@@ -638,19 +664,33 @@ def pesquisar_produto_db(produto_requisitado):
 
     return busca
 
+def listar_fornecedores_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = "SELECT id_fornecedor, nome_fornecedor FROM fornecedor"
+    cursor.execute(query)
+    busca = cursor.fetchall()
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return busca
+
 # funções da tabela  funcionario
 
 # Função para criar um novo funcionário no banco de dados
-def register_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario):
+def register_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario):
     conn = get_connection()
     cursor = conn.cursor()
+
     query = """
         INSERT INTO funcionario(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario,
         cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, 
-        usuario_funcionario, senha_funcionario) 
-        VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        usuario_funcionario, senha_funcionario, perfil_funcionario) 
+        VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
-    cursor.execute(query, (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario))
+    cursor.execute(query, (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario))
+    
     conn.commit()
     cursor.close()
     conn.close()
@@ -667,17 +707,21 @@ def pesquisar_funcionario_db(id_funcionario):
     return result
 
 # Função para editar dados de um funcionário
-def update_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, id_funcionario):
+def update_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario, id_funcionario):
     conn = get_connection()
     cursor = conn.cursor()
+
     query = """
         UPDATE funcionario 
         SET nome_funcionario = %s, data_nascimento_funcionario = %s, data_admissao_funcionario = %s,
         cpf_funcionario = %s, cidade_funcionario = %s, estado_funcionario = %s, telefone_funcionario = %s, 
-        email_funcionario = %s, usuario_funcionario = %s, senha_funcionario = %s 
+        email_funcionario = %s, usuario_funcionario = %s, senha_funcionario = %s, perfil_funcionario = %s 
         WHERE id_funcionario = %s
     """
-    cursor.execute(query, (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, id_funcionario))
+    cursor.execute(query, (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario, id_funcionario))
+    
+
+    
     conn.commit()
     cursor.close()
     conn.close()
@@ -701,6 +745,144 @@ def listar_funcionarios_db():
     result = cursor.fetchall()  # Retorna todas as linhas
     cursor.close()
     conn.close()
+    return result
+
+# FUNÇÕES USADAS NA TELA DE REABASTECIMENTO E ESTOQUE
+def consultar_estoque_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_produto, nome_produto, categoria_produto, quantidade_produto FROM produto"
+
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return result
+
+def registrar_reabastecimento_db(id_produto, quantidade_recebida):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "INSERT INTO estoque(idProduto, quantidade_estoque) VALUES (%s, %s)"
+
+    cursor.execute(query, (id_produto, quantidade_recebida,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+# FUNÇÕES USADAS NA TELA DE CLIENTE
+def registrar_cliente_db(nome_cliente, descricao_cliete, cnpj_cliente):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "INSERT INTO cliente (nome_cliente, descricao_cliente, cnpj_cliente) VALUES (%s, %s, %s)"
+
+    cursor.execute(query, (nome_cliente, descricao_cliete, cnpj_cliente,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def update_cliente_db(nome_cliente, descricao_cliete, cnpj_cliente, id_usuario):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "UPDATE cliente SET nome_cliente = %s, descricao_cliente = %s, cnpj_cliente = %s WHERE id_cliente = %s"
+
+    cursor.execute(query, (nome_cliente, descricao_cliete, cnpj_cliente, id_usuario,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def delete_cliente_db(id_cliente):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "DELETE FROM cliente WHERE id_cliente = %s OR nome_cliente = %s"
+
+    cursor.execute(query, (id_cliente, id_cliente,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def get_clientes_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM cliente"
+
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return result
+
+def pesquisar_cliente_db(cliente_procurado):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_cliente, nome_cliente, descricao_cliente, cnpj_cliente FROM cliente WHERE id_cliente = %s"
+
+    cursor.execute(query, (cliente_procurado,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    return result
+
+# FUNCOES USADAS NA TELA DE "PEDIDO"
+def fazer_pedido_db(nf_pedido, data_pedido, forma_pagamento, quantidade_produto_item, idProduto, idCliente):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "INSERT INTO pedido (nota_fiscal, data_pedido, forma_pagamento, quantidade_produto_item, idProduto, idCliente) VALUES (%s, %s, %s, %s, %s, %s)"
+
+    cursor.execute(query, (nf_pedido, data_pedido, forma_pagamento, quantidade_produto_item, idProduto, idCliente,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def get_id_nome_produtos_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_produto, nome_produto, quantidade_produto FROM produto"
+
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return result
+
+def get_id_nome_clientes_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_cliente, nome_cliente FROM cliente"
+
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return result
+
+def get_pedidos_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = """SELECT pe.id_pedido, pe.nota_fiscal, pe.data_pedido, pe.forma_pagamento, ci.nome_cliente, po.nome_produto, pe.quantidade_produto_item FROM pedido AS pe
+            JOIN produto AS po ON po.id_produto = pe.idProduto
+            JOIN cliente AS ci ON pe.idCliente = ci.id_cliente"""
+
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
     return result
 
 # Funções responsáveis pela funcionalidade do Dashboard
