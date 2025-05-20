@@ -806,15 +806,14 @@ def vendas_por_mes():
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("SET lc_time_names = 'pt_BR';")
-    query = """
-        SELECT 
+    query =  """
+    SELECT 
         DATE_FORMAT(data_pedido, '%M %Y') AS mes_extenso,
         COUNT(*) AS total_vendas
     FROM Pedido
-    GROUP BY mes_extenso
+    GROUP BY DATE_FORMAT(data_pedido, '%M %Y')
     ORDER BY MIN(data_pedido);
-    
-    """
+"""
     cursor.execute(query)
     
     resultados = cursor.fetchall()
