@@ -6,14 +6,14 @@ from menu_user import menu_usuario
 
 class login_menu:
     def __init__(self,root):
-
+        ctk.set_appearance_mode("dark")  # Deixar o frame no modo escuro-dark
         self.root = root
         self.root.title("TBit Manager by TerraBytes")
         largura = self.root.winfo_screenwidth()  # Expandir tela largura
         altura = self.root.winfo_screenheight()  # Expandir tela altura
         self.root.geometry(f"{largura}x{altura}+0+0")  # definir expanção
 
-        ctk.set_appearance_mode("dark")  # Deixar o frame no modo escuro-dark
+        
         self.root.configure(fg_color='#161B22')
         # Fundo geral da janela
         self.root.configure(bg="#0D1117")
@@ -47,12 +47,12 @@ class login_menu:
 
         # Entry Usuario
         self.usuario_entry = ctk.CTkEntry(self.right_frame, text_color='#FFFFFF',
-                                        width=160, height=30, fg_color='#1B263B', placeholder_text='Nome usuario...')
+                                        width=160, height=35, fg_color='#1B263B', placeholder_text='Nome usuario...')
         self.usuario_entry.place(x=160, y=95)
 
         # Entry Senha
         self.senha_entry = ctk.CTkEntry(self.right_frame, text_color='#FFFFFF',
-                                        width=160, height=30, fg_color='#1B263B', show="*", placeholder_text='Senha usuario...')
+                                        width=160, height=35, fg_color='#1B263B', show="*", placeholder_text='Senha usuario...')
         self.senha_entry.place(x=160, y=150)
 
 
@@ -92,14 +92,14 @@ class login_menu:
             messagebox.showerror(title="Erro", message=f"Ocorreu um erro: {str(e)}")
 
     def abrir_menu_admin(self):
-        janela_admin = ctk.CTk()
+        from menu_adm import menu_admin
+        janela_admin = ctk.CTkToplevel(self.root)  # <- agora é Toplevel
         app = menu_admin(janela_admin)
-        janela_admin.mainloop()
 
     def abrir_menu_user(self):
-        janela_user = ctk.CTk()
+        from menu_user import menu_usuario
+        janela_user = ctk.CTkToplevel(self.root)  # <- agora é Toplevel
         app = menu_usuario(janela_user)
-        janela_user.mainloop()
 
 if __name__ == '__main__':
     root = ctk.CTk()

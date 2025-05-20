@@ -14,7 +14,7 @@ class tela_produto_adm:
 
         # Definições da janela
         self.root = ctk.CTkToplevel()
-        self.root.configure(fg_color='#A0A0A0')
+        self.root.configure(fg_color='#141C29')
         self.root.title("TBit Manager - Menu de produtos")
 
         largura = self.root.winfo_screenwidth()# Expandir tela largura
@@ -31,55 +31,54 @@ class tela_produto_adm:
     def criando_widgets(self):
 
 
-        self.titulo = ctk.CTkLabel(self.root, text='P R O D U T O - A D M I N I S T R A D O R',font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o usuario
-        self.titulo.place(x=380, y=60) # Posiciona o label 
+        self.titulo = ctk.CTkLabel(self.root, text='P R O D U T O',font=("Garamond", 60), fg_color="#141C29", text_color='#58A6FF') # Cria um abel para o usuario
+        self.titulo.place(x=800,y=60) # Posiciona o label 
 
         #cria o frame como fundo para deixar um fundo para as labls e caixas de textos
-        self.right_frame = ctk.CTkFrame(self.root, width=700, height=700, fg_color="gray")# definir o tamanho e cor do fundo da frame
+        self.right_frame = ctk.CTkFrame(self.root, width=700, height=700, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
         self.right_frame.place(x=100, y=160)# definir a expanção da frame
 
 
         # Criando os botoes que carregam as funcoes necessarias e seus posicionamentos
-        ctk.CTkButton(self.right_frame, text="Cadastrar", command=self.registrar_no_banco, width=90,height= 40,fg_color='#404040',text_color='black', border_color='gray').place(x=50, y=420) # Botao para cadastrar 
-        ctk.CTkButton(self.right_frame, text="Editar", command=self.alterar_no_banco, width=90,height= 40,fg_color='#404040',text_color='black', border_color='gray').place(x=160, y=420) # Botao para alterar 
-        ctk.CTkButton(self.right_frame, text="Excluir", command=self.deletar_do_banco, width=90,height= 40,fg_color='#404040',text_color='black', border_color='gray').place(x=270, y=420) # Botao para deletar produto
-        ctk.CTkButton(self.right_frame, text="Cancelar", command=self.cancelar_operacao, width=90,height= 40,fg_color='#404040',text_color='black', border_color='gray').place(x=380, y=420) # Botao para cancelar/voltar ao padrao
-        ctk.CTkButton(self.root, text='Voltar', width=90,fg_color='#404040',text_color='black', border_color='gray', height=40, command=self.voltar_menu).place(x=1700, y=900)
+        ctk.CTkButton(self.right_frame, text="Cadastrar", command=self.registrar_no_banco, width=90,height= 40,fg_color='#404040',text_color='#C9D1D9', border_color='gray').place(x=50, y=400) # Botao para cadastrar 
+        ctk.CTkButton(self.right_frame, text="Editar", command=self.alterar_no_banco, width=90,height= 40,fg_color='#404040',text_color='#C9D1D9', border_color='gray').place(x=160, y=400) # Botao para alterar 
+        ctk.CTkButton(self.right_frame, text="Excluir", command=self.deletar_do_banco, width=90,height= 40,fg_color='#404040',text_color='#C9D1D9', border_color='gray').place(x=270, y=400) # Botao para deletar produto
+        ctk.CTkButton(self.right_frame, text="Cancelar", command=self.cancelar_operacao, width=90,height= 40,fg_color='#404040',text_color='#C9D1D9', border_color='gray').place(x=380, y=400) # Botao para cancelar/voltar ao padrao
+        ctk.CTkButton(self.root, text='Voltar', width=90,fg_color='#1B263B',text_color='#C9D1D9', border_color='gray', height=40, command=self.voltar_menu).place(x=1700, y=900)
         
 
         # Labels usados para identificar as caixas de texto e seus posicionamentos
-        ctk.CTkLabel(self.root, text="Nome :",fg_color="gray",font=('times New Roman', 20), text_color='black').place(x=160, y=210)
-        ctk.CTkLabel(self.root, text="Descrição :",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=160, y=260)
-        ctk.CTkLabel(self.root, text="Categoria :",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=160, y=310)
-        ctk.CTkLabel(self.root, text="Quantidade : ",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=160, y=360)
-        ctk.CTkLabel(self.root, text="Valor :",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=160, y=410)
-        ctk.CTkLabel(self.root, text="Fornecedor do Produto :",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=160, y=510)
-        ctk.CTkLabel(self.root, text="Pesquisar fornecedor : ",fg_color="gray", font=('times New Roman', 20), text_color='black').place(x=160, y=460)
+        ctk.CTkLabel(self.root, text="Nome :",fg_color="#2C3E50",font=('times New Roman', 20), text_color='#C9D1D9').place(x=160, y=200)
+        ctk.CTkLabel(self.root, text="Descrição :",fg_color="#2C3E50", font=('times New Roman', 20), text_color='#C9D1D9').place(x=160, y=250)
+        ctk.CTkLabel(self.root, text="Categoria :",fg_color="#2C3E50", font=('times New Roman', 20), text_color='#C9D1D9').place(x=160, y=300)
+        ctk.CTkLabel(self.root, text="Quantidade : ",fg_color="#2C3E50", font=('times New Roman', 20), text_color='#C9D1D9').place(x=160, y=350)
+        ctk.CTkLabel(self.root, text="Valor :",fg_color="#2C3E50", font=('times New Roman', 20), text_color='#C9D1D9').place(x=160, y=400)
+        ctk.CTkLabel(self.root, text="Pesquisar :",fg_color="#2C3E50", font=('times New Roman', 20), text_color='#C9D1D9').place(x=160, y=450)
 
         # Entrys usados para o usuario digitar e seus posicionamentos
         # Entry 'nome do produto'
-        self.box_nome = ctk.CTkEntry(self.right_frame,text_color='black', width=300,height=30, fg_color='lightgray', bg_color='gray', border_color='gray')
-        self.box_nome.place(x=170, y=50)
+        self.box_nome = ctk.CTkEntry(self.right_frame, placeholder_text="Digite o nome do produto", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',width=200, height=30)
+        self.box_nome.place(x=170, y=40)
 
         # Entry 'descrição do produto'
-        self.box_descricao = ctk.CTkEntry(self.right_frame,text_color='black', width=300,height=30, fg_color='lightgray', bg_color='gray', border_color='gray')
-        self.box_descricao.place(x=170, y=100)
+        self.box_descricao = ctk.CTkEntry(self.right_frame, placeholder_text="Digite a descrição do produto", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',width=200, height=30)
+        self.box_descricao.place(x=170, y=90)
 
         # Entry 'categoria do produto'
-        self.box_categoria = ctk.CTkEntry(self.right_frame,text_color='black', width=200,height=30, fg_color='lightgray', bg_color='gray', border_color='gray')
-        self.box_categoria.place(x=170, y=150)
+        self.box_categoria = ctk.CTkEntry(self.right_frame, placeholder_text="Digite a categoria do produto", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',width=200, height=30)
+        self.box_categoria.place(x=170, y=140)
 
         # Entry 'quantidade do produto'
-        self.box_quantidade = ctk.CTkEntry(self.right_frame,text_color='black', width=200,height=30, fg_color='lightgray', bg_color='gray', border_color='gray')
-        self.box_quantidade.place(x=170, y=200)
+        self.box_quantidade = ctk.CTkEntry(self.right_frame, placeholder_text="Digite a quantidade de produtos", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',width=200, height=30)
+        self.box_quantidade.place(x=170, y=190)
 
         # Entry 'valor do produto'
-        self.box_valor = ctk.CTkEntry(self.right_frame,text_color='black', width=200,height=30, fg_color='lightgray', bg_color='gray', border_color='gray')
-        self.box_valor.place(x=170, y=250)
+        self.box_valor = ctk.CTkEntry(self.right_frame, placeholder_text="Digite o valor do produto", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',width=200, height=30)
+        self.box_valor.place(x=170, y=240)
 
         # Entry 'fornecedor do produto'
-        self.box_fornecedor = ctk.CTkEntry(self.right_frame,text_color='black', width=300,height=30, fg_color='lightgray', bg_color='gray', border_color='gray')
-        self.box_fornecedor.place(x=260, y=300)
+        self.box_fornecedor = ctk.CTkEntry(self.right_frame, placeholder_text="Digite o nome do fornecedor", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',width=200, height=30)
+        self.box_fornecedor.place(x=170, y=290)
         self.box_fornecedor.bind("<KeyRelease>", self.filtrar_nomes)
 
         #COMBO box fornecedor
@@ -87,21 +86,20 @@ class tela_produto_adm:
         self.combobox_fornecedor= ctk.CTkComboBox(
         self.root,                          # widget pai
         height=30,                          # altura do combobox
-        width=180,                          # largura do combobox
-        text_color='black',                 # cor do texto e da setinha da direita
+        width=140,                          # largura do combobox
+        text_color='#C9D1D9',               # cor do texto e da setinha da direita
         fg_color="#404040",                 # fundo da caixa de seleção
         border_color="gray",                # cor da borda da caixa
         button_color="#404040",             # fundo da área da setinha
         button_hover_color="lightgray",     # cor de fundo ao passar mouse na setinha
         dropdown_fg_color="gray",           # fundo da lista suspensa
-        dropdown_text_color="black",        # cor do texto das opções
+        dropdown_text_color="#C9D1D9",      # cor do texto das opções
         dropdown_hover_color="#404040",     # fundo da opção ao passar o mouse
         border_width=0,                     # Define o tamanho da caixa de texto fixa da ComboBOX
         bg_color='gray',                    # Deixar o fundo rededondo, combinando com o fundo da frame e deixando o formato redondo da comboBOX
         values=self.buscar_fornecedores()   # lista de strings pra popular a lista
         )
-        self.combobox_fornecedor.place(x=370, y=510)
-
+        self.combobox_fornecedor.place(x=490, y=450)
     # MÉTODOS USADOS PARA OS FORNECEDORES
     def buscar_fornecedores(self):
             busca = listar_fornecedores_db()
@@ -133,8 +131,8 @@ class tela_produto_adm:
         # Definir estilo
         style = ttk.Style()
         style.theme_use("alt")
-        style.configure("Treeview.Heading", background="gray", foreground="black", anchor="center")
-        style.configure("Treeview", background="gray", foreground="black", fieldbackground="gray", rowheight=25)
+        style.configure("Treeview.Heading", background="#1B263B", foreground="#C9D1D9", anchor="center")
+        style.configure("Treeview", background="#2C3E50", foreground="#C9D1D9", fieldbackground="gray", rowheight=25)
 
         self.treeview = ttk.Treeview(self.root, columns=("id_produto", "nome_produto", "descricao_produto", "categoria_produto", "quantidade_disponivel", "valor_produto", "fornecedor_produto"), show="headings", height=12)
 

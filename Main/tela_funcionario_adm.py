@@ -2,19 +2,15 @@
 import customtkinter as ctk
 from tkinter import messagebox, ttk
 from database_geral import register_funcionario_db, delete_funcionario_db, update_funcionario_db, pesquisar_funcionario_db, listar_funcionarios_db
-
-
 #from tkinter import *
 
-
+ctk.set_appearance_mode('dark')
 class tela_funcionario_adm:
     def __init__(self, root):
         self.menu_root = root  
         self.root = ctk.CTkToplevel(root) 
         self.root.title("TBit Manager - Menu de funcionário")
-        self.root.configure(fg_color='#161B22')
-
-        #ctk.set_appearance_mode('dark')
+        self.root.configure(fg_color='#141C29')
 
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura
@@ -26,7 +22,7 @@ class tela_funcionario_adm:
 
     def create_widgets(self):
         #adciona um titulo 
-        self.titulo = ctk.CTkLabel(self.root, text='F U N C I O N A R I O ',font=("Garamond", 60), fg_color="#161B22", text_color='#58A6FF') # Cria um label para o usuario
+        self.titulo = ctk.CTkLabel(self.root, text='F U N C I O N A R I O ',font=("Garamond", 60), fg_color="#141C29", text_color='#58A6FF') # Cria um label para o usuario
         self.titulo.place(x=680, y=60) # Posiciona o label do titulo
 
         #cria o frame como fundo para deixar um fundo para as labls e caixas de textos
@@ -50,20 +46,20 @@ class tela_funcionario_adm:
         
 
         # Caixas de textos
-        self.nome_funcionario_entry  = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=300,height=30)
-        self.data_nascimento_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray",border_color='gray', width=100,height=30)
-        self.data_admissao_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray",border_color='gray', width=100,height=30)
-        self.cpf_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray",border_color='gray', width=150,height=30)
-        self.cidade_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray",border_color='gray', width=150,height=30)
-        self.uf_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray",border_color='gray', width=150,height=30)
-        self.telefone_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray",border_color='gray', width=150,height=30)
-        self.email_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray",border_color='gray', width=280,height=30)
-        self.usuario_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray",border_color='gray',  width=120, height=30)
-        self.senha_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray",border_color='gray', show="*", width=120,height=30)
+        self.nome_funcionario_entry  = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B', border_color= '#2C3E50',width=300,height=30)
+        self.data_nascimento_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B',border_color='#2C3E50', width=100,height=30)
+        self.data_admissao_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B',border_color='#2C3E50', width=100,height=30)
+        self.cpf_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B',border_color='#2C3E50', width=150,height=30)
+        self.cidade_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B',border_color='#2C3E50', width=150,height=30)
+        self.uf_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B',border_color='#2C3E50', width=150,height=30)
+        self.telefone_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B',border_color='#2C3E50', width=150,height=30)
+        self.email_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B',border_color='#2C3E50', width=280,height=30)
+        self.usuario_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B',border_color='#2C3E50',  width=120, height=30)
+        self.senha_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B',border_color='#2C3E50', show="*", width=120,height=30)
 
-        self.buscar_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray",border_color='gray', width=90,height=30)
+        self.buscar_funcionario_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B',border_color='#2C3E50', width=90,height=30)
        
-        self.perfil_funcionario_combobox = ctk.CTkComboBox(self.root,fg_color="#1B263B", border_color="#2C3E50",values=["Usuario simples", "Administrador"],dropdown_hover_color='#1B263B',dropdown_text_color='#C9D1D9', width=150,height=30, dropdown_fg_color="#161B22", text_color="black",button_color="#1B263B", button_hover_color="#1B263B", border_width=0, bg_color='#1B263B')
+        self.perfil_funcionario_combobox = ctk.CTkComboBox(self.root,fg_color="#1B263B", border_color="#2C3E50",values=["Usuario simples", "Administrador"],dropdown_hover_color='#1B263B',dropdown_text_color='#C9D1D9', width=150,height=30, dropdown_fg_color="#161B22", text_color="#C9D1D9",button_color="#1B263B", button_hover_color="#1B263B", border_width=0, bg_color='#1B263B')
         #button_color="" --> cor do botão da seta
 
         #Posicionamento das caixas de textos especialmente para nao dar conflito com o GET = PEGAR
@@ -232,7 +228,7 @@ class tela_funcionario_adm:
         style.configure("Treeview.Heading", background="#1B263B", foreground="#C9D1D9", anchor="center")
         style.configure("Treeview", background="#2C3E50", foreground="#C9D1D9", fieldbackground="gray", rowheight=25)
 
-        self.treeview = ttk.Treeview(self.root, columns=("id_funcionario", "nome_funcionario", "data_nascimento", "data_admissao", "cpf_funcionario", "cidade_funcionario", "uf_funcionario", "telefone_funcionario", "email_funcionario", "usuario_funcionario", "senha_funcionario", "perfil_funcionario"), show="headings", height=15)
+        self.treeview = ttk.Treeview(self.root, columns=("id_funcionario", "nome_funcionario", "data_nascimento", "data_admissao", "cpf_funcionario", "cidade_funcionario", "uf_funcionario", "telefone_funcionario", "email_funcionario", "usuario_funcionario", "senha_funcionario", "perfil_funcionario"), show="headings", height=20)
 
         self.treeview.heading("id_funcionario", text="ID")
         self.treeview.heading("nome_funcionario", text="Nome")
@@ -257,8 +253,8 @@ class tela_funcionario_adm:
         self.treeview.column("telefone_funcionario", width=100) # Altera a largura da coluna "telefone"
         self.treeview.column("email_funcionario", width=200) # Altera a largura da coluna "email"
         self.treeview.column("usuario_funcionario", width=90) # Altera a largura da coluna "usuario"
-        self.treeview.column("senha_funcionario", width=90) # Altera a largura da coluna "senha"
-        self.treeview.column("perfil_funcionario", width=70) # Altera a largura da coluna "perfil"
+        self.treeview.column("senha_funcionario", width=80) # Altera a largura da coluna "senha"
+        self.treeview.column("perfil_funcionario", width=150) # Altera a largura da coluna "perfil"
 
         funcionarios = listar_funcionarios_db()
         for funcionario in funcionarios:

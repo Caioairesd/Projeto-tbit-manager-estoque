@@ -8,7 +8,7 @@ class tela_pedido:
     def __init__(self,root):
         self.menu_root = root  
         self.root = ctk.CTkToplevel(root)
-        self.root.configure(fg_color="#A0A0A0")
+        self.root.configure(fg_color='#141C29')
 
         #ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
 
@@ -23,31 +23,48 @@ class tela_pedido:
         self.root.after(200, self.criar_tabelao)  # Garante que a tabela é criada depois que a janela estiver pronta
 
     def create_widgets(self):
-        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', text_color="black",fg_color='#404040',width=90, height=40, command=self.voltar_menu)
+
+        self.titulo = ctk.CTkLabel(self.root, text='P E D I D O ',font=("Garamond", 60), fg_color="#141C29", text_color='#58A6FF') # Cria um label para o usuario
+        self.titulo.place(x=820, y=60) # Posiciona o label do titulo
+        
+        #cria o frame como fundo para deixar um fundo para as labls e caixas de textos
+        self.right_frame = ctk.CTkFrame(self.root, width=700, height=400, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
+        self.right_frame.place(x=150, y=300)# definir a expanção da frame
+
+
+        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', text_color="#C9D1D9",fg_color='#1B263B',width=90, height=40, command=self.voltar_menu)
         self.voltar_menu_button.place(x=1700, y=900)
 
-        self.fazer_pedido_button = ctk.CTkButton(self.root, text="Novo pedido", text_color="black",fg_color='#404040', width=150, height=30, command=self.fazer_pedido)
-        self.fazer_pedido_button.place(x=300, y=800)
+        self.fazer_pedido_button = ctk.CTkButton(self.root, text="Novo pedido",text_color='#C9D1D9', fg_color='#1B263B',bg_color='#2C3E50', width=40,height=35, command=self.fazer_pedido)
+        self.fazer_pedido_button.place(x=580, y=470)
 
-        self.nome_produto_entry = ctk.CTkEntry(self.root, placeholder_text="Pesquise o produto que você deseja...", width=250, height=30)
-        self.nome_produto_entry.place(x=100, y=100)
+        self.nome_produto_entry = ctk.CTkEntry(self.root, placeholder_text="Pesquisar produto...", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50', width=200, height=30)
+        self.nome_produto_entry.place(x=350, y=410)
         self.nome_produto_entry.bind("<KeyRelease>", self.filtrar_nomes_produtos)
 
-        self.nome_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Pesquise o cliente que você deseja...", width=250, height=30)
-        self.nome_cliente_entry.place(x=400, y=100)
+        self.nome_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Pesquisar cliente...", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',width=200, height=30)
+        self.nome_cliente_entry.place(x=350, y=350)
         self.nome_cliente_entry.bind("<KeyRelease>", self.filtrar_nomes_clientes)
 
-        self.nome_produto_combobox = ctk.CTkComboBox(self.root, width=250, height=30, values=self.listar_produtos())
-        self.nome_produto_combobox.place(x=100, y=150)
+        self.nome_produto_combobox = ctk.CTkComboBox(self.root, values=self.listar_produtos(),width=140, height=30, fg_color='#1B263B', dropdown_hover_color='#1B263B', dropdown_text_color='#C9D1D9',dropdown_fg_color="#161B22", text_color="#C9D1D9", button_color="#1B263B", button_hover_color="#1B263B",border_width=0, bg_color='#1B263B')
+        self.nome_produto_combobox.place(x=580, y=410)
 
-        self.nome_cliente_combobox = ctk.CTkComboBox(self.root, width=250, height=30, values=self.listar_clientes())
-        self.nome_cliente_combobox.place(x=400, y=150)
+        self.nome_cliente_combobox = ctk.CTkComboBox(self.root, values=self.listar_clientes(),width=140, height=30, fg_color='#1B263B', dropdown_hover_color='#1B263B', dropdown_text_color='#C9D1D9',dropdown_fg_color="#161B22", text_color="#C9D1D9", button_color="#1B263B", button_hover_color="#1B263B",border_width=0, bg_color='#1B263B')
+        self.nome_cliente_combobox.place(x=580, y=350)
 
-        self.forma_pag_combobox = ctk.CTkComboBox(self.root, width=250, height=30, values=["Cartão Débito", "Cartão Crédito", "PIX", "Boleto"])
-        self.forma_pag_combobox.place(x=700, y=100)
 
-        self.quantidade_desejada = ctk.CTkEntry(self.root, placeholder_text="Digite a quantidade desejada pelo cliente...", width=250, height=30)
-        self.quantidade_desejada.place(x=250, y=200)
+        self.forma_pag_combobox = ctk.CTkComboBox(self.root,values=["Cartão Débito", "Cartão Crédito", "PIX", "Boleto"],fg_color='#1B263B',width=125,height=30,dropdown_hover_color='#1B263B',dropdown_text_color='#C9D1D9',dropdown_fg_color="#161B22",text_color="#C9D1D9",button_color="#1B263B",button_hover_color="#1B263B",border_width=0,bg_color='#1B263B')
+        self.forma_pag_combobox.place(x=420, y=530)
+
+
+        self.quantidade_desejada = ctk.CTkEntry(self.root, placeholder_text="Quantidade de produto...", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',width=200, height=30)
+        self.quantidade_desejada.place(x=350, y=470)
+        
+        #criação das labels
+        ctk.CTkLabel(self.root, text="Quantidade : ",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=220, y=470)
+        ctk.CTkLabel(self.root, text="Produto : ",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=220, y=410)
+        ctk.CTkLabel(self.root, text="Cliente :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=220, y=350)
+        ctk.CTkLabel(self.root, text="Forma de pagamento :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=220, y=530)
 
     def fazer_pedido(self):
         quantidade = int(self.quantidade_desejada.get())
@@ -130,6 +147,11 @@ class tela_pedido:
 
     # CONJUNTO DE FUNÇÕES USADOS PARA A CRIAÇÃO E MODELAGEM DA TABELA
     def criar_tabelao(self):
+        style = ttk.Style()
+        style.theme_use("alt")
+        style.configure("Treeview.Heading", background="#1B263B", foreground="#C9D1D9", anchor="center")
+        style.configure("Treeview", background="#2C3E50", foreground="#C9D1D9", fieldbackground="gray", rowheight=25)
+
         self.treeview = ttk.Treeview(self.root, columns=("id_pedido", "nf_pedido", "data_pedido", "forma_pagamento", "cliente_pediu", "produto_pedido", "quantidade_pedida"), show="headings", height=15)
 
         self.treeview.heading("id_pedido", text="ID") # Altera o nome no cabeçalho da coluna "id_pedido"
@@ -153,7 +175,7 @@ class tela_pedido:
         for pedido in pedidos:
             self.treeview.insert("", "end", values=pedido) # Para cada linha de pedido, ele adiciona na tabela as informações
 
-        self.treeview.place(x=100, y=300) # Posiciona o ponto inicial da tabela na tela
+        self.treeview.place(x=1050, y=300) # Posiciona o ponto inicial da tabela na tela
 
     def atualizar_tabela(self, pedidos):
          for item in self.treeview.get_children():
