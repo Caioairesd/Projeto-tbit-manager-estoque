@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from tkinter import messagebox, ttk
-from database_geral import register_fornecedor_db,listar_fornecedor_db,update_fornecedor_db,delete_fornecedor_db,pesquisar_fornecedor_db
+from database_geral import register_fornecedor_db,listar_fornecedor_db,update_fornecedor_db,delete_fornecedor_db,pesquisar_fornecedor_db, get_id_cnpj_db
+from mysql.connector import Error
 
 class tela_fornecedor_adm:
 
@@ -45,6 +46,7 @@ class tela_fornecedor_adm:
         ctk.CTkButton(self.right_frame,text="Excluir",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.delete_fornecedor).place(x=320,y=420)
         ctk.CTkButton(self.right_frame,text="Cancelar",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.cancelar_operacao).place(x=430,y=420)
         ctk.CTkButton(self.root, text='Voltar', width=90, height=40, text_color='black',fg_color='#404040', bg_color='gray',command=self.voltar_menu).place(x=1700, y=900)
+        
         #Criação de campos de entrada de dados
         self.fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
         self.cnpj_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
@@ -185,22 +187,37 @@ class tela_fornecedor_adm:
         fornecedores = listar_fornecedor_db()
         self.atualizar_tabela(fornecedores)
 
+    # USADO PARA O DELETE
+    def get_id_fornecedor(self):
+        cnpj_fornecedor = self.cnpj_fornecedor_entry.get()
+        busca = get_id_cnpj_db()
+
+        for fornecedor in busca:
+            if cnpj_fornecedor == fornecedor[1]:
+                id_fornecedor = fornecedor[0]
+                return id_fornecedor
+
     #Função responsável por deletar os fornecedores
     def delete_fornecedor(self):
 
         #variáveis recebem os dados inseridos nos campos de textos
-        cnpj_fornecedor = self.cnpj_fornecedor_entry.get()
-        if cnpj_fornecedor:
-            confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse formecedor?")
+        id_fornecedor = self.get_id_fornecedor()
+        if id_fornecedor:
+            confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse fornecedor?")
             if confirmacao  == True:
-                delete_fornecedor_db(cnpj_fornecedor)
 
-                self.cnpj_fornecedor_entry.delete(0,ctk.END)
+                try:
+                    delete_fornecedor_db(id_fornecedor)
 
-                fornecedores = listar_fornecedor_db()
-                self.atualizar_tabela(fornecedores)
+                    self.limpar_campos()
+
+                    fornecedores = listar_fornecedor_db()
+                    self.atualizar_tabela(fornecedores)
                 
-                messagebox.showinfo("Sucesso","Fornecedor deletado com sucesso!")
+                    messagebox.showinfo("Sucesso","Fornecedor deletado com sucesso!")
+                except Error as erro:
+                    messagebox.showerror("Erro", f"Erro ao executar a operação no banco de dados:\n{erro}")
+
         else:
             messagebox.showerror("Erro","ID do fornecedor é obrigatório!")
 

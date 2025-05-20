@@ -484,14 +484,43 @@ class tbit_db:
                 pass # Trigger já existe
 
             try:
+                # Obviamente foi pego do chat, te amo Balera
                 self.cursor.execute("""
-                create procedure delete_fornecedor_e_produtos(IDfornecedor INT)
+                DELIMITER $$
+
+                CREATE PROCEDURE delete_fornecedor_e_produtos(IN fornecedor_excluido INT)
                 BEGIN
-                    DELETE FROM Pedido WHERE idProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
-                    DELETE FROM Estoque WHERE IdProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
-                    DELETE FROM Produto WHERE idFornecedor = IDfornecedor;
-                    DELETE FROM Fornecedor WHERE id_fornecedor = IDfornecedor;
-                END;""")
+                    -- Verifica se o fornecedor existe
+                    IF EXISTS (SELECT 1 FROM Fornecedor WHERE id_fornecedor = fornecedor_excluido) THEN
+                        
+                        -- Deleta pedidos dos produtos do fornecedor
+                        DELETE FROM Pedido 
+                        WHERE idProduto IN (
+                            SELECT id_produto 
+                            FROM Produto 
+                            WHERE idFornecedor = fornecedor_excluido
+                        );
+
+                        -- Deleta estoque dos produtos do fornecedor
+                        DELETE FROM Estoque 
+                        WHERE IdProduto IN (
+                            SELECT id_produto 
+                            FROM Produto 
+                            WHERE idFornecedor = fornecedor_excluido
+                        );
+
+                        -- Deleta os produtos do fornecedor
+                        DELETE FROM Produto 
+                        WHERE idFornecedor = fornecedor_excluido;
+
+                        -- Por fim, deleta o fornecedor
+                        DELETE FROM Fornecedor 
+                        WHERE id_fornecedor = fornecedor_excluido;
+                    END IF;
+                END$$
+
+                DELIMITER ;""")
+
             except mysql.connector.Error:
                 pass # Procedure já existe
 
@@ -555,10 +584,25 @@ def update_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefo
 def delete_fornecedor_db(id_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "DELETE FROM fornecedor WHERE id_fornecedor = %s"
-    cursor.execute(query,(id_fornecedor,))
+
+    cursor.callproc("delete_fornecedor_e_produtos", [id_fornecedor])
+
     conn.commit()
     cursor.close()
+
+def get_id_cnpj_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_fornecedor, cnpj_fornecedor FROM fornecedor"
+
+    cursor.execute(query)
+    busca = cursor.fetchall()
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return busca
 
 #Funções da tabela produto
 
