@@ -27,40 +27,27 @@ class login_menu:
         self.right_frame.place(relx=0.5, rely=0.5, anchor="center")
 
         # Título
-        self.titulo = ctk.CTkLabel(self.root, text="T B I T  M A N A G E R",
-                                   font=("Garamond", 60),
-                                   fg_color="#161B22", text_color="#58A6FF")
+        self.titulo = ctk.CTkLabel(self.root, text="T B I T  M A N A G E R", font=("Garamond", 60),fg_color="#161B22", text_color="#58A6FF")
         self.titulo.place(relx=0.5, y=60, anchor="center")
 
         # Label Usuario
-        self.usuario_label = ctk.CTkLabel(self.right_frame, text="Usuario:",
-                                          font=("Times New Roman", 30),
-                                          fg_color='#2C3E50', text_color="#C9D1D9")
+        self.usuario_label = ctk.CTkLabel(self.right_frame, text="Usuario:", font=("Times New Roman", 30), fg_color='#2C3E50', text_color="#C9D1D9")
         self.usuario_label.place(x=50, y=90)
-
-
         # Label Senha
-        self.senha_label = ctk.CTkLabel(self.right_frame, text="Senha:",
-                                        font=("Times New Roman", 30),
-                                        fg_color='#2C3E50', text_color="#C9D1D9")
+        self.senha_label = ctk.CTkLabel(self.right_frame, text="Senha:",font=("Times New Roman", 30),fg_color='#2C3E50', text_color="#C9D1D9")
         self.senha_label.place(x=50, y=150)
 
         # Entry Usuario
-        self.usuario_entry = ctk.CTkEntry(self.right_frame, text_color='#FFFFFF',
-                                        width=160, height=35, fg_color='#1B263B', placeholder_text='Nome usuario...')
+        self.usuario_entry = ctk.CTkEntry(self.right_frame, text_color='#FFFFFF', width=160, height=35, fg_color='#1B263B', placeholder_text='Nome usuario...')
         self.usuario_entry.place(x=160, y=95)
 
         # Entry Senha
-        self.senha_entry = ctk.CTkEntry(self.right_frame, text_color='#FFFFFF',
-                                        width=160, height=35, fg_color='#1B263B', show="*", placeholder_text='Senha usuario...')
+        self.senha_entry = ctk.CTkEntry(self.right_frame, text_color='#FFFFFF', width=160, height=35, fg_color='#1B263B', show="*", placeholder_text='Senha usuario...')
         self.senha_entry.place(x=160, y=150)
 
 
         # Botão Login
-        self.login_button = ctk.CTkButton(self.right_frame, text="LOGIN",
-                                          text_color='#FFFFFF', width=80, height=30,
-                                          fg_color='#1B263B', hover_color="#2B3A55",
-                                          command=self.login_user)
+        self.login_button = ctk.CTkButton(self.right_frame, text="LOGIN", text_color='#FFFFFF', width=80, height=30,fg_color='#1B263B', hover_color="#2B3A55", command=self.login_user)
         self.login_button.place(x=160, y=200)
 
     def login_user(self):

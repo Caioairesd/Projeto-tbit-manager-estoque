@@ -50,7 +50,7 @@ class tela_fornecedor_adm:
         ctk.CTkButton(self.right_frame,text="Alterar",width=90,height=40,text_color='#C9D1D9', fg_color='#1B263B',bg_color='#2C3E50',command=self.update_fornecedor).place(x=210,y=420)
         ctk.CTkButton(self.right_frame,text="Excluir",width=90,height=40,text_color='#C9D1D9', fg_color='#1B263B',bg_color='#2C3E50',command=self.delete_fornecedor).place(x=320,y=420)
         ctk.CTkButton(self.right_frame,text="Cancelar",width=90,height=40,text_color='#C9D1D9', fg_color='#1B263B',bg_color='#2C3E50',command=self.cancelar_operacao).place(x=430,y=420)
-        ctk.CTkButton(self.root, text='Voltar', width=90, height=40, text_color='#C9D1D9',fg_color='#1B263B', bg_color='#141C29',command=self.voltar_menu).place(x=1700, y=900)
+        ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22',command=self.voltar_menu).place(x=1700, y=900)
 
         #Criação de campos de entrada de dados
         self.fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B', placeholder_text='Nome fornecedor..',width=200,height=30)

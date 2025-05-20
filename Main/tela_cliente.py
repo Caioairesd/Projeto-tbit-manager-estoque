@@ -32,7 +32,7 @@ class tela_cliente:
         self.label_text.place(x=780, y=60) # Posiciona o texto
       
 
-        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', font=('Arial',13),text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#121B22', width=90, height=40, command=self.voltar_menu)
+        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.voltar_menu)
         self.voltar_menu_button.place(x=1700, y=900)
         #label cliente id
         self.label_text = ctk.CTkLabel(self.root, text="id cliente :",font=("arial",22), fg_color="#2C3E50", text_color='#C9D1D9') # Cria um label para o texto

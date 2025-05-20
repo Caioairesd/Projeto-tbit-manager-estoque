@@ -7,13 +7,9 @@ class tela_estoque:
     def __init__(self,root):
         self.menu_root = root  
         self.root = ctk.CTkToplevel(root)
-
-        #Define os parâmetros de interface da janela
-        self.root.geometry("900x700")
-       
         self.root.title("TBit Manager - Estoque")
       
-        self.root.configure(fg_color="#A0A0A0")
+        self.root.configure(fg_color='#161B22')
 
         ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
 
@@ -27,15 +23,30 @@ class tela_estoque:
         self.criar_tabelao()
 
     def create_widgets(self):
-        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar',text_color='black', width=90, height= 40,fg_color= '#404040', bg_color= 'gray', command=self.voltar_menu)
+
+        # Título
+        self.titulo = ctk.CTkLabel(self.root, text="E S T O Q U E ", font=("Garamond", 60),fg_color="#161B22", text_color="#58A6FF")
+        self.titulo.place(relx=0.5, y=60, anchor="center")
+
+        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', font=('Arial',13),text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#121B22', width=90, height=40, command=self.voltar_menu)
         self.voltar_menu_button.place(x=1700, y=900)
 
-        self.pesquisar_produto = ctk.CTkEntry(self.root, width=350, height=30)
-        self.pesquisar_produto.place(x=100, y=250)
+        self.pesquisar_produto = ctk.CTkEntry(self.root, placeholder_text='buscar produto...',placeholder_text_color='#C9D1D9', text_color='#C9D1D9', fg_color='#1B263B', bg_color='#1B263B',width=200, height=30)
+        self.pesquisar_produto.place(x=660, y=250)
         self.pesquisar_produto.bind("<KeyRelease>", self.filtrar_tabela)
+
+        #labels
+        self.titulo = ctk.CTkLabel(self.root, text='Pesquisar :',font=("Garamond", 20), fg_color="#161B22", text_color='#C9D1D9') # Cria um label para o usuario
+        self.titulo.place(x=560, y=250) # Posiciona o label 
+
 
     # CONJUNTO DE FUNÇÕES USADOS NO TREEVIEW
     def criar_tabelao(self):
+        style = ttk.Style()
+        style.theme_use("alt")
+        style.configure("Treeview.Heading", background="#1B263B", foreground="#C9D1D9", anchor="center")
+        style.configure("Treeview", background="#2C3E50", foreground="#C9D1D9", fieldbackground="gray", rowheight=25)
+
         self.treeview = ttk.Treeview(self.root, columns=("id_produto", "nome_produto", "categoria_estoque", "quantidade_estoque"), show="headings")
 
         self.treeview.heading("id_produto", text="ID do produto")
@@ -46,8 +57,8 @@ class tela_estoque:
         estoque = consultar_estoque_db()
         for produto in estoque:
             self.treeview.insert("", "end", values=produto)
-        
-        self.treeview.place(x=100, y=300)
+
+        self.treeview.place(relx=0.5, y=510, anchor='center', height=400)
 
     def atualizar_tabela(self, produtos):
          for item in self.treeview.get_children():

@@ -55,7 +55,7 @@ class menu_admin:
         dashboard_button = ctk.CTkButton(self.root, text='Dashboard', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45,fg_color= '#1B263B', bg_color= '#2C3E50', command=self.abrir_tela_dashboard)
         dashboard_button.place(x=980, y=580)
 
-        logout_button = ctk.CTkButton(self.root, text='Voltar',font=('Arial',17),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.logout_admin)
+        logout_button = ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.logout_admin)
         logout_button.place(x=1700, y=900)
 
         

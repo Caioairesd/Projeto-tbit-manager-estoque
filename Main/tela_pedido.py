@@ -32,7 +32,7 @@ class tela_pedido:
         self.right_frame.place(x=150, y=300)# definir a expanção da frame
 
 
-        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', text_color="#C9D1D9",fg_color='#1B263B',width=90, height=40, command=self.voltar_menu)
+        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.voltar_menu)
         self.voltar_menu_button.place(x=1700, y=900)
 
         self.fazer_pedido_button = ctk.CTkButton(self.root, text="Novo pedido",text_color='#C9D1D9', fg_color='#1B263B',bg_color='#2C3E50', width=40,height=35, command=self.fazer_pedido)
@@ -64,7 +64,7 @@ class tela_pedido:
         ctk.CTkLabel(self.root, text="Quantidade : ",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=220, y=470)
         ctk.CTkLabel(self.root, text="Produto : ",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=220, y=410)
         ctk.CTkLabel(self.root, text="Cliente :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=220, y=350)
-        ctk.CTkLabel(self.root, text="Forma de pagamento :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=220, y=530)
+        ctk.CTkLabel(self.root, text="Forma de pagamento : ",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=220, y=530)
 
     def fazer_pedido(self):
         quantidade = int(self.quantidade_desejada.get())

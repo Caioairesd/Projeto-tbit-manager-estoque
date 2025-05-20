@@ -89,7 +89,7 @@ class tela_funcionario_adm:
         ctk.CTkButton(self.right_frame, text="EXCLUIR",text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#2C3E50', width=90, height= 40,command=self.delete_funcionario).place(x=200, y=580)
         ctk.CTkButton(self.right_frame, text="EDITAR",text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#2C3E50', width=90, height= 40,command=self.update_funcionario).place(x=310, y=580)
         ctk.CTkButton(self.right_frame, text="BUSCAR",text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#2C3E50', width=50, height= 30,command=self.pesquisar_funcionario).place(x=300, y=650)
-        ctk.CTkButton(self.root, text='VOLTAR',text_color='#C9D1D9',fg_color= '#1B263B', bg_color= '#161B22', width=90, height= 40, command=self.voltar_menu).place(x=1700, y=900)
+        ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.voltar_menu).place(x=1700, y=900)
 
 
     def registrar_funcionario(self):

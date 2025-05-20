@@ -26,36 +26,40 @@ class tela_reabastecimento:
 
     def create_widgets(self):
 
+        self.label_text = ctk.CTkLabel(self.root, text="R E A B A S T E C I M E N T O ",font=("Garamond", 60), fg_color="#141C29", text_color='#58A6FF') # Cria um label para o texto
+        self.label_text.place(x=570, y=60) # Posiciona o texto
+      
+
         self.right_frame = ctk.CTkFrame(self.root, width=800, height=150, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
         self.right_frame.place(x=560, y=170)# definir a expanção da frame
 
-        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar',text_color='black', width=90, height= 40,fg_color= '#404040', bg_color= 'gray', command=self.voltar_menu)
+        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.voltar_menu)
         self.voltar_menu_button.place(x=1700, y=900)
 
         self.combobox_produtos = ctk.CTkComboBox(self.root,height=30,width=140,text_color='#C9D1D9',fg_color='#1B263B',border_color='gray',button_color='#1B263B',button_hover_color='#1B263B',dropdown_fg_color='#161B22',dropdown_text_color='#C9D1D9', dropdown_hover_color='#1B263B', border_width=0,                     bg_color='#1B263B',                 values=self.produtos_combobox()    )
-        self.combobox_produtos.place(x=20, y=20)
+       
 
 
-        self.pesquisar_produto_entry = ctk.CTkEntry(self.root, height=35, width=250, placeholder_text="Pesquisar produto por nome...", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50', placeholder_text_color='gray')
+        self.pesquisar_produto_entry = ctk.CTkEntry(self.root, height=35, width=150, placeholder_text="Pesquisar produto", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',  border_color='#2C3E50',placeholder_text_color='gray')
 
-        self.quantidade_entrou_entry = ctk.CTkEntry(self.root, height=35, width=150, placeholder_text='Quantidade...', text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50', border_color='#A0A0A0', placeholder_text_color='gray')
+        self.quantidade_entrou_entry = ctk.CTkEntry(self.root, height=35, width=150, placeholder_text='Quantidade de produto', text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50', border_color='#2C3E50', placeholder_text_color='gray')
 
-        self.novo_reabastecimento_button = ctk.CTkButton(self.root, text="Reabastecimento", fg_color='#1B263B', text_color='#C9D1D9', bg_color='#2C3E50', hover_color='#161B22', width=200, height=30)
+        self.novo_reabastecimento_button = ctk.CTkButton(self.root, text="ADCIONAR", fg_color='#1B263B', text_color='#C9D1D9', bg_color='#2C3E50', hover_color='#161B22', width=100, height=30)
 
 
         self.pesquisar_produto_entry.bind("<KeyRelease>", self.filtrar_tabela)
 
-        self.combobox_produtos.place(x=100, y=100)
-        self.quantidade_entrou_entry.place(x=290, y=100)
-        self.novo_reabastecimento_button.place(x=450, y=100)
-        self.pesquisar_produto_entry.place(x=680, y=270)
+        self.combobox_produtos.place(x=1200, y=180)
+        self.quantidade_entrou_entry.place(x=700, y=200)
+        self.novo_reabastecimento_button.place(x=870, y=202)
+        self.pesquisar_produto_entry.place(x=700, y=250)
 
         #labels
         self.titulo = ctk.CTkLabel(self.root, text='Pesquisar :',font=("Garamond", 20), fg_color="#2C3E50", text_color='#C9D1D9') # Cria um label para o usuario
-        self.titulo.place(x=580, y=270) # Posiciona o label 
+        self.titulo.place(x=580, y=250) # Posiciona o label 
 
-        self.titulo = ctk.CTkLabel(self.root, text='Pesquisar :',font=("Garamond", 20), fg_color="#2C3E50", text_color='#C9D1D9') # Cria um label para o usuario
-        self.titulo.place(x=580, y=270) # Posiciona o label 
+        self.titulo = ctk.CTkLabel(self.root, text='Quantidade : ',font=("Garamond", 20), fg_color="#2C3E50", text_color='#C9D1D9') # Cria um label para o usuario
+        self.titulo.place(x=580, y=200) # Posiciona o label 
 
     def criar_tabelao(self):
         # Definir estilo
