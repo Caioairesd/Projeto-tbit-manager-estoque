@@ -585,8 +585,10 @@ def atualizar_produto_db(nome_produto, descricao, categoria, valor):
 def listar_produtos_db():
     conn = get_connection()
     cursor = conn.cursor()
-    query = """SELECT p.id_produto, p.nome_produto, p.descricao_produto, p.categoria_produto, p.quantidade_produto, p.valor_produto, f.nome_fornecedor FROM produto as p 
+    
+    query = """SELECT p.id_produto, p.nome_produto, p.descricao_produto, p.categoria_produto, p.quantidade_produto, p.valor_produto, f.nome_fornecedor FROM produto AS p 
     JOIN fornecedor AS f ON f.id_fornecedor = p.idFornecedor"""
+
     cursor.execute(query)
     busca = cursor.fetchall()
     conn.commit()

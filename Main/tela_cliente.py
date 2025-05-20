@@ -13,7 +13,7 @@ class tela_cliente:
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura
         self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
-        self.root.configure(fg_color='#A0A0A0')
+        self.root.configure(fg_color='#161B22')
 
         #ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
 
@@ -24,8 +24,15 @@ class tela_cliente:
 
     def create_widget(self):
 
-        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', width=20, command=self.voltar_menu)
-        self.voltar_menu_button.place(x=825, y=650)
+        self.right_frame = ctk.CTkFrame(self.root, width=600, height=600, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
+        self.right_frame.place(x=250, y=250)# definir a expanção da frame
+        
+        self.label_text = ctk.CTkLabel(self.root, text="C L I E N T E ",font=("Garamond", 60), fg_color="#161B22", text_color='#58A6FF') # Cria um label para o texto
+        self.label_text.place(x=650, y=60) # Posiciona o texto
+      
+
+        self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', font=('Arial',13),text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#121B22', width=90, height=40, command=self.voltar_menu)
+        self.voltar_menu_button.place(x=1700, y=900)
 
         self.id_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Digite o ID para pesquisa...", width=250, height=30)
         self.id_cliente_entry.place(x=100, y=100)
@@ -40,17 +47,17 @@ class tela_cliente:
         self.cnpj_cliente_entry.place(x=100, y=250)
 
         self.pesquisar_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Pesquise um cliente pelo seu nome...", width=250, height=30)
-        self.pesquisar_cliente_entry.place(x=600, y=250)
+        self.pesquisar_cliente_entry.place(x=1110, y=250)
         self.pesquisar_cliente_entry.bind("<KeyRelease>", self.filtrar_tabela)
 
-        self.registrar_button = ctk.CTkButton(self.root, text="Registrar cliente", width=150, height=30, command=self.registrar_cliente)
-        self.registrar_button.place(x=400, y=100)
+        self.registrar_button = ctk.CTkButton(self.root, text="CADASTRAR", width=90, height=40, bg_color='#2C3E50', command=self.registrar_cliente)
+        self.registrar_button.place(x=350, y=600)
 
-        self.alterar_button = ctk.CTkButton(self.root, text="Alterar cliente", width=150, height=30, command=self.alterar_cliente)
-        self.alterar_button.place(x=400, y=150)
+        self.alterar_button = ctk.CTkButton(self.root, text="EDITAR", width=90, height=40, bg_color='#2C3E50', command=self.alterar_cliente)
+        self.alterar_button.place(x=455, y=600)
 
-        self.deletar_button = ctk.CTkButton(self.root, text="Deletar cliente", width=150, height=30, command=self.deletar_cliente)
-        self.deletar_button.place(x=400, y=200)
+        self.deletar_button = ctk.CTkButton(self.root, text="EXCLUIR", width=90, height=40, bg_color='#2C3E50', command=self.deletar_cliente)
+        self.deletar_button.place(x=560, y=600)
 
     def registrar_cliente(self):
         nome_cliente = self.nome_cliente_entry.get()
@@ -148,7 +155,7 @@ class tela_cliente:
 
         self.treeview.bind("<ButtonRelease-1>", self.click_na_linha)
         
-        self.treeview.place(x=50, y=300)
+        self.treeview.place(x=1000, y=300)
 
     def atualizar_tabela(self, clientes):
          for item in self.treeview.get_children():

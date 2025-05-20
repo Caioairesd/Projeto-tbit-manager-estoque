@@ -37,7 +37,6 @@ class tela_fornecedor_adm:
         ctk.CTkLabel(self.right_frame,text="Telefone :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=100,y=200)
         ctk.CTkLabel(self.right_frame,text="Cidade :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=100,y=250)
         ctk.CTkLabel(self.right_frame,text="País :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=100,y=300)
-        ctk.CTkLabel(self.right_frame,text="id :",fg_color="gray", text_color='black', font=('Times New Roman', 23)).place(x=100,y=350)
         ctk.CTkLabel(self.right_frame,text="Buscar por :\n(nome/id)  ",fg_color="gray", text_color='black', font=('Times New Roman', 20)).place(x=100,y=500)
 
         #Criação de botões
@@ -53,7 +52,6 @@ class tela_fornecedor_adm:
         self.telefone_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
         self.cidade_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
         self.pais_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
-        self.id_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
         self.pesquisar_entry = ctk.CTkEntry(self.right_frame, text_color='black',fg_color="lightgray", border_color= 'gray',width=200,height=30)
 
         #Definindo localização dos campos na tela
@@ -63,7 +61,6 @@ class tela_fornecedor_adm:
         self.telefone_fornecedor_entry.place(x=240,y=200)
         self.cidade_fornecedor_entry.place(x=240,y=250)
         self.pais_fornecedor_entry.place(x=240,y=300)
-        self.id_fornecedor_entry.place(x=240,y=350)
         self.pesquisar_entry.place(x=240,y=500)
 
     # CONJUNTO DE FUNÇÕES USADAS PARA A CRIAÇÃO E MODELAGEM DA TABELA
@@ -84,7 +81,6 @@ class tela_fornecedor_adm:
         self.treeview.heading("pais_fornecedor", text="Pais")
         self.treeview.heading("cidade_fornecedor", text="Cidade")
 
-        self.treeview.column("id_fornecedor", width=80) # Altera a largura da coluna "id"
         self.treeview.column("nome_fornecedor", width=150) # Altera a largura da coluna "nome"
         self.treeview.column("cnpj_fornecedor", width=120) # Altera a largura da coluna "cnpj"
         self.treeview.column("email_fornecedor", width=210) # Altera a largura da coluna "email"

@@ -10,38 +10,34 @@ class menu_usuario:
     
         self.root = root
         self.root.title(" Menu Principal - Usuario") 
-        #self.create_widget()
-        self.root.configure(fg_color="#A0A0A0")
+        self.root.configure(fg_color='#161B22')
+        ctk.set_appearance_mode("dark")
 
-        
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura
         self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
-
-        ctk.set_appearance_mode("dark")
-
 
         self.create_widgets()
 
     def create_widgets(self):
 
-        self.label_text = ctk.CTkLabel(self.root, text="M E N U  P R I N C I P A L - U S U Á R I O",font=("Garamond", 60), fg_color="#A0A0A0", text_color='black') # Cria um label para o texto
-        self.label_text.place(x=400, y=60) # Posiciona o texto
+        self.label_text = ctk.CTkLabel(self.root, text="M E N U  P R I N C I P A L ",font=("Garamond", 60), fg_color="#161B22", text_color='#58A6FF') # Cria um label para o texto
+        self.label_text.place(x=650, y=60) # Posiciona o texto
       
 
-        self.right_frame = ctk.CTkFrame(self.root, width=400, height=300, fg_color="gray")# definir o tamanho e cor do fundo da frame
-        self.right_frame.place(x=750, y=325)# definir a expanção da frame
+        self.right_frame = ctk.CTkFrame(self.root, width=400, height=200, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
+        self.right_frame.place(x=750, y=350)# definir a expanção da frame
         #Criação de botões
-        btn_pedido_menu = ctk.CTkButton(self.root,text="Pedido",text_color= 'black',width=90,fg_color= '#404040',bg_color='gray',height=40,command=self.abrir_tela_pedido)
-        btn_reabastecimento = ctk.CTkButton(self.root,text="Reabastecimento",text_color= 'black',width=90,fg_color= '#404040',bg_color='gray',height=40,command=self.abrir_tela_reabastecimento)
-        btn_estoque = ctk.CTkButton(self.root,text="Estoque",text_color= 'black',width=90,height=40,fg_color= '#404040',bg_color='gray',command=self.abrir_tela_estoque)
-        btn_logout = ctk.CTkButton(self.root, text='Voltar', text_color= 'black',width=90,height=40,fg_color= '#404040',command=self.logout_usuario)
+        btn_pedido_menu = ctk.CTkButton(self.root,text="Pedido",font=('Arial',13),text_color='#C9D1D9',width=110, height= 45 , fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_pedido)
+        btn_reabastecimento = ctk.CTkButton(self.root,text="Reabastecimento",font=('Arial',13),text_color='#C9D1D9',width=110, height= 45 , fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_reabastecimento)
+        btn_estoque = ctk.CTkButton(self.root,text="Estoque",font=('Arial',13),text_color='#C9D1D9',width=110, height= 45 , fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_estoque)
+        btn_logout = ctk.CTkButton(self.root, text='Voltar', font=('Arial',13),text_color='#C9D1D9',width=110, height= 45 , fg_color= '#1B263B', bg_color= '#161B22',command=self.logout_usuario)
         pass
             
 
-        btn_pedido_menu.place(x=800, y=400)
-        btn_reabastecimento.place(x=800, y=450)
-        btn_estoque.place(x=800, y=500)
+        btn_pedido_menu.place(x=780, y=400)
+        btn_reabastecimento.place(x=900, y=400)
+        btn_estoque.place(x=1025, y=400)
         btn_logout.place(x=1700, y=900)
     
     

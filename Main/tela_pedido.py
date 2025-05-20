@@ -10,7 +10,7 @@ class tela_pedido:
         self.root = ctk.CTkToplevel(root)
         self.root.configure(fg_color="#A0A0A0")
 
-        ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
+        #ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
 
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura
@@ -20,7 +20,7 @@ class tela_pedido:
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 
         self.create_widgets()
-        self.criar_tabelao()
+        self.root.after(200, self.criar_tabelao)  # Garante que a tabela é criada depois que a janela estiver pronta
 
     def create_widgets(self):
         self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', text_color="black",fg_color='#404040',width=90, height=40, command=self.voltar_menu)

@@ -20,9 +20,9 @@ class tela_funcionario_adm:
         altura = self.root.winfo_screenheight()# Expandir tela altura
         self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
 
-        #self.root.config(bg="#003366")
         self.create_widgets()
-        self.criar_tabela()
+        self.root.after(200, self.criar_tabela)  # Garante que a tabela é criada depois que a janela estiver pronta
+
 
     def create_widgets(self):
         #adciona um titulo 
