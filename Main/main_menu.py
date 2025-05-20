@@ -77,12 +77,12 @@ class login_menu:
 
             if verify_login:
                 if (verify_login[3] == "Administrador"):
-                    messagebox.showinfo(title="INFO LOGIN", message="Acesso ao ADM concedido. Bem Vindo!")
+                    messagebox.showinfo(title="INFO LOGIN", message=f"Acesso ao ADMINISTRADOR concedido. Bem Vindo {verify_login[0]}!")
                     self.root.withdraw()
                     self.abrir_menu_admin()
 
                 elif (verify_login[3] == "Usuario simples"):
-                    messagebox.showinfo(title="INFO LOGIN", message="Acesso concedido. Bem Vindo!")
+                    messagebox.showinfo(title="INFO LOGIN", message=f"Acesso concedido. Bem Vindo {verify_login[0]}!")
                     self.root.withdraw()
                     self.abrir_menu_user()
             else:

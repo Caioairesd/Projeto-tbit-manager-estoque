@@ -116,14 +116,12 @@ class tela_funcionario_adm:
             register_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, CPF, Cidade, UF, Telefone, Email, Usuario, Senha, perfil)
             self.limpar_campos()
             messagebox.showinfo("Success", "Funcionario criado com Sucesso")
+
+            funcionarios = listar_funcionarios_db()
+            self.atualizar_tabela(funcionarios)
+            
         else:
             messagebox.showerror("Error", "Todos os campos são obrigatórios")
-
-    def listar_funcionarios(self):
-        funcionarios = listar_funcionarios_db()
-        self.text_area.delete(1.0, ctk.END)
-        for funcionario in funcionarios:
-            self.text_area.insert(ctk.END, f"ID:{funcionario[0]}, Nome: {funcionario[1]}, Data de Nascimento: {funcionario[2]}, Data de Admissão: {funcionario[3]}, CPF: {funcionario[4]}, Cidade: {funcionario[5]}, UF: {funcionario[6]}, Telefone: {funcionario[7]}, Email: {funcionario[8]}, Usuario: {funcionario[9]}, Senha: {funcionario[10]}, Perfil: {funcionario[11]}\n\n")
 
     def pesquisar_funcionario(self):
         busca = self.buscar_funcionario_entry.get()
@@ -178,9 +176,9 @@ class tela_funcionario_adm:
             messagebox.showinfo("Sucesso", "Funcionário atualizado com sucesso")
             self.limpar_campos()
 
-            
             funcionarios = listar_funcionarios_db()
             self.atualizar_tabela(funcionarios)
+
         else:
             messagebox.showerror("Erro", "Todos os campos são obrigatórios")
 
@@ -191,8 +189,10 @@ class tela_funcionario_adm:
             if id_funcionario:
                 delete_funcionario_db(id_funcionario)
                 self.id_funcionario_entry.delete(0, ctk.END)
+
                 funcionarios = listar_funcionarios_db()
                 self.atualizar_tabela(funcionarios)
+
                 messagebox.showinfo("Sucesso", "Funcionário deletado com sucesso!")
             else:
                 messagebox.showerror("Erro", "ID do funcionário é obrigatório!")
@@ -209,10 +209,8 @@ class tela_funcionario_adm:
         self.usuario_funcionario_entry.delete(0, ctk.END)
         self.senha_funcionario_entry.delete(0, ctk.END)
         self.id_funcionario_entry.delete(0, ctk.END)
-        self.text_area.delete(1.0, ctk.END)
 
-    def cancelar(self):
-        self.menu_root = root  
+    def cancelar(self):  
         confirmacao = messagebox.askyesno("Confirmação", "Você deseja mesmo cancelar a operação?")
         if confirmacao == True:
             messagebox.showinfo("Cancelar", "Ação cancelada")
@@ -246,8 +244,8 @@ class tela_funcionario_adm:
         self.treeview.heading("telefone_funcionario", text="Telefone")
         self.treeview.heading("email_funcionario", text="Email")
         self.treeview.heading("usuario_funcionario", text="Usuario")
-        self.treeview.heading("senha_funcionario", text="Perfil")
-        self.treeview.heading("perfil_funcionario", text="Senha")
+        self.treeview.heading("senha_funcionario", text="Senha")
+        self.treeview.heading("perfil_funcionario", text="Perfil")
 
         self.treeview.column("id_funcionario", width=50) # Altera a largura da coluna "id"
         self.treeview.column("nome_funcionario", width=120) # Altera a largura da coluna "nome"

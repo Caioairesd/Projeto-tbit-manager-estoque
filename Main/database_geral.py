@@ -2,7 +2,7 @@ import mysql.connector
 
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = ''
+MYSQL_PASSWORD = 'root'
 MYSQL_DATABASE = 'tbit_db'
 
 class tbit_db:
@@ -544,11 +544,11 @@ def pesquisar_fornecedor_db(id_solicitado):
     return busca
 
 
-def update_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor):
+def update_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "UPDATE fornecedor SET nome_fornecedor = %s,cnpj_fornecedor = %s,email_fornecedor = %s,telefone_fornecedor = %s,cidade_fornecedor = %s,pais_fornecedor = %s WHERE id_fornecedor = %s"
-    cursor.execute(query,(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor))
+    query = "UPDATE fornecedor SET nome_fornecedor = %s,cnpj_fornecedor = %s,email_fornecedor = %s,telefone_fornecedor = %s,cidade_fornecedor = %s,pais_fornecedor = %s WHERE cnpj_fornecedor = %s"
+    cursor.execute(query,(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,cnpj_fornecedor,))
     conn.commit()
     cursor.close()
 
@@ -633,16 +633,18 @@ def listar_fornecedores_db():
 # funções da tabela  funcionario
 
 # Função para criar um novo funcionário no banco de dados
-def register_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario):
+def register_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario):
     conn = get_connection()
     cursor = conn.cursor()
+
     query = """
         INSERT INTO funcionario(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario,
         cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, 
-        usuario_funcionario, senha_funcionario) 
-        VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        usuario_funcionario, senha_funcionario, perfil_funcionario) 
+        VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
-    cursor.execute(query, (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario))
+    cursor.execute(query, (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario))
+    
     conn.commit()
     cursor.close()
     conn.close()
@@ -659,17 +661,19 @@ def pesquisar_funcionario_db(id_funcionario):
     return result
 
 # Função para editar dados de um funcionário
-def update_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, id_funcionario):
+def update_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario, id_funcionario):
     conn = get_connection()
     cursor = conn.cursor()
+
     query = """
         UPDATE funcionario 
         SET nome_funcionario = %s, data_nascimento_funcionario = %s, data_admissao_funcionario = %s,
         cpf_funcionario = %s, cidade_funcionario = %s, estado_funcionario = %s, telefone_funcionario = %s, 
-        email_funcionario = %s, usuario_funcionario = %s, senha_funcionario = %s 
+        email_funcionario = %s, usuario_funcionario = %s, senha_funcionario = %s, perfil_funcionario = %s 
         WHERE id_funcionario = %s
     """
-    cursor.execute(query, (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, id_funcionario))
+    cursor.execute(query, (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, uf_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario, id_funcionario))
+    
     conn.commit()
     cursor.close()
     conn.close()
@@ -700,7 +704,8 @@ def consultar_estoque_db():
     conn = get_connection()
     cursor = conn.cursor()
 
-    query = "SELECT id_produto, nome_produto, quantidade_produto FROM produto"
+    query = "SELECT id_produto, nome_produto, categoria_produto, quantidade_produto FROM produto"
+
     cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()

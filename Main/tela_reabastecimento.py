@@ -65,10 +65,11 @@ class tela_reabastecimento:
         style.configure("Treeview.Heading", background="gray", foreground="black", anchor="center")
         style.configure("Treeview", background="gray", foreground="black", fieldbackground="gray", rowheight=25)
 
-        self.treeview = ttk.Treeview(self.root, columns=("id_produto", "nome_produto", "quantidade_estoque"), show="headings", height=20)
+        self.treeview = ttk.Treeview(self.root, columns=("id_produto", "nome_produto", "categoria_produto", "quantidade_estoque"), show="headings", height=20)
 
         self.treeview.heading("id_produto",text="ID do produto")
         self.treeview.heading("nome_produto", text="Nome do produto")
+        self.treeview.heading("categoria_produto", text="Categoria do produto")
         self.treeview.heading("quantidade_estoque", text="Quantidade em estoque")
 
         estoque = consultar_estoque_db()

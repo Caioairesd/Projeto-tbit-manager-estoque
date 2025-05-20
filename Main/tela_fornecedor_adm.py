@@ -120,7 +120,6 @@ class tela_fornecedor_adm:
             if valores:
                 self.limpar_campos()
 
-                self.id_fornecedor_entry.insert(0, valores[0])
                 self.fornecedor_entry.insert(0, valores[1])
                 self.cnpj_fornecedor_entry.insert(0, valores[2])
                 self.email_fornecedor_entry.insert(0, valores[3])
@@ -136,8 +135,8 @@ class tela_fornecedor_adm:
         cnpj_fornecedor = self.cnpj_fornecedor_entry.get()
         email_fornecedor = self.email_fornecedor_entry.get()
         telefone_fornecedor = self.telefone_fornecedor_entry.get()
-        cidade_fornecedor = self.pais_fornecedor_entry.get()
-        pais_fornecedor = self.cidade_fornecedor_entry.get()
+        cidade_fornecedor = self.cidade_fornecedor_entry.get()
+        pais_fornecedor = self.pais_fornecedor_entry.get()
        
         #Condicional responsável por acionar função do banco de dados
         if nome_fornecedor and cnpj_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
@@ -162,7 +161,6 @@ class tela_fornecedor_adm:
     def update_fornecedor(self):
 
         #variáveis recebem os dados inseridos nos campos de textos
-        id_fornecedor = self.id_fornecedor_entry.get() 
         nome_fornecedor=self.fornecedor_entry.get()
         cnpj_fornecedor =self.cnpj_fornecedor_entry.get()        
         email_fornecedor =self.email_fornecedor_entry.get()
@@ -170,12 +168,15 @@ class tela_fornecedor_adm:
         cidade_fornecedor =self.pais_fornecedor_entry.get()
         pais_fornecedor = self.cidade_fornecedor_entry.get()
         
-        if  id_fornecedor and nome_fornecedor and cnpj_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
-            update_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor,id_fornecedor)
+        if  nome_fornecedor and cnpj_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
             
-            messagebox.showinfo("Sucess","informações alteradas com sucesso!")
+            confirmacao = messagebox.askyesno("Confirmação", f"Você deseja mesmo alterar o fornecedor '{cnpj_fornecedor}'?")
+            if confirmacao == True:
+                update_fornecedor_db(nome_fornecedor,cnpj_fornecedor,email_fornecedor,telefone_fornecedor,cidade_fornecedor,pais_fornecedor)
+
+                messagebox.showinfo("Sucess","informações alteradas com sucesso!")
         else:
-            messagebox.showerror("ERROR","Todos os campos são obrigatórios!")
+            messagebox.showerror("Error","Todos os campos são obrigatórios!")
 
         #Chama a função de limpar campos de texto
         self.limpar_campos()
@@ -188,15 +189,17 @@ class tela_fornecedor_adm:
     def delete_fornecedor(self):
 
         #variáveis recebem os dados inseridos nos campos de textos
-        id_fornecedor = self.id_fornecedor_entry.get()
-        if id_fornecedor:
+        cnpj_fornecedor = self.cnpj_fornecedor_entry.get()
+        if cnpj_fornecedor:
             confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse formecedor?")
             if confirmacao  == True:
-                delete_fornecedor_db(id_fornecedor)
+                delete_fornecedor_db(cnpj_fornecedor)
 
-                self.id_fornecedor_entry.delete(0,ctk.END)
+                self.cnpj_fornecedor_entry.delete(0,ctk.END)
+
                 fornecedores = listar_fornecedor_db()
                 self.atualizar_tabela(fornecedores)
+                
                 messagebox.showinfo("Sucesso","Fornecedor deletado com sucesso!")
         else:
             messagebox.showerror("Erro","ID do fornecedor é obrigatório!")
@@ -210,7 +213,6 @@ class tela_fornecedor_adm:
         self.telefone_fornecedor_entry.delete(0,ctk.END)
         self.pais_fornecedor_entry.delete(0,ctk.END)
         self.cidade_fornecedor_entry.delete(0,ctk.END)
-        self.id_fornecedor_entry.delete(0,ctk.END)
         self.pesquisar_entry.delete(0, ctk.END)
 
     #Função responsável por cancelar a operação
