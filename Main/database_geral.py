@@ -58,14 +58,14 @@ class tbit_db:
                 """
                     CREATE TABLE if not exists Pedido 
                     (
-                    id_compra int not null auto_increment,
+                    id_pedido int not null auto_increment,
                     nota_fiscal varchar(20),
                     data_pedido date,   
                     forma_pagamento varchar(20),
                     quantidade_produto_item int,
                     idProduto int not null,  
                     idCliente int not null,
-                    constraint pk_compra primary key (id_compra),
+                    constraint pk_compra primary key (id_pedido),
                     constraint fk_produto_compra foreign key (idProduto) references Produto(id_produto),
                     constraint fk_cliente_compra foreign key (idCliente) references Cliente(id_cliente)
                     );
@@ -110,7 +110,7 @@ class tbit_db:
                     );
                 """
                 """
-                    INSERT INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
+                    INSERT ignore INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
                     ('TechImport', '12.345.678/0001-01', 'contato@techimport.com.br', '(11) 98765-4321', 'Brasil', 'São Paulo'),
                     ('EletroParts', '23.456.789/0001-02', 'vendas@eletroparts.com', '(21) 99876-5432', 'Brasil', 'Rio de Janeiro'),
                     ('Global Components', '34.567.890/0001-03', 'sales@globalcomp.com', '+1 (555) 123-4567', 'EUA', 'Nova York'),
@@ -173,7 +173,7 @@ class tbit_db:
                     ('Fukuoka Electronics', '01.234.567/0001-60', 'sales@fukuokaelec.com', '+81 92 9876 5432', 'Japão', 'Fukuoka');
                 """
                 """
-                    INSERT INTO Cliente (nome_cliente, descricao_cliente, cnpj_cliente) VALUES
+                    INSERT ignore INTO Cliente (nome_cliente, descricao_cliente, cnpj_cliente) VALUES
                     ('Loja Tech', 'Revenda de equipamentos eletrônicos', '11.111.111/0001-11'),
                     ('Eletro Magazine', 'Rede de varejo de eletrônicos', '22.222.222/0001-22'),
                     ('Informática Express', 'Loja de informática e acessórios', '33.333.333/0001-33'),
@@ -236,7 +236,7 @@ class tbit_db:
                     ('Loja Exemplo', 'Cliente atacadista do setor têxtil', '12.345.678/0001-90');
                 """
                 """
-                    INSERT INTO Funcionario (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario) VALUES
+                    INSERT ignore INTO Funcionario (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario) VALUES
                     ('João Silva', '1985-05-15', '2020-03-10', '111.111.111-11', 'São Paulo', 'SP', '(11) 91234-5678', 'joao.silva@empresa.com', 'joao.silva', 'senha123', 'Administrador'),
                     ('Maria Oliveira', '1990-08-22', '2021-02-15', '222.222.222-22', 'Rio de Janeiro', 'RJ', '(21) 92345-6789', 'maria.oliveira@empresa.com', 'maria.oliveira', 'senha456', 'Administrador'),
                     ('Carlos Souza', '1988-11-30', '2019-07-05', '333.333.333-33', 'Belo Horizonte', 'MG', '(31) 93456-7890', 'carlos.souza@empresa.com', 'carlos.souza', 'senha789', 'Administrador'),
@@ -299,7 +299,7 @@ class tbit_db:
                     ('Beatriz Costa', '1985-12-02', '2020-02-05', '515.151.515-15', 'Salvador', 'BA', '(71) 91234-5678', 'beatriz.costa@empresa.com', 'beatriz.costa', 'senha012', 'Usuario simples');
                 """
                 """
-                    INSERT INTO Produto (nome_produto, descricao_produto, categoria_produto, quantidade_produto, valor_produto, idFornecedor) VALUES
+                    INSERT ignore INTO Produto (nome_produto, descricao_produto, categoria_produto, quantidade_produto, valor_produto, idFornecedor) VALUES
                     ( 'Notebook Dell', 'Notebook Dell Inspiron 15 i5 8GB 256GB SSD', 'Notebooks', 90, 3499.90, 1),
                     ( 'Mouse Logitech', 'Mouse sem fio Logitech M170', 'Periféricos', 238, 79.90, 2),
                     ( 'Teclado Mecânico', 'Teclado mecânico Redragon Kumara', 'Teclados', 67, 279.90, 3),
@@ -362,7 +362,7 @@ class tbit_db:
                     ( 'Antena Digital', 'Antena digital interna', 'Redes e Conectividade', 102, 79.90, 60);
                 """
                 """
-                    INSERT INTO Pedido (nota_fiscal, data_pedido, forma_pagamento, quantidade_produto_item, idProduto, idCliente) VALUES
+                    INSERT ignore INTO Pedido (nota_fiscal, data_pedido, forma_pagamento, quantidade_produto_item, idProduto, idCliente) VALUES
                     ('NF1001', '2023-01-05', 'Cartão Crédito', 2, 1, 1),
                     ('NF1002', '2023-01-10', 'Boleto', 5, 2, 2),
                     ('NF1003', '2023-01-15', 'PIX', 1, 3, 3),
@@ -425,7 +425,7 @@ class tbit_db:
                     ('NF1060', '2023-11-01', 'Cartão Débito', 4, 60, 60);
                 """
                 """
-                    INSERT INTO Cadastro (idFuncionario, idCliente) VALUES
+                    INSERT ignore INTO Cadastro (idFuncionario, idCliente) VALUES
                     (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10),
                     (11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20),
                     (21, 21), (22, 22), (23, 23), (24, 24), (25, 25), (26, 26), (27, 27), (28, 28), (29, 29), (30, 30),
@@ -434,7 +434,7 @@ class tbit_db:
                     (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
                 """
                 """
-                    INSERT INTO Estoque (IdProduto, quantidade_estoque) VALUES
+                    INSERT ignore INTO Estoque (IdProduto, quantidade_estoque) VALUES
                     (1, 30), (2, 80), (3, 20), (4, 15), (5, 50), (6, 25), (7, 18), (8, 12), (9, 40), (10, 30),
                     (11, 35), (12, 25), (13, 70), (14, 18), (15, 150), (16, 50), (17, 40), (18, 30), (19, 35), (20, 20),
                     (21, 45), (22, 25), (23, 15), (24, 60), (25, 40), (26, 30), (27, 8), (28, 12), (29, 45), (30, 18),
