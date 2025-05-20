@@ -2,7 +2,7 @@ import mysql.connector
 
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = 'root'
+MYSQL_PASSWORD = ''
 MYSQL_DATABASE = 'tbit_db'
 
 class tbit_db:
@@ -11,7 +11,7 @@ class tbit_db:
             self.conn = mysql.connector.connect(
                 host='localhost',
                 user='root',
-                password='root'
+                password=''
             )
             self.cursor = self.conn.cursor()
             self.cursor.execute("create database if not exists tbit_db;")
@@ -830,6 +830,8 @@ def get_pedidos_db():
 
     return result
 
+# Funções responsáveis pela funcionalidade do Dashboard
+
 def montante_pedidos():
     conn = get_connection()
     cursor = conn.cursor()
@@ -954,15 +956,15 @@ def vendas_por_mes():
     cursor.execute("SET lc_time_names = 'pt_BR';")
     query = """
     SELECT 
-    DATE_FORMAT(data_pedido, '%M-%Y') AS mes,
+    DATE_FORMAT(data_pedido, '%M %Y') AS mes_extenso,
     COUNT(*) AS total_vendas
     FROM Pedido
-    GROUP BY mes
-    ORDER BY STR_TO_DATE(mes, '%M %Y');
+    GROUP BY YEAR(data_pedido), MONTH(data_pedido)
+    ORDER BY YEAR(data_pedido), MONTH(data_pedido);
+;
     
     """
     cursor.execute(query)
-    
     
     resultados = cursor.fetchall()
     
@@ -971,6 +973,16 @@ def vendas_por_mes():
     cursor.close()
     conn.close()
     return dados_pedidos
+
+    def update_dashboard():
+        
+        vendas_por_mes()
+        Categorias_mais_vendidas()
+        clientes_mais_pedidos()
+        produtos_mais_vendidos()
+        total_produtos()
+        total_clientes()
+        total_vendas()
 
 
 
