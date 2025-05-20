@@ -516,13 +516,40 @@ class tbit_db:
 
             try:
                 self.cursor.execute("""
-                create procedure delete_fornecedor_e_produtos(IDfornecedor INT)
+                DELIMITER $$
+
+                CREATE PROCEDURE delete_fornecedor_e_produtos(IN fornecedor_excluido INT)
                 BEGIN
-                    DELETE FROM Pedido WHERE idProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
-                    DELETE FROM Estoque WHERE IdProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
-                    DELETE FROM Produto WHERE idFornecedor = IDfornecedor;
-                    DELETE FROM Fornecedor WHERE id_fornecedor = IDfornecedor;
-                END;""")
+                    -- Verifica se o fornecedor existe
+                    IF EXISTS (SELECT 1 FROM Fornecedor WHERE id_fornecedor = fornecedor_excluido) THEN
+                        
+                        -- Deleta pedidos dos produtos do fornecedor
+                        DELETE FROM Pedido 
+                        WHERE idProduto IN (
+                            SELECT id_produto 
+                            FROM Produto 
+                            WHERE idFornecedor = fornecedor_excluido
+                        );
+
+                        -- Deleta estoque dos produtos do fornecedor
+                        DELETE FROM Estoque 
+                        WHERE IdProduto IN (
+                            SELECT id_produto 
+                            FROM Produto 
+                            WHERE idFornecedor = fornecedor_excluido
+                        );
+
+                        -- Deleta os produtos do fornecedor
+                        DELETE FROM Produto 
+                        WHERE idFornecedor = fornecedor_excluido;
+
+                        -- Por fim, deleta o fornecedor
+                        DELETE FROM Fornecedor 
+                        WHERE id_fornecedor = fornecedor_excluido;
+                    END IF;
+                END$$
+
+                DELIMITER ;""")
             except mysql.connector.Error:
                 pass # Procedure já existe
 
