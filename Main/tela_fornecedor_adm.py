@@ -45,20 +45,13 @@ class tela_fornecedor_adm:
         ctk.CTkLabel(self.right_frame,text="Buscar por id:  ",fg_color="#2C3E50", text_color='#C9D1D9', font=('Times New Roman', 20)).place(x=100,y=500)
 
         #Criação de botões
-<<<<<<< Updated upstream
-        ctk.CTkButton(self.right_frame,text="Cadastrar",width=90,height=40,text_color='black', fg_color='#404040', bg_color='gray',command=self.create_fornecedor).place(x=100,y=420)
-        ctk.CTkButton(self.right_frame,text="Alterar",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.update_fornecedor).place(x=210,y=420)
-        ctk.CTkButton(self.right_frame,text="Excluir",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.delete_fornecedor).place(x=320,y=420)
-        ctk.CTkButton(self.right_frame,text="Cancelar",width=90,height=40,text_color='black', fg_color='#404040',bg_color='gray',command=self.cancelar_operacao).place(x=430,y=420)
-        ctk.CTkButton(self.root, text='Voltar', width=90, height=40, text_color='black',fg_color='#404040', bg_color='gray',command=self.voltar_menu).place(x=1700, y=900)
-        
-=======
+
         ctk.CTkButton(self.right_frame,text="Cadastrar",width=90,height=40,text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',command=self.create_fornecedor).place(x=100,y=420)
         ctk.CTkButton(self.right_frame,text="Alterar",width=90,height=40,text_color='#C9D1D9', fg_color='#1B263B',bg_color='#2C3E50',command=self.update_fornecedor).place(x=210,y=420)
         ctk.CTkButton(self.right_frame,text="Excluir",width=90,height=40,text_color='#C9D1D9', fg_color='#1B263B',bg_color='#2C3E50',command=self.delete_fornecedor).place(x=320,y=420)
         ctk.CTkButton(self.right_frame,text="Cancelar",width=90,height=40,text_color='#C9D1D9', fg_color='#1B263B',bg_color='#2C3E50',command=self.cancelar_operacao).place(x=430,y=420)
         ctk.CTkButton(self.root, text='Voltar', width=90, height=40, text_color='#C9D1D9',fg_color='#1B263B', bg_color='#141C29',command=self.voltar_menu).place(x=1700, y=900)
->>>>>>> Stashed changes
+
         #Criação de campos de entrada de dados
         self.fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B', placeholder_text='Nome fornecedor..',width=200,height=30)
         self.cnpj_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B', placeholder_text='CNPJ fornecedor...',width=200,height=30)
@@ -147,13 +140,11 @@ class tela_fornecedor_adm:
             if valores:
                 self.limpar_campos()
 
-<<<<<<< Updated upstream
-=======
                 self.id_fornecedor_entry.delete(0, ctk.END)
                 self.id_fornecedor_entry.insert(0, valores[0])
 
                 self.fornecedor_entry.delete(0, ctk.END)
->>>>>>> Stashed changes
+
                 self.fornecedor_entry.insert(0, valores[1])
 
                 self.cnpj_fornecedor_entry.delete(0, ctk.END)
@@ -179,12 +170,6 @@ class tela_fornecedor_adm:
         telefone_fornecedor = self.telefone_fornecedor_entry.get()
         cidade_fornecedor = self.cidade_fornecedor_entry.get()
         pais_fornecedor = self.pais_fornecedor_entry.get()
-<<<<<<< Updated upstream
-       
-        #Condicional responsável por acionar função do banco de dados
-=======
-
->>>>>>> Stashed changes
         if nome_fornecedor and cnpj_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
             register_fornecedor_db(nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, cidade_fornecedor, pais_fornecedor)
             self.limpar_campos()
@@ -207,7 +192,7 @@ class tela_fornecedor_adm:
         cidade_fornecedor = self.cidade_fornecedor_entry.get()
         pais_fornecedor = self.pais_fornecedor_entry.get()
 
-<<<<<<< Updated upstream
+
         #variáveis recebem os dados inseridos nos campos de textos
         nome_fornecedor=self.fornecedor_entry.get()
         cnpj_fornecedor =self.cnpj_fornecedor_entry.get()        
@@ -225,19 +210,12 @@ class tela_fornecedor_adm:
                 messagebox.showinfo("Sucess","informações alteradas com sucesso!")
         else:
             messagebox.showerror("Error","Todos os campos são obrigatórios!")
-=======
-        if id_fornecedor and nome_fornecedor and cnpj_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
-            update_fornecedor_db(nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, cidade_fornecedor, pais_fornecedor, id_fornecedor)
-            messagebox.showinfo("Sucesso", "Informações alteradas com sucesso!")
-        else:
-            messagebox.showerror("Erro", "Todos os campos são obrigatórios!")
->>>>>>> Stashed changes
 
         self.limpar_campos()
         fornecedores = listar_fornecedor_db()
         self.atualizar_tabela(fornecedores)
 
-<<<<<<< Updated upstream
+
     # USADO PARA O DELETE
     def get_id_fornecedor(self):
         cnpj_fornecedor = self.cnpj_fornecedor_entry.get()
@@ -247,8 +225,6 @@ class tela_fornecedor_adm:
             if cnpj_fornecedor == fornecedor[1]:
                 id_fornecedor = fornecedor[0]
                 return id_fornecedor
-=======
->>>>>>> Stashed changes
 
     #Função responsável por deletar os fornecedores
     def delete_fornecedor(self):
