@@ -47,12 +47,12 @@ class login_menu:
 
         # Entry Usuario
         self.usuario_entry = ctk.CTkEntry(self.right_frame, text_color='#FFFFFF',
-                                        width=160, height=30, fg_color='#1B263B')
+                                        width=160, height=30, fg_color='#1B263B', placeholder_text='Nome usuario...')
         self.usuario_entry.place(x=160, y=95)
 
         # Entry Senha
         self.senha_entry = ctk.CTkEntry(self.right_frame, text_color='#FFFFFF',
-                                        width=160, height=30, fg_color='#1B263B', show="*")
+                                        width=160, height=30, fg_color='#1B263B', show="*", placeholder_text='Senha usuario...')
         self.senha_entry.place(x=160, y=150)
 
 

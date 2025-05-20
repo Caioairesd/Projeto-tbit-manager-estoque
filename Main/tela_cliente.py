@@ -23,40 +23,60 @@ class tela_cliente:
         self.criar_tabela()
 
     def create_widget(self):
-
+        #Frame para funcdo
         self.right_frame = ctk.CTkFrame(self.root, width=600, height=600, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
         self.right_frame.place(x=250, y=250)# definir a expanção da frame
-        
+
+        #Definir Titulo do arquivo
         self.label_text = ctk.CTkLabel(self.root, text="C L I E N T E ",font=("Garamond", 60), fg_color="#161B22", text_color='#58A6FF') # Cria um label para o texto
-        self.label_text.place(x=650, y=60) # Posiciona o texto
+        self.label_text.place(x=780, y=60) # Posiciona o texto
       
 
         self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', font=('Arial',13),text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#121B22', width=90, height=40, command=self.voltar_menu)
         self.voltar_menu_button.place(x=1700, y=900)
+        #label cliente id
+        self.label_text = ctk.CTkLabel(self.root, text="id cliente :",font=("arial",22), fg_color="#2C3E50", text_color='#C9D1D9') # Cria um label para o texto
+        self.label_text.place(x=350, y=300) # Posiciona o texto
+        #caixa de texto Id cliente 
+        self.id_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Digite o ID para pesquisa...", text_color='#C9D1D9',fg_color='#1B263B', bg_color='#2C3E50',width=250, height=30)
+        self.id_cliente_entry.place(x=470, y=300)
+        #Nome label 
+        self.label_text = ctk.CTkLabel(self.root, text="Nome :",font=("arial",22), fg_color="#2C3E50", text_color='#C9D1D9') # Cria um label para o texto
+        self.label_text.place(x=350, y=350) # Posiciona o texto
+        #Caixa de texto cliente nome
+        self.nome_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Nome para registro do cliente...", text_color='#C9D1D9',fg_color='#1B263B', bg_color='#2C3E50',width=250, height=30)
+        self.nome_cliente_entry.place(x=470, y=350)
 
-        self.id_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Digite o ID para pesquisa...", width=250, height=30)
-        self.id_cliente_entry.place(x=100, y=100)
+        #Cliente label 
+        self.label_text = ctk.CTkLabel(self.root, text="Descrição :",font=("arial",20), fg_color="#2C3E50", text_color='#C9D1D9') # Cria um label para o texto
+        self.label_text.place(x=350, y=400) # Posiciona o texto
 
-        self.nome_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Nome para registro do cliente...", width=250, height=30)
-        self.nome_cliente_entry.place(x=100, y=150)
+        #Caixa de texto Descrição cliente
+        self.descricao_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Descrição para registro do cliente...", text_color='#C9D1D9',fg_color='#1B263B', bg_color='#2C3E50',width=250, height=30)
+        self.descricao_cliente_entry.place(x=470, y=400)
 
-        self.descricao_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Descrição para registro do cliente...", width=250, height=30)
-        self.descricao_cliente_entry.place(x=100, y=200)
+        #Label CNPJ 
+        self.label_text = ctk.CTkLabel(self.root, text="CNPJ :",font=("arial",20), fg_color="#2C3E50", text_color='#C9D1D9') # Cria um label para o texto
+        self.label_text.place(x=350, y=450) # Posiciona o texto
+        #Caixa de texto CNPJ
+        self.cnpj_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="00.000.000/0000-00", text_color='#C9D1D9',fg_color='#1B263B', bg_color='#2C3E50',width=250, height=30)
+        self.cnpj_cliente_entry.place(x=470, y=450)
 
-        self.cnpj_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="00.000.000/0000-00", width=250, height=30)
-        self.cnpj_cliente_entry.place(x=100, y=250)
-
-        self.pesquisar_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Pesquise um cliente pelo seu nome...", width=250, height=30)
-        self.pesquisar_cliente_entry.place(x=1110, y=250)
+        #label de pesquisar pelo nome do cliente 
+        self.label_text = ctk.CTkLabel(self.root, text="Pesquiar :",font=("arial",22), fg_color="#161B22", text_color='#C9D1D9') # Cria um label para o texto
+        self.label_text.place(x=1000, y=200) # Posiciona o texto
+        #pesquisar cliente pelo nome 
+        self.pesquisar_cliente_entry = ctk.CTkEntry(self.root, placeholder_text="Pesquise um cliente pelo seu nome...", text_color='#C9D1D9',fg_color='#1B263B', bg_color='#2C3E50',width=250, height=30)
+        self.pesquisar_cliente_entry.place(x=1110, y=200)
         self.pesquisar_cliente_entry.bind("<KeyRelease>", self.filtrar_tabela)
 
-        self.registrar_button = ctk.CTkButton(self.root, text="CADASTRAR", width=90, height=40, bg_color='#2C3E50', command=self.registrar_cliente)
+        self.registrar_button = ctk.CTkButton(self.root, text="CADASTRAR", width=90, height=40, bg_color='#2C3E50', fg_color='#1B263B', command=self.registrar_cliente)
         self.registrar_button.place(x=350, y=600)
 
-        self.alterar_button = ctk.CTkButton(self.root, text="EDITAR", width=90, height=40, bg_color='#2C3E50', command=self.alterar_cliente)
+        self.alterar_button = ctk.CTkButton(self.root, text="EDITAR", width=90, height=40, bg_color='#2C3E50', fg_color='#1B263B', command=self.alterar_cliente)
         self.alterar_button.place(x=455, y=600)
 
-        self.deletar_button = ctk.CTkButton(self.root, text="EXCLUIR", width=90, height=40, bg_color='#2C3E50', command=self.deletar_cliente)
+        self.deletar_button = ctk.CTkButton(self.root, text="EXCLUIR", width=90, height=40, bg_color='#2C3E50', fg_color='#1B263B', command=self.deletar_cliente)
         self.deletar_button.place(x=560, y=600)
 
     def registrar_cliente(self):
@@ -137,6 +157,12 @@ class tela_cliente:
 
      # FUNÇÕES USADAS PARA A TABELA
     def criar_tabela(self):
+        style = ttk.Style()
+        style.theme_use("alt")
+        style.configure("Treeview.Heading", background="#1B263B", foreground="#C9D1D9", anchor="center")
+        style.configure("Treeview", background="#2C3E50", foreground="#C9D1D9", fieldbackground="gray", rowheight=30)
+
+
         self.treeview = ttk.Treeview(self.root, columns=("id_cliente", "nome_cliente", "descricao_cliente", "cnpj_cliente"), show="headings", height=15)
 
         self.treeview.heading("id_cliente", text="ID do cliente")
@@ -155,7 +181,7 @@ class tela_cliente:
 
         self.treeview.bind("<ButtonRelease-1>", self.click_na_linha)
         
-        self.treeview.place(x=1000, y=300)
+        self.treeview.place(x=1000, y=250, height=600)
 
     def atualizar_tabela(self, clientes):
          for item in self.treeview.get_children():
