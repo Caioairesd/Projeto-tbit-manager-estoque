@@ -2,7 +2,7 @@ import mysql.connector
 
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = ''
+MYSQL_PASSWORD = 'root'
 MYSQL_DATABASE = 'tbit_db'
 
 class tbit_db:
@@ -11,7 +11,7 @@ class tbit_db:
             self.conn = mysql.connector.connect(
                 host='localhost',
                 user='root',
-                password=''
+                password='root'
             )
             self.cursor = self.conn.cursor()
             self.cursor.execute("create database if not exists tbit_db;")
@@ -954,16 +954,14 @@ def vendas_por_mes():
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("SET lc_time_names = 'pt_BR';")
-    query = """
+    query =  """
     SELECT 
-    DATE_FORMAT(data_pedido, '%M %Y') AS mes_extenso,
-    COUNT(*) AS total_vendas
+        DATE_FORMAT(data_pedido, '%M %Y') AS mes_extenso,
+        COUNT(*) AS total_vendas
     FROM Pedido
-    GROUP BY YEAR(data_pedido), MONTH(data_pedido)
-    ORDER BY YEAR(data_pedido), MONTH(data_pedido);
-;
-    
-    """
+    GROUP BY DATE_FORMAT(data_pedido, '%M %Y')
+    ORDER BY MIN(data_pedido);
+"""
     cursor.execute(query)
     
     resultados = cursor.fetchall()
@@ -974,16 +972,7 @@ def vendas_por_mes():
     conn.close()
     return dados_pedidos
 
-    def update_dashboard():
-        
-        vendas_por_mes()
-        Categorias_mais_vendidas()
-        clientes_mais_pedidos()
-        produtos_mais_vendidos()
-        total_produtos()
-        total_clientes()
-        total_vendas()
-
+   
 
 
 
