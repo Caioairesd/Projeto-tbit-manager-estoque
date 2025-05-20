@@ -32,18 +32,18 @@ class tela_produto_adm:
 
 
         self.titulo = ctk.CTkLabel(self.root, text='P R O D U T O',font=("Garamond", 60), fg_color="#141C29", text_color='#58A6FF') # Cria um abel para o usuario
-        self.titulo.place(x=800,y=60) # Posiciona o label 
+        self.titulo.place(relx=0.5, y=60, anchor='center') # Posiciona o label 
 
         #cria o frame como fundo para deixar um fundo para as labls e caixas de textos
         self.right_frame = ctk.CTkFrame(self.root, width=700, height=700, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
-        self.right_frame.place(x=100, y=160)# definir a expanção da frame
+        self.right_frame.place(x=100, y=170)# definir a expanção da frame
 
 
         # Criando os botoes que carregam as funcoes necessarias e seus posicionamentos
-        ctk.CTkButton(self.right_frame, text="Cadastrar", command=self.registrar_no_banco, width=90,height= 40,fg_color='#404040',text_color='#C9D1D9', border_color='gray').place(x=50, y=400) # Botao para cadastrar 
-        ctk.CTkButton(self.right_frame, text="Editar", command=self.alterar_no_banco, width=90,height= 40,fg_color='#404040',text_color='#C9D1D9', border_color='gray').place(x=160, y=400) # Botao para alterar 
-        ctk.CTkButton(self.right_frame, text="Excluir", command=self.deletar_do_banco, width=90,height= 40,fg_color='#404040',text_color='#C9D1D9', border_color='gray').place(x=270, y=400) # Botao para deletar produto
-        ctk.CTkButton(self.right_frame, text="Cancelar", command=self.cancelar_operacao, width=90,height= 40,fg_color='#404040',text_color='#C9D1D9', border_color='gray').place(x=380, y=400) # Botao para cancelar/voltar ao padrao
+        ctk.CTkButton(self.right_frame, text="Cadastrar", command=self.registrar_no_banco, width=90,height= 40,fg_color='#1B263B',text_color='#C9D1D9', border_color='gray').place(x=50, y=400) # Botao para cadastrar 
+        ctk.CTkButton(self.right_frame, text="Editar", command=self.alterar_no_banco, width=90,height= 40,fg_color='#1B263B',text_color='#C9D1D9', border_color='gray').place(x=160, y=400) # Botao para alterar 
+        ctk.CTkButton(self.right_frame, text="Excluir", command=self.deletar_do_banco, width=90,height= 40,fg_color='#1B263B',text_color='#C9D1D9', border_color='gray').place(x=270, y=400) # Botao para deletar produto
+        ctk.CTkButton(self.right_frame, text="Cancelar", command=self.cancelar_operacao, width=90,height= 40,fg_color='#1B263B',text_color='#C9D1D9', border_color='gray').place(x=380, y=400) # Botao para cancelar/voltar ao padrao
         ctk.CTkButton(self.root, text='Voltar', width=90,fg_color='#1B263B',text_color='#C9D1D9', border_color='gray', height=40, command=self.voltar_menu).place(x=1700, y=900)
         
 
@@ -83,23 +83,9 @@ class tela_produto_adm:
 
         #COMBO box fornecedor
 
-        self.combobox_fornecedor= ctk.CTkComboBox(
-        self.root,                          # widget pai
-        height=30,                          # altura do combobox
-        width=140,                          # largura do combobox
-        text_color='#C9D1D9',               # cor do texto e da setinha da direita
-        fg_color="#404040",                 # fundo da caixa de seleção
-        border_color="gray",                # cor da borda da caixa
-        button_color="#404040",             # fundo da área da setinha
-        button_hover_color="lightgray",     # cor de fundo ao passar mouse na setinha
-        dropdown_fg_color="gray",           # fundo da lista suspensa
-        dropdown_text_color="#C9D1D9",      # cor do texto das opções
-        dropdown_hover_color="#404040",     # fundo da opção ao passar o mouse
-        border_width=0,                     # Define o tamanho da caixa de texto fixa da ComboBOX
-        bg_color='gray',                    # Deixar o fundo rededondo, combinando com o fundo da frame e deixando o formato redondo da comboBOX
-        values=self.buscar_fornecedores()   # lista de strings pra popular a lista
-        )
+        self.combobox_fornecedor = ctk.CTkComboBox(self.root,height=30, width=140,text_color='#C9D1D9',fg_color='#1B263B',border_color='gray',button_color='#1B263B',button_hover_color='#1B263B',dropdown_fg_color='#161B22',dropdown_text_color='#C9D1D9',dropdown_hover_color='#1B263B',border_width=0,bg_color='#1B263B',values=self.buscar_fornecedores())
         self.combobox_fornecedor.place(x=490, y=450)
+
     # MÉTODOS USADOS PARA OS FORNECEDORES
     def buscar_fornecedores(self):
             busca = listar_fornecedores_db()
@@ -158,7 +144,7 @@ class tela_produto_adm:
 
         self.treeview.bind("<ButtonRelease-1>", self.click_na_linha)
         
-        self.treeview.place(x=910, y=160, height=700)
+        self.treeview.place(x=890, y=170, height=700)
 
     def atualizar_tabela(self, produtos):
          for item in self.treeview.get_children():
