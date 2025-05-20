@@ -880,3 +880,146 @@ def get_pedidos_db():
     conn.close()
 
     return result
+
+# Funções responsáveis pela funcionalidade do Dashboard
+
+def montante_pedidos():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """
+    SELECT SUM(pr.valor_produto * pe.quantidade_produto_item) 
+    FROM produto pr 
+    JOIN pedido pe ON pr.id_produto = pe.IdProduto;
+    """
+    cursor.execute(query)
+    result = cursor.fetchone()[0]  # Pegando apenas o primeiro valor retornado
+    cursor.close()
+    conn.close()
+
+    return float(result) if result else 0.0  # Convertendo para número puro
+
+def total_vendas():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """
+    SELECT count(id_pedido) from Pedido;
+    """
+    cursor.execute(query)
+    result = cursor.fetchone()[0] # Pegando apenas o primeiro valor retornado
+    cursor.close()
+    conn.close()
+    
+    return int(result )  if result else 0
+
+def total_clientes():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """
+    select count(id_cliente) from cliente;
+    """
+    cursor.execute(query)
+    result = cursor.fetchone()[0] # Pegando apenas o primeiro valor retornado
+    cursor.close()
+    conn.close()
+    
+    return int(result )  if result else 0
+
+def total_produtos():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """
+    select count(id_produto) from produto;
+    """
+    cursor.execute(query)
+    result = cursor.fetchone()[0] # Pegando apenas o primeiro valor retornado
+    cursor.close()
+    conn.close()
+    
+    return int(result )  if result else 0
+
+def produtos_mais_vendidos():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """
+    SELECT pr.nome_produto, COUNT(pe.id_pedido) AS total_vendas
+    FROM pedido pe
+    JOIN produto pr ON pe.idProduto = pr.id_produto
+    GROUP BY pr.id_produto
+    ORDER BY COUNT(pe.id_pedido) DESC
+    LIMIT 5;
+    """
+    cursor.execute(query)
+    
+    # Pegando todas as linhas da consulta
+    resultados = cursor.fetchall()
+    
+    # Transformando em dicionário
+    dados_produtos_mais_vendidos = [dict(nome=row[0], total_vendas=row[1]) for row in resultados]
+
+    cursor.close()
+    conn.close()
+    return dados_produtos_mais_vendidos
+
+def clientes_mais_pedidos():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """
+    SELECT cl.nome_cliente, COUNT(pe.id_pedido) AS total_vendas 
+    FROM pedido pe JOIN cliente cl 
+    ON pe.idCliente = cl.id_cliente 
+    GROUP BY cl.nome_cliente 
+    ORDER BY COUNT(pe.id_pedido) desc limit 5;
+    """
+    cursor.execute(query)
+    
+    
+    resultados = cursor.fetchall()
+    
+    dados_clientes_mais_pedidos = [dict(nome_cliente=row[0], total_vendas=row[1]) for row in resultados]
+
+    cursor.close()
+    conn.close()
+    return dados_clientes_mais_pedidos
+
+def Categorias_mais_vendidas():
+    conn = get_connection()
+    cursor = conn.cursor()
+    query = """ SELECT pr.categoria_produto, COUNT(pe.id_pedido) AS pedidos_categoria
+    FROM pedido pe JOIN produto pr 
+    ON pr.id_produto = pe.idProduto 
+    GROUP BY pr.categoria_produto 
+    ORDER BY COUNT(pe.id_pedido) desc limit 10;
+    """
+    cursor.execute(query)
+    
+    
+    resultados = cursor.fetchall()
+    
+    dados_categorias_mais_vendidas = [dict(categoria_produto=row[0], pedidos_categoria=row[1]) for row in resultados]
+
+    cursor.close()
+    conn.close()
+    return dados_categorias_mais_vendidas
+
+def vendas_por_mes():
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SET lc_time_names = 'pt_BR';")
+    query =  """
+    SELECT 
+        DATE_FORMAT(data_pedido, '%M %Y') AS mes_extenso,
+        COUNT(*) AS total_vendas
+    FROM Pedido
+    GROUP BY DATE_FORMAT(data_pedido, '%M %Y')
+    ORDER BY MIN(data_pedido);
+"""
+    cursor.execute(query)
+    
+    resultados = cursor.fetchall()
+    
+    dados_pedidos = [dict(mes=row[0],pedidos=row[1]) for row in resultados]
+
+    cursor.close()
+    conn.close()
+    return dados_pedidos
+
