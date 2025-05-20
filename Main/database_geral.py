@@ -826,7 +826,7 @@ def get_pedidos_db():
     conn = get_connection()
     cursor = conn.cursor()
 
-    query = """SELECT pe.id_compra, pe.nota_fiscal, pe.data_pedido, pe.forma_pagamento, ci.nome_cliente, po.nome_produto, pe.quantidade_produto_item FROM pedido AS pe
+    query = """SELECT pe.id_pedido, pe.nota_fiscal, pe.data_pedido, pe.forma_pagamento, ci.nome_cliente, po.nome_produto, pe.quantidade_produto_item FROM pedido AS pe
             JOIN produto AS po ON po.id_produto = pe.idProduto
             JOIN cliente AS ci ON pe.idCliente = ci.id_cliente"""
 
