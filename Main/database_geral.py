@@ -109,8 +109,23 @@ class tbit_db:
                     constraint fk_produto_estoque foreign key (IdProduto) references Produto(id_produto)    
                     );
                 """
-                """
-                    INSERT ignore INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
+            ]
+
+            # Executa os comandos para criar as tabelas, separa os comandos por ;        
+            for comando in comandos_sql:
+                for comandos in comando.split(';'):
+                    if comandos.strip():
+                        self.cursor.execute(comandos + ';')
+            
+            # Função que da um select count() para verificar o numero de dados na tabela e só insere se a tabela estiver vazia
+            def tabela_vazia(table):
+                self.cursor.execute(f"SELECT COUNT(*) FROM {table}")
+                return self.cursor.fetchone()[0] == 0
+
+            
+            if tabela_vazia("Fornecedor"):
+                self.cursor.execute("""
+                    INSERT  INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
                     ('TechImport', '12.345.678/0001-01', 'contato@techimport.com.br', '(11) 98765-4321', 'Brasil', 'São Paulo'),
                     ('EletroParts', '23.456.789/0001-02', 'vendas@eletroparts.com', '(21) 99876-5432', 'Brasil', 'Rio de Janeiro'),
                     ('Global Components', '34.567.890/0001-03', 'sales@globalcomp.com', '+1 (555) 123-4567', 'EUA', 'Nova York'),
@@ -171,9 +186,11 @@ class tbit_db:
                     ('Digital Info', '89.012.345/0001-58', 'vendas@digitalinfo.com', '(41) 95678-9012', 'Brasil', 'Colombo'),
                     ('TechWales', '90.123.456/0001-59', 'contact@techwales.co.uk', '+44 29 8765 4321', 'Reino Unido', 'Cardiff'),
                     ('Fukuoka Electronics', '01.234.567/0001-60', 'sales@fukuokaelec.com', '+81 92 9876 5432', 'Japão', 'Fukuoka');
-                """
-                """
-                    INSERT ignore INTO Cliente (nome_cliente, descricao_cliente, cnpj_cliente) VALUES
+                """)
+            
+            if tabela_vazia("Cliente"):
+                self.cursor.execute("""
+                    INSERT  INTO Cliente (nome_cliente, descricao_cliente, cnpj_cliente) VALUES
                     ('Loja Tech', 'Revenda de equipamentos eletrônicos', '11.111.111/0001-11'),
                     ('Eletro Magazine', 'Rede de varejo de eletrônicos', '22.222.222/0001-22'),
                     ('Informática Express', 'Loja de informática e acessórios', '33.333.333/0001-33'),
@@ -234,9 +251,11 @@ class tbit_db:
                     ('Space Tech', 'Tecnologia espacial', '58.595.959/0001-59'),
                     ('Future Tech', 'Tecnologias futuras e inovadoras', '59.606.060/0001-60'),
                     ('Loja Exemplo', 'Cliente atacadista do setor têxtil', '12.345.678/0001-90');
-                """
-                """
-                    INSERT ignore INTO Funcionario (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario) VALUES
+                """)
+            
+            if tabela_vazia("Funcionario"):
+                self.cursor.execute("""
+                    INSERT  INTO Funcionario (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario) VALUES
                     ('João Silva', '1985-05-15', '2020-03-10', '111.111.111-11', 'São Paulo', 'SP', '(11) 91234-5678', 'joao.silva@empresa.com', 'joao.silva', 'senha123', 'Administrador'),
                     ('Maria Oliveira', '1990-08-22', '2021-02-15', '222.222.222-22', 'Rio de Janeiro', 'RJ', '(21) 92345-6789', 'maria.oliveira@empresa.com', 'maria.oliveira', 'senha456', 'Administrador'),
                     ('Carlos Souza', '1988-11-30', '2019-07-05', '333.333.333-33', 'Belo Horizonte', 'MG', '(31) 93456-7890', 'carlos.souza@empresa.com', 'carlos.souza', 'senha789', 'Administrador'),
@@ -297,9 +316,11 @@ class tbit_db:
                     ('Laura Santos', '1997-06-06', '2023-08-20', '494.949.494-94', 'Porto Alegre', 'RS', '(51) 99012-3456', 'laura.santos@empresa.com', 'laura.santos', 'senha890', 'Usuario simples'),
                     ('Eduardo Oliveira', '1990-09-19', '2021-11-25', '505.050.505-05', 'Curitiba', 'PR', '(41) 90123-4567', 'eduardo.oliveira@empresa.com', 'eduardo.oliveira', 'senha901', 'Usuario simples'),
                     ('Beatriz Costa', '1985-12-02', '2020-02-05', '515.151.515-15', 'Salvador', 'BA', '(71) 91234-5678', 'beatriz.costa@empresa.com', 'beatriz.costa', 'senha012', 'Usuario simples');
-                """
-                """
-                    INSERT ignore INTO Produto (nome_produto, descricao_produto, categoria_produto, quantidade_produto, valor_produto, idFornecedor) VALUES
+                """)
+            
+            if tabela_vazia("Produto"):
+                self.cursor.execute("""
+                    INSERT  INTO Produto (nome_produto, descricao_produto, categoria_produto, quantidade_produto, valor_produto, idFornecedor) VALUES
                     ( 'Notebook Dell', 'Notebook Dell Inspiron 15 i5 8GB 256GB SSD', 'Notebooks', 90, 3499.90, 1),
                     ( 'Mouse Logitech', 'Mouse sem fio Logitech M170', 'Periféricos', 238, 79.90, 2),
                     ( 'Teclado Mecânico', 'Teclado mecânico Redragon Kumara', 'Teclados', 67, 279.90, 3),
@@ -360,9 +381,11 @@ class tbit_db:
                     ( 'TV Box Android', 'TV Box Android 4GB RAM', 'Monitores', 72, 299.90, 58),
                     ( 'Controle Remoto', 'Controle remoto universal', 'Acessórios', 132, 49.90, 59),
                     ( 'Antena Digital', 'Antena digital interna', 'Redes e Conectividade', 102, 79.90, 60);
-                """
-                """
-                    INSERT ignore INTO Pedido (nota_fiscal, data_pedido, forma_pagamento, quantidade_produto_item, idProduto, idCliente) VALUES
+                """)
+            
+            if tabela_vazia("Pedido"):
+                self.cursor.execute("""
+                    INSERT  INTO Pedido (nota_fiscal, data_pedido, forma_pagamento, quantidade_produto_item, idProduto, idCliente) VALUES
                     ('NF1001', '2023-01-05', 'Cartão Crédito', 2, 1, 1),
                     ('NF1002', '2023-01-10', 'Boleto', 5, 2, 2),
                     ('NF1003', '2023-01-15', 'PIX', 1, 3, 3),
@@ -423,31 +446,29 @@ class tbit_db:
                     ('NF1058', '2023-10-20', 'Boleto', 2, 58, 58),
                     ('NF1059', '2023-10-25', 'PIX', 1, 59, 59),
                     ('NF1060', '2023-11-01', 'Cartão Débito', 4, 60, 60);
-                """
-                """
-                    INSERT ignore INTO Cadastro (idFuncionario, idCliente) VALUES
+                """)
+            
+            if tabela_vazia("Cadastro"):
+                self.cursor.execute("""
+                    INSERT  INTO Cadastro (idFuncionario, idCliente) VALUES
                     (1, 1), (2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (7, 7), (8, 8), (9, 9), (10, 10),
                     (11, 11), (12, 12), (13, 13), (14, 14), (15, 15), (16, 16), (17, 17), (18, 18), (19, 19), (20, 20),
                     (21, 21), (22, 22), (23, 23), (24, 24), (25, 25), (26, 26), (27, 27), (28, 28), (29, 29), (30, 30),
                     (31, 31), (32, 32), (33, 33), (34, 34), (35, 35), (36, 36), (37, 37), (38, 38), (39, 39), (40, 40),
                     (41, 41), (42, 42), (43, 43), (44, 44), (45, 45), (46, 46), (47, 47), (48, 48), (49, 49), (50, 50),
                     (51, 51), (52, 52), (53, 53), (54, 54), (55, 55), (56, 56), (57, 57), (58, 58), (59, 59), (60, 60);
-                """
-                """
-                    INSERT ignore INTO Estoque (IdProduto, quantidade_estoque) VALUES
+                """)
+            
+            if tabela_vazia("Estoque"):
+                self.cursor.execute("""
+                    INSERT  INTO Estoque (IdProduto, quantidade_estoque) VALUES
                     (1, 30), (2, 80), (3, 20), (4, 15), (5, 50), (6, 25), (7, 18), (8, 12), (9, 40), (10, 30),
                     (11, 35), (12, 25), (13, 70), (14, 18), (15, 150), (16, 50), (17, 40), (18, 30), (19, 35), (20, 20),
                     (21, 45), (22, 25), (23, 15), (24, 60), (25, 40), (26, 30), (27, 8), (28, 12), (29, 45), (30, 18),
                     (31, 10), (32, 30), (33, 25), (34, 12), (35, 35), (36, 20), (37, 15), (38, 25), (39, 18), (40, 5),
                     (41, 25), (42, 40), (43, 8), (44, 15), (45, 10), (46, 18), (47, 15), (48, 10), (49, 25), (50, 35),
                     (51, 60), (52, 40), (53, 30), (54, 18), (55, 12), (56, 35), (57, 8), (58, 25), (59, 50), (60, 40);
-                """
-            ]
-
-            for comando in comandos_sql:
-                for stmt in comando.split(';'):
-                    if stmt.strip():
-                        self.cursor.execute(stmt + ';')
+                """)
 
             self.cursor.close()
             self.cursor = self.conn.cursor()
