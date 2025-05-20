@@ -11,7 +11,7 @@ class tela_estoque:
       
         self.root.configure(fg_color='#161B22')
 
-        ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
+        #ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
 
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura

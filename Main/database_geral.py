@@ -2,7 +2,7 @@ import mysql.connector
 
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = 'root'
+MYSQL_PASSWORD = ''
 MYSQL_DATABASE = 'tbit_db'
 
 class tbit_db:
@@ -11,7 +11,7 @@ class tbit_db:
             self.conn = mysql.connector.connect(
                 host='localhost',
                 user='root',
-                password='root'
+                password=''
             )
             self.cursor = self.conn.cursor()
             self.cursor.execute("create database if not exists tbit_db;")
@@ -252,7 +252,8 @@ class tbit_db:
                     ('Drakengard Games', 'Empresa independente de jogos', '61.111.222/0001-61'),
                     ('Pro Beta Nothing Remains', 'Empresa de tecnologia', '62.222.333/0001-62'),
                     ('Running Alone', 'Mercado de bairro', '63.333.444/0001-63'),
-                    ('Nova Era Games', 'Assistência técnica de informática', '64.444.555/0001-64');
+                    ('Nova Era Games', 'Assistência técnica de informática', '64.444.555/0001-64'),
+                    ('Pichau', 'Varejista de Informatica', '69.696.969/6969-69');
                 """)
                 self.conn.commit()
 

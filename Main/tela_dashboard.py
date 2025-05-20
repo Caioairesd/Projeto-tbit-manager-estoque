@@ -27,14 +27,14 @@ class tela_dashboard:
         self.criar_widgets()
 
     def criar_widgets(self):
-        # Botão responsável por voltar ao menu
+        # Botão responsável por voltar ao menu 0073E6
         voltar_menu_button = ctk.CTkButton(self.root, text='VOLTAR', width=90, height=40,fg_color='#0073E6', command=self.voltar_menu)
         voltar_menu_button.place(x=1770, y=1000)
         
-        # Botão responsável por atualizar o dashboard
+        ''' # Botão responsável por atualizar o dashboard
         update_button = ctk.CTkButton(self.root, text='ATUALIZAR ', width=90, height=40,fg_color='#0073E6', command=self.voltar_menu)
         update_button.place(x=1600, y=1000)
-
+        '''
     def gerar_graficos(self):
         dados_Vendas_clientes = clientes_mais_pedidos()
         nomes_clientes = [item["nome_cliente"] for item in dados_Vendas_clientes]

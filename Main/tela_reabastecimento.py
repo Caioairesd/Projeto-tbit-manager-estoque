@@ -14,7 +14,7 @@ class tela_reabastecimento:
        
         self.root.configure(fg_color='#141C29')
 
-        ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
+        #ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
 
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura
@@ -45,7 +45,7 @@ class tela_reabastecimento:
 
         self.quantidade_entrou_entry = ctk.CTkEntry(self.root, height=35, width=150, placeholder_text='Quantidade de produto', text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50', border_color='#2C3E50', placeholder_text_color='gray')
 
-        self.novo_reabastecimento_button = ctk.CTkButton(self.root, text="ADCIONAR", fg_color='#1B263B', text_color='#C9D1D9', bg_color='#2C3E50', hover_color='#161B22', width=100, height=30)
+        self.novo_reabastecimento_button = ctk.CTkButton(self.root, text="ADCIONAR", fg_color='#1B263B', text_color='#C9D1D9', bg_color='#2C3E50', hover_color='#161B22', width=100, height=30, command=self.chamado_reabastecer)
 
 
         self.pesquisar_produto_entry.bind("<KeyRelease>", self.filtrar_tabela)
