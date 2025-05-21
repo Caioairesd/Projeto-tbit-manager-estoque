@@ -103,15 +103,18 @@ class tela_funcionario_adm:
         Senha = self.senha_funcionario_entry.get()
         perfil = self.perfil_funcionario_combobox.get()
         
-        data_nascimento_funcionario = self.inverter_data(data_nascimento_funcionario_invertida)
-        data_admissao_funcionario = self.inverter_data(data_admissao_funcionario_invertida)
+        try:
+            data_nascimento_funcionario = self.inverter_data(data_nascimento_funcionario_invertida)
+            data_admissao_funcionario = self.inverter_data(data_admissao_funcionario_invertida)
+        except:
+            messagebox.showerror("Error", "Digite uma data válida: dd/mm/aaaa")
 
         if nome_funcionario and data_nascimento_funcionario and data_admissao_funcionario and CPF and Cidade and UF and Telefone and Email and Usuario and Senha:
             register_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, CPF, Cidade, UF, Telefone, Email, Usuario, Senha, perfil)
             self.limpar_campos()
             messagebox.showinfo("Success", "Funcionario criado com Sucesso")
 
-            funcionarios = listar_funcionarios_db()
+            funcionarios = listar_funcionarios_parcial_db()
             self.atualizar_tabela(funcionarios)
             
         else:
@@ -167,7 +170,7 @@ class tela_funcionario_adm:
             messagebox.showinfo("Sucesso", "Funcionário atualizado com sucesso")
             self.limpar_campos()
 
-            funcionarios = listar_funcionarios_db()
+            funcionarios = listar_funcionarios_parcial_db()
             self.atualizar_tabela(funcionarios)
 
         else:
@@ -181,8 +184,10 @@ class tela_funcionario_adm:
                 delete_funcionario_db(id_funcionario)
                 self.id_funcionario_entry.delete(0, ctk.END)
 
-                funcionarios = listar_funcionarios_db()
+                funcionarios = listar_funcionarios_parcial_db()
                 self.atualizar_tabela(funcionarios)
+
+                self.limpar_campos()
 
                 messagebox.showinfo("Sucesso", "Funcionário deletado com sucesso!")
             else:
@@ -206,16 +211,15 @@ class tela_funcionario_adm:
         if confirmacao == True:
             messagebox.showinfo("Cancelar", "Ação cancelada")
             self.limpar_campos()
-            funcionarios = listar_funcionarios_db()
+            funcionarios = listar_funcionarios_parcial_db()
             self.atualizar_tabela(funcionarios)
 
     def inverter_data(self, data_digitada):
         data = data_digitada.split("/")
         data_banco = data[2]+"/"+data[1]+"/"+data[0]
 
-        print(data_banco)
-
         return data_banco
+            
     
     def criar_tabela(self):
         style = ttk.Style()
