@@ -2,7 +2,7 @@ import mysql.connector
 
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = ''
+MYSQL_PASSWORD = 'root'
 MYSQL_DATABASE = 'tbit_db'
 
 class tbit_db:
@@ -11,7 +11,7 @@ class tbit_db:
             self.conn = mysql.connector.connect(
                 host='localhost',
                 user='root',
-                password=''
+                password='root'
             )
             self.cursor = self.conn.cursor()
             self.cursor.execute("create database if not exists tbit_db;")
@@ -727,8 +727,8 @@ def register_funcionario_db(nome_funcionario, data_nascimento_funcionario, data_
 def pesquisar_funcionario_db(id_funcionario):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "SELECT * FROM funcionario WHERE id_funcionario = %s"
-    cursor.execute(query, (id_funcionario,))
+    query = "SELECT * FROM funcionario WHERE id_funcionario = %s OR nome_funcionario = %s"
+    cursor.execute(query, (id_funcionario, id_funcionario,))
     result = cursor.fetchone()  # Retorna uma linha, se encontrar o funcionário
     cursor.close()
     conn.close()
@@ -773,6 +773,20 @@ def listar_funcionarios_db():
     result = cursor.fetchall()  # Retorna todas as linhas
     cursor.close()
     conn.close()
+
+    return result
+
+def listar_funcionarios_parcial_db():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_funcionario, nome_funcionario, data_admissao_funcionario, cidade_funcionario, estado_funcionario, email_funcionario, perfil_funcionario FROM funcionario "
+
+    cursor.execute(query)
+    result = cursor.fetchall()  # Retorna todas as linhas
+    cursor.close()
+    conn.close()
+
     return result
 
 # FUNÇÕES USADAS NA TELA DE REABASTECIMENTO E ESTOQUE

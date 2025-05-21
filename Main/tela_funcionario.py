@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from tkinter import messagebox, ttk
-from database_geral import register_funcionario_db, delete_funcionario_db, update_funcionario_db, pesquisar_funcionario_db, listar_funcionarios_db
+from database_geral import register_funcionario_db, delete_funcionario_db, update_funcionario_db, pesquisar_funcionario_db, listar_funcionarios_db, listar_funcionarios_parcial_db
 
 ctk.set_appearance_mode('dark')
 class tela_funcionario_adm:
@@ -126,12 +126,9 @@ class tela_funcionario_adm:
 
             if id_solicitado:
                 messagebox.showinfo("Sucesso", f"Funcionário {id_solicitado[1]} encontrado com sucesso!")
+                
                 self.limpar_campos() # Limpa todos os campos antes de inserir novos dados
-                self.text_area.delete(1.0, ctk.END)  # Limpa a área de texto antes de exibir os dados
-
-                # Exibe as informações do funcionário na caixa de texto
-                self.text_area.insert(ctk.END, f"ID:{id_solicitado[0]}, Nome: {id_solicitado[1]}, Data de Nascimento: {id_solicitado[2]}, Data de Admissão: {id_solicitado[3]}, CPF: {id_solicitado[4]}, Cidade: {id_solicitado[5]}, UF: {id_solicitado[6]}, Telefone: {id_solicitado[7]}, Email: {id_solicitado[8]}, Usuario: {id_solicitado[9]}, Senha: {id_solicitado[10]}, Perfil: {id_solicitado[11]}\n")
-
+                
                 # Preenche os campos de entrada com os dados encontrados
                 self.id_funcionario_entry.insert(0, id_solicitado[0])
                 self.nome_funcionario_entry.insert(0, id_solicitado[1])
@@ -226,35 +223,25 @@ class tela_funcionario_adm:
         style.configure("Treeview.Heading", background="#1B263B", foreground="#C9D1D9", anchor="center")
         style.configure("Treeview", background="#2C3E50", foreground="#C9D1D9", fieldbackground="gray", rowheight=25)
 
-        self.treeview = ttk.Treeview(self.root, columns=("id_funcionario", "nome_funcionario", "data_nascimento", "data_admissao", "cpf_funcionario", "cidade_funcionario", "uf_funcionario", "telefone_funcionario", "email_funcionario", "usuario_funcionario", "senha_funcionario", "perfil_funcionario"), show="headings", height=20)
+        self.treeview = ttk.Treeview(self.root, columns=("id_funcionario", "nome_funcionario", "data_admissao", "cidade_funcionario", "uf_funcionario", "email_funcionario", "perfil_funcionario"), show="headings", height=20)
 
         self.treeview.heading("id_funcionario", text="ID")
         self.treeview.heading("nome_funcionario", text="Nome")
-        self.treeview.heading("data_nascimento", text="Data nasc.")
         self.treeview.heading("data_admissao", text="Data admissão")
-        self.treeview.heading("cpf_funcionario", text="CPF")
         self.treeview.heading("cidade_funcionario", text="Cidade")
         self.treeview.heading("uf_funcionario", text="UF")
-        self.treeview.heading("telefone_funcionario", text="Telefone")
         self.treeview.heading("email_funcionario", text="Email")
-        self.treeview.heading("usuario_funcionario", text="Usuario")
-        self.treeview.heading("senha_funcionario", text="Senha")
         self.treeview.heading("perfil_funcionario", text="Perfil")
 
         self.treeview.column("id_funcionario", width=50) # Altera a largura da coluna "id"
         self.treeview.column("nome_funcionario", width=120) # Altera a largura da coluna "nome"
-        self.treeview.column("data_nascimento", width=100) # Altera a largura da coluna "data nasc"
         self.treeview.column("data_admissao", width=100) # Altera a largura da coluna "data admissao"
-        self.treeview.column("cpf_funcionario", width=100) # Altera a largura da coluna "cpf"
         self.treeview.column("cidade_funcionario", width=100) # Altera a largura da coluna "cidade"
         self.treeview.column("uf_funcionario", width=50) # Altera a largura da coluna "estado"
-        self.treeview.column("telefone_funcionario", width=100) # Altera a largura da coluna "telefone"
         self.treeview.column("email_funcionario", width=200) # Altera a largura da coluna "email"
-        self.treeview.column("usuario_funcionario", width=90) # Altera a largura da coluna "usuario"
-        self.treeview.column("senha_funcionario", width=80) # Altera a largura da coluna "senha"
         self.treeview.column("perfil_funcionario", width=150) # Altera a largura da coluna "perfil"
 
-        funcionarios = listar_funcionarios_db()
+        funcionarios = listar_funcionarios_parcial_db()
         for funcionario in funcionarios:
             self.treeview.insert("", "end", values=funcionario)
 
@@ -270,7 +257,7 @@ class tela_funcionario_adm:
             self.treeview.insert("", "end", values=funcionario)
 
     def filtrar_tabela(self, event):
-        funcionarios = listar_funcionarios_db()
+        funcionarios = listar_funcionarios_parcial_db()
         funcionario_pesquisado = self.buscar_funcionario_entry.get().lower()
 
         filtragem = [funcionario for funcionario in funcionarios if funcionario_pesquisado in funcionario[1].lower()]
@@ -288,16 +275,11 @@ class tela_funcionario_adm:
 
                 self.id_funcionario_entry.insert(0, valores[0])
                 self.nome_funcionario_entry.insert(0, valores[1])
-                self.data_nascimento_funcionario_entry.insert(0, valores[2])
-                self.data_admissao_funcionario_entry.insert(0, valores[3])
-                self.cpf_funcionario_entry.insert(0, valores[4])
-                self.cidade_funcionario_entry.insert(0, valores[5])
-                self.uf_funcionario_entry.insert(0, valores[6])
-                self.telefone_funcionario_entry.insert(0, valores[7])
-                self.email_funcionario_entry.insert(0, valores[8])
-                self.usuario_funcionario_entry.insert(0, valores[9])
-                self.senha_funcionario_entry.insert(0, valores[10])
-                self.perfil_funcionario_combobox.set(valores[11])
+                self.data_admissao_funcionario_entry.insert(0, valores[2])
+                self.cidade_funcionario_entry.insert(0, valores[3])
+                self.uf_funcionario_entry.insert(0, valores[4])
+                self.email_funcionario_entry.insert(0, valores[5])
+                self.perfil_funcionario_combobox.set(valores[6])
 
     def voltar_menu(self):
         

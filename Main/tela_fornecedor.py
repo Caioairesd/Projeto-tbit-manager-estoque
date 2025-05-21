@@ -73,7 +73,7 @@ class tela_fornecedor_adm:
 
         ctk.CTkButton(self.right_frame, text="Buscar", width=90, height=30,
               text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',
-              command=self.filtrar_tabela).place(x=450, y=500)
+              command=self.pesquisar_fornecedor).place(x=450, y=500)
         
         ctk.CTkLabel(self.right_frame, text="ID :", fg_color="#2C3E50", text_color='#C9D1D9', font=('Times New Roman', 23)).place(x=100, y=350)
         self.id_fornecedor_entry = ctk.CTkEntry(self.right_frame, text_color='#C9D1D9', fg_color='#1B263B', placeholder_text='ID fornecedor...', width=200, height=30)
@@ -121,7 +121,7 @@ class tela_fornecedor_adm:
          for fornecedor in fornecedores:
             self.treeview.insert("", "end", values=fornecedor)
 
-    def filtrar_tabela(self, event=None):
+    """def filtrar_tabela(self, event=None):
         fornecedores = listar_fornecedor_db()
         fornecedor_pesquisado = self.pesquisar_entry.get().lower()
 
@@ -129,7 +129,7 @@ class tela_fornecedor_adm:
 
         self.atualizar_tabela(filtragem)
 
-        self.pesquisar_entry.bind("<Return>", self.filtrar_tabela)
+        self.pesquisar_entry.bind("<Return>", self.filtrar_tabela)"""
 
     def click_na_linha(self, event):
         linha_selecionada = self.treeview.focus()
@@ -179,6 +179,29 @@ class tela_fornecedor_adm:
         else:
             messagebox.showerror("Erro", "Todos os campos são obrigatórios!")
 
+    def pesquisar_fornecedor(self):
+        # Usado para atualizar os campos de texto
+        pesquisa = self.pesquisar_entry.get()
+
+        if pesquisa:
+            fornecedor = pesquisar_fornecedor_db(pesquisa)
+
+            if fornecedor:
+                messagebox.showinfo("Sucesso", f"Fornecedor {fornecedor[1]} foi encontrado! Atualizando campos...")
+
+                self.id_fornecedor_entry.delete(0, ctk.END)
+
+                self.id_fornecedor_entry.insert(ctk.END, fornecedor[0])
+                self.fornecedor_entry.insert(ctk.END, fornecedor[1])
+                self.cnpj_fornecedor_entry.insert(ctk.END, fornecedor[2])
+                self.email_fornecedor_entry.insert(ctk.END, fornecedor[3])
+                self.telefone_fornecedor_entry.insert(ctk.END, fornecedor[4])
+                self.cidade_fornecedor_entry.insert(ctk.END, fornecedor[5])
+                self.pais_fornecedor_entry.insert(ctk.END, fornecedor[6])
+            else:
+                messagebox.showerror("Error", "Não foi encontrado nenhum fornecedor com esse nome ou ID!")
+        else:
+            messagebox.showerror("Error", "Preencha o campo de pesquisa!")
     
     #função responsável por exibir e setar os valores relacionados ao id ou nome inserido ao usuário
     # como não realizamos ainda a máteria de banco de dados não é possível vincular tabela.         
@@ -212,6 +235,7 @@ class tela_fornecedor_adm:
             messagebox.showerror("Error","Todos os campos são obrigatórios!")
 
         self.limpar_campos()
+
         fornecedores = listar_fornecedor_db()
         self.atualizar_tabela(fornecedores)
 
