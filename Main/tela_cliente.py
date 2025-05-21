@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from tkinter import ttk, messagebox
-from database_geral import registrar_cliente_db, update_cliente_db, delete_cliente_db, get_clientes_db, pesquisar_cliente_db
+from database_geral import registrar_cliente_db, update_cliente_db, delete_cliente_db, get_clientes_db, pesquisar_cliente_db, get_id_cliente_db
 
 class tela_cliente:
 
@@ -118,15 +118,19 @@ class tela_cliente:
     
     def deletar_cliente(self):
         id_cliente = self.id_cliente_entry.get()
+
         if id_cliente:
-            confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse formecedor?")
+            confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse cliente?")
+
             if confirmacao  == True:
                 delete_cliente_db(id_cliente)
                 self.id_cliente_entry.delete(0,ctk.END)
+                
                 messagebox.showinfo("Sucesso","Cliente deletado com sucesso!")
 
                 banco = get_clientes_db()
                 self.atualizar_tabela(banco)
+
                 self.limpar_campos()
         else:
             messagebox.showerror("Erro","ID do cliente é obrigatório!")

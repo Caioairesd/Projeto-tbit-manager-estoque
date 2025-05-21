@@ -209,6 +209,26 @@ class tbit_db:
             except mysql.connector.Error:
                 pass # Procedure já existe
 
+            try:
+                self.cursor.execute("""
+                DELIMITER $$
+
+                CREATE PROCEDURE delete_cliente(IN cliente_excluido INT)
+                BEGIN
+                    IF EXISTS (SELECT 1 FROM Cliente WHERE id_cliente = cliente_excluido) THEN
+
+                        DELETE FROM Pedido WHERE idCliente = cliente_excluido;
+                        DELETE FROM Cadastro WHERE IdCliente = cliente_excluido;
+                        DELETE FROM Cliente WHERE id_cliente = cliente_excluido;
+
+                    END IF;
+                END$$
+
+                DELIMITER ;
+                """)
+            except mysql.connector.Error:
+                pass # Procedure já existe
+
             self.conn.commit()
             print("Banco de dados e tabelas criados com sucesso!")
 
@@ -509,12 +529,24 @@ def delete_cliente_db(id_cliente):
     conn = get_connection()
     cursor = conn.cursor()
 
-    query = "DELETE FROM cliente WHERE id_cliente = %s OR nome_cliente = %s"
+    cursor.callproc("delete_cliente", [id_cliente])
 
-    cursor.execute(query, (id_cliente, id_cliente,))
     conn.commit()
     cursor.close()
     conn.close()
+
+def get_id_cliente_db(cliente):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_cliente FROM cliente WHERE nome_cliente = %s"
+
+    cursor.execute(query, (cliente,))
+    busca = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    return busca[0]
 
 def get_clientes_db():
     conn = get_connection()
