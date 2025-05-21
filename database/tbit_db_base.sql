@@ -155,3 +155,15 @@ delimiter $$
         end if;
     END$$
 DELIMITER ;
+
+DELIMITER $$
+	CREATE PROCEDURE delete_cliente(IN cliente_excluido INT)
+		BEGIN
+			IF EXISTS (SELECT 1 FROM Cliente WHERE id_cliente = cliente_excluido) THEN
+
+			DELETE FROM Pedido WHERE idCliente = cliente_excluido;
+			DELETE FROM Cadastro WHERE IdCliente = cliente_excluido;
+			DELETE FROM Cliente WHERE id_cliente = cliente_excluido;
+		end if;
+	END$$
+DELIMITER ;
