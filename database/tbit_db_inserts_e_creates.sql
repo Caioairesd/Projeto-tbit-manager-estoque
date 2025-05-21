@@ -87,46 +87,74 @@ constraint fk_produto_estoque foreign key (IdProduto) references Produto(id_prod
 );
 
 delimiter $$
-create trigger reabastecer_estoque
-after insert on Estoque
-FOR EACH ROW
-begin
-    update Produto
-    set quantidade_produto = quantidade_produto + new.quantidade_estoque
-    where id_produto = new.IdProduto;
-end;
-$$
-
-create trigger diminuir_quantidade_produto
-after insert on pedido
-for each row
-begin
-    update Produto
-    set quantidade_produto = quantidade_produto - new.quantidade_produto_item
-    where id_produto = new.IdProduto;
-end;
+    create trigger reabastecer_estoque
+    after insert on Estoque
+    FOR EACH ROW
+    begin
+        update Produto
+        set quantidade_produto = quantidade_produto + new.quantidade_estoque
+        where id_produto = new.IdProduto;
+    end;
 $$
 delimiter ;
 
 delimiter $$
-create procedure delete_fornecedor_e_produtos(IDfornecedor INT)
-BEGIN
-
-    DELETE FROM Pedido
-    WHERE idProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
-
-    DELETE FROM Estoque
-    WHERE IdProduto IN (SELECT id_produto FROM Produto WHERE idFornecedor = IDfornecedor);
-
-    DELETE FROM Produto
-    WHERE idFornecedor = IDfornecedor;
-
-    DELETE FROM Fornecedor
-    WHERE id_fornecedor = IDfornecedor;
-END;
+    create trigger diminuir_quantidade_produto
+    after insert on pedido
+    for each row
+    begin
+        update Produto
+        set quantidade_produto = quantidade_produto - new.quantidade_produto_item
+        where id_produto = new.IdProduto;
+    end;
 $$
 delimiter ;
 
+DELIMITER $$
+    CREATE PROCEDURE delete_fornecedor_e_produtos(IN fornecedor_excluido INT)
+    BEGIN
+        -- Verifica se o fornecedor existe
+        IF EXISTS (SELECT 1 FROM Fornecedor WHERE id_fornecedor = fornecedor_excluido) THEN
+        -- Deleta pedidos dos produtos do fornecedor
+        DELETE FROM Pedido 
+        WHERE idProduto IN (
+        SELECT id_produto 
+        FROM Produto 
+        WHERE idFornecedor = fornecedor_excluido
+        );
+        -- Deleta estoque dos produtos do fornecedor
+        DELETE FROM Estoque 
+        WHERE IdProduto IN (
+        SELECT id_produto 
+        FROM Produto 
+        WHERE idFornecedor = fornecedor_excluido
+        );
+        -- Deleta os produtos do fornecedor
+        DELETE FROM Produto 
+        WHERE idFornecedor = fornecedor_excluido;
+        -- Por fim, deleta o fornecedor
+        DELETE FROM Fornecedor 
+        WHERE id_fornecedor = fornecedor_excluido;
+        END IF;
+    END$$
+DELIMITER ;
+
+-- procedure para deletar um produto e suas dependências
+delimiter $$
+    create procedure delete_produtos(IN produto_excluido INT)
+    begin
+        if exists (select 1 from Produto where id_produto = produto_excluido) then
+            -- Deleta os pedidos associados ao produto
+            delete from Pedido where idProduto = produto_excluido;
+
+            -- Deleta o estoque associado ao produto
+            delete from Estoque where IdProduto = produto_excluido;
+
+            -- Deleta o produto
+            delete from Produto where id_produto = produto_excluido;
+        end if;
+    END$$
+DELIMITER ;
 -- Inserção de dados na tabela Fornecedor (60 registros)
 INSERT INTO Fornecedor (nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor) VALUES
 ('TechImport', '12.345.678/0001-01', 'contato@techimport.com.br', '(11) 98765-4321', 'Brasil', 'São Paulo'),
