@@ -333,6 +333,7 @@ def deletar_produto_db(produto_requisitado):
 
     cursor.callproc("delete_produtos", [produto_requisitado])
 
+    conn.commit()
     cursor.close()
     conn.close()
 
@@ -368,12 +369,10 @@ def get_id_produto_db(produto):
 
     cursor.execute(query, (produto,))
     busca = cursor.fetchone()
-
-    conn.commit()
     cursor.close()
     conn.close()
 
-    return busca
+    return busca[0]
 
 # funções da tabela  funcionario
 
