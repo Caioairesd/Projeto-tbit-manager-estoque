@@ -86,6 +86,10 @@ CREATE TABLE if not exists Estoque
     constraint fk_produto_estoque foreign key (IdProduto) references Produto(id_produto)
 );
 
+-- INSERT ÚNICO PARA ACESSO AO SISTEMA COMO USUÁRIO MASTER
+INSERT  INTO Funcionario (nome_funcionario, data_nascimento_funcionario, data_admissao_funcionario, cpf_funcionario, cidade_funcionario, estado_funcionario, telefone_funcionario, email_funcionario, usuario_funcionario, senha_funcionario, perfil_funcionario) VALUES
+('João Silva', '1985-05-15', '2020-03-10', '111.111.111-11', 'São Paulo', 'SP', '(11) 91234-5678', 'joao.silva@empresa.com', 'joao.silva', 'senha123', 'Administrador');
+
 delimiter $$
     create trigger reabastecer_estoque
     after insert on Estoque
