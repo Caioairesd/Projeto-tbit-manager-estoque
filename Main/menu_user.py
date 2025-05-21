@@ -33,9 +33,9 @@ class menu_usuario:
         pass
             
 
-        btn_pedido_menu.place(x=775, y=400)
-        btn_reabastecimento.place(x=903, y=400)
-        btn_estoque.place(x=1035, y=400)
+        btn_pedido_menu.place(x=450, y=425)
+        btn_reabastecimento.place(x=582, y=425)
+        btn_estoque.place(x=720, y=425)
         btn_logout.place(x=1700, y=900)
     
     
