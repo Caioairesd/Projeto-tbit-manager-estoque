@@ -119,7 +119,7 @@ class tela_cliente:
     def deletar_cliente(self):
         id_cliente = self.id_cliente_entry.get()
         if id_cliente:
-            confirmacao = messagebox.askyesno("","Você realmente deseja deletar este cliente?")
+            confirmacao = messagebox.askyesno("","Você realmente deseja deletar esse formecedor?")
             if confirmacao  == True:
                 delete_cliente_db(id_cliente)
                 self.id_cliente_entry.delete(0,ctk.END)
@@ -153,7 +153,7 @@ class tela_cliente:
         self.descricao_cliente_entry.delete(0, ctk.END)
         self.pesquisar_cliente_entry.delete(0, ctk.END)
 
-        self.pesquisar_cliente_entry.configure(placeholder_text="Pesquise um cliente pelo nome...")
+        self.pesquisar_cliente_entry.configure(placeholder_text="Pesquise um cliente pelo seu nome...")
 
      # FUNÇÕES USADAS PARA A TABELA
     def criar_tabela(self):
