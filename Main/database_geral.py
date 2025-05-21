@@ -111,6 +111,13 @@ class tbit_db:
                 """
             ]
 
+            for comando in comandos_sql:
+                self.cursor.execute(comando)
+
+            self.conn.commit()
+            print("Banco de dados e tabelas criados com sucesso!")
+                
+
             def tabela_vazia(table):
                 self.cursor.execute(f"SELECT COUNT(*) FROM {table}")
                 return self.cursor.fetchone()[0] == 0
@@ -323,9 +330,9 @@ def listar_produtos_db():
 def deletar_produto_db(produto_requisitado):
     conn = get_connection()
     cursor = conn.cursor()
-    query = "DELETE FROM produto WHERE nome_produto = %s"
-    cursor.execute(query, (produto_requisitado,))
-    conn.commit()
+
+    cursor.callproc("delete_produtos", [produto_requisitado])
+
     cursor.close()
     conn.close()
 
@@ -347,6 +354,21 @@ def listar_fornecedores_db():
     query = "SELECT id_fornecedor, nome_fornecedor FROM fornecedor"
     cursor.execute(query)
     busca = cursor.fetchall()
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return busca
+
+def get_id_produto_db(produto):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    query = "SELECT id_produto FROM produto WHERE nome_produto = %s"
+
+    cursor.execute(query, (produto,))
+    busca = cursor.fetchone()
+
     conn.commit()
     cursor.close()
     conn.close()

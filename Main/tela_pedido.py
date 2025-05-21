@@ -93,7 +93,13 @@ class tela_pedido:
     def gerar_nota_fiscal(self):
         quant_linhas = len(self.treeview.get_children())
         numero_nf = quant_linhas + 1
-        nova_nf = f"NF10{numero_nf}"
+
+        if numero_nf < 10:
+            nova_nf = f"NF000{numero_nf}"
+        elif numero_nf < 100:
+            nova_nf = f"NF00{numero_nf}"
+        else:
+            nova_nf = f"NF0{numero_nf}"
 
         return nova_nf
 

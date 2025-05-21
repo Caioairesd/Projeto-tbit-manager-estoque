@@ -3,7 +3,7 @@
 #from ctkinter import * 
 import customtkinter as ctk
 from tkinter import messagebox, ttk
-from database_geral import registrar_produto_db, atualizar_produto_db, listar_produtos_db, deletar_produto_db, pesquisar_produto_db, listar_fornecedores_db
+from database_geral import registrar_produto_db, atualizar_produto_db, listar_produtos_db, deletar_produto_db, listar_fornecedores_db, get_id_produto_db
 
 # Criando classe principal, que carrega a janela e tudo o que há nela
 class tela_produto_adm:
@@ -225,18 +225,26 @@ class tela_produto_adm:
     
     def deletar_do_banco(self):
         produto = self.box_nome.get()
+
         if produto:
-            confirmacao = messagebox.askyesno("Confirmacao", f"Você deseja mesmo excluir '{produto}'")
+            confirmacao = messagebox.askyesno("Confirmacao", f"Você deseja mesmo excluir '{produto}'?")
 
             if confirmacao == True:
-                deletar_produto_db(produto)
-                self.box_nome.delete(0, ctk.END)
-                messagebox.showinfo("Success", "Produto excluido com sucesso!")
+                id_produto = get_id_produto_db(produto)
+                print(id_produto)
+                
+                if id_produto:
+                    deletar_produto_db(id_produto)
 
-                estoque = listar_produtos_db()
-                self.atualizar_tabela() # Lista novamente todos os itens presentes na tabela 'produto'
-                self.limpar_campos() # Metodo usado para limpar os campos
-            
+                    messagebox.showinfo("Sucesso", "Produto excluido com sucesso!")
+
+                    estoque = listar_produtos_db()
+                    self.atualizar_tabela(estoque) # Lista novamente todos os itens presentes na tabela 'produto'
+                    
+                    self.limpar_campos() # Metodo usado para limpar os campos
+
+                else:
+                    messagebox.showerror("Error", "Não foi encontrado produto com esse ID!")
             else:
                 messagebox.showinfo("Cancelado", "Processo de exclusão cancelada!")
         else:
