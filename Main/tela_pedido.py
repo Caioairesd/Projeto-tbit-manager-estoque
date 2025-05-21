@@ -82,6 +82,10 @@ class tela_pedido:
                 fazer_pedido_db(nota_fiscal, data_sistema, forma_pag, quantidade, id_produto, id_cliente)
                 messagebox.showinfo("Sucesso", "Pedido cadastrado com sucesso!")
 
+                self.nome_cliente_entry.delete(0, ctk.END)
+                self.quantidade_desejada.delete(0, ctk.END)
+                self.nome_produto_entry.delete(0, ctk.END)
+
                 pedidos = get_pedidos_db()
                 self.atualizar_tabela(pedidos)
 
