@@ -5,12 +5,12 @@ from database_geral import register_funcionario_db, delete_funcionario_db, updat
 ctk.set_appearance_mode('dark')
 class tela_funcionario_adm:
     def __init__(self, root):
+        ctk.set_appearance_mode("dark")
         self.menu_root = root  
         self.root = ctk.CTkToplevel(root) 
         self.root.title("TBit Manager - Menu de funcionário")
         self.root.configure(fg_color='#141C29')
         
-        ctk.set_appearance_mode("dark")
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura
         self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
