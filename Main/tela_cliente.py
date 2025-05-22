@@ -15,7 +15,7 @@ class tela_cliente:
         self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
         self.root.configure(fg_color='#161B22')
 
-        #ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
+        ctk.set_appearance_mode("dark")# Deixar o frame no modo escuro-dark
 
         self.root.grab_set()  # Bloqueia interações na principal até fechar essa
 

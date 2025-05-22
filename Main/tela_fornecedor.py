@@ -16,7 +16,7 @@ class tela_fornecedor_adm:
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura
         self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
-        #ctk.set_appearance_mode('dark')
+        ctk.set_appearance_mode('dark')
     
         self.root.title("TBit Manager - Menu de fornecedor")
       
@@ -95,7 +95,7 @@ class tela_fornecedor_adm:
         self.treeview.heading("cnpj_fornecedor", text="CNPJ")
         self.treeview.heading("email_fornecedor", text="Email")
         self.treeview.heading("telefone_fornecedor", text="Telefone")
-        self.treeview.heading("pais_fornecedor", text="Pais")
+        self.treeview.heading("pais_fornecedor", text="País")
         self.treeview.heading("cidade_fornecedor", text="Cidade")
 
         self.treeview.column('id_fornecedor', width=50)
@@ -170,8 +170,8 @@ class tela_fornecedor_adm:
         telefone_fornecedor = self.telefone_fornecedor_entry.get()
         cidade_fornecedor = self.cidade_fornecedor_entry.get()
         pais_fornecedor = self.pais_fornecedor_entry.get()
-        if nome_fornecedor and cnpj_fornecedor and email_fornecedor and telefone_fornecedor and cidade_fornecedor and pais_fornecedor:
-            register_fornecedor_db(nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, cidade_fornecedor, pais_fornecedor)
+        if nome_fornecedor and cnpj_fornecedor and email_fornecedor and telefone_fornecedor  and pais_fornecedor and cidade_fornecedor:
+            register_fornecedor_db(nome_fornecedor, cnpj_fornecedor, email_fornecedor, telefone_fornecedor, pais_fornecedor, cidade_fornecedor,)
             self.limpar_campos()
             fornecedores = listar_fornecedor_db()
             self.atualizar_tabela(fornecedores)
