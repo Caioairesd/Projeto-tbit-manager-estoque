@@ -1,15 +1,16 @@
 import customtkinter as ctk
 from tkinter import messagebox, ttk
-from database_geral import register_funcionario_db, delete_funcionario_db, update_funcionario_db, pesquisar_funcionario_db, listar_funcionarios_db, listar_funcionarios_parcial_db
+from database_geral import register_funcionario_db, delete_funcionario_db, update_funcionario_db, pesquisar_funcionario_db, listar_funcionarios_db
 
 ctk.set_appearance_mode('dark')
 class tela_funcionario_adm:
     def __init__(self, root):
+        ctk.set_appearance_mode("dark")
         self.menu_root = root  
         self.root = ctk.CTkToplevel(root) 
         self.root.title("TBit Manager - Menu de funcionário")
         self.root.configure(fg_color='#141C29')
-
+        
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura
         self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
@@ -114,7 +115,7 @@ class tela_funcionario_adm:
             self.limpar_campos()
             messagebox.showinfo("Success", "Funcionario criado com Sucesso")
 
-            funcionarios = listar_funcionarios_parcial_db()
+            funcionarios = listar_funcionarios_db()
             self.atualizar_tabela(funcionarios)
             
         else:
@@ -170,7 +171,7 @@ class tela_funcionario_adm:
             messagebox.showinfo("Sucesso", "Funcionário atualizado com sucesso")
             self.limpar_campos()
 
-            funcionarios = listar_funcionarios_parcial_db()
+            funcionarios = listar_funcionarios_db()
             self.atualizar_tabela(funcionarios)
 
         else:
@@ -184,7 +185,7 @@ class tela_funcionario_adm:
                 delete_funcionario_db(id_funcionario)
                 self.id_funcionario_entry.delete(0, ctk.END)
 
-                funcionarios = listar_funcionarios_parcial_db()
+                funcionarios = listar_funcionarios_db()
                 self.atualizar_tabela(funcionarios)
 
                 self.limpar_campos()
@@ -211,7 +212,7 @@ class tela_funcionario_adm:
         if confirmacao == True:
             messagebox.showinfo("Cancelar", "Ação cancelada")
             self.limpar_campos()
-            funcionarios = listar_funcionarios_parcial_db()
+            funcionarios = listar_funcionarios_db()
             self.atualizar_tabela(funcionarios)
 
     def inverter_data(self, data_digitada):
@@ -245,7 +246,7 @@ class tela_funcionario_adm:
         self.treeview.column("email_funcionario", width=200) # Altera a largura da coluna "email"
         self.treeview.column("perfil_funcionario", width=150) # Altera a largura da coluna "perfil"
 
-        funcionarios = listar_funcionarios_parcial_db()
+        funcionarios = listar_funcionarios_db()
         for funcionario in funcionarios:
             self.treeview.insert("", "end", values=funcionario)
 
@@ -261,7 +262,7 @@ class tela_funcionario_adm:
             self.treeview.insert("", "end", values=funcionario)
 
     def filtrar_tabela(self, event):
-        funcionarios = listar_funcionarios_parcial_db()
+        funcionarios = listar_funcionarios_db()
         funcionario_pesquisado = self.buscar_funcionario_entry.get().lower()
 
         filtragem = [funcionario for funcionario in funcionarios if funcionario_pesquisado in funcionario[1].lower()]
@@ -277,13 +278,18 @@ class tela_funcionario_adm:
             if valores:
                 self.limpar_campos()
 
-                self.id_funcionario_entry.insert(0, valores[0])
-                self.nome_funcionario_entry.insert(0, valores[1])
-                self.data_admissao_funcionario_entry.insert(0, valores[2])
-                self.cidade_funcionario_entry.insert(0, valores[3])
-                self.uf_funcionario_entry.insert(0, valores[4])
-                self.email_funcionario_entry.insert(0, valores[5])
-                self.perfil_funcionario_combobox.set(valores[6])
+            self.id_funcionario_entry.insert(0, valores[0])
+            self.nome_funcionario_entry.insert(0, valores[1])
+            self.data_nascimento_funcionario_entry.insert(0, valores[2])
+            self.data_admissao_funcionario_entry.insert(0, valores[3])
+            self.cpf_funcionario_entry.insert(0, valores[4])
+            self.cidade_funcionario_entry.insert(0, valores[5])
+            self.uf_funcionario_entry.insert(0, valores[6])
+            self.telefone_funcionario_entry.insert(0, valores[7])
+            self.email_funcionario_entry.insert(0, valores[8])
+            self.usuario_funcionario_entry.insert(0, valores[9])
+            self.senha_funcionario_entry.insert(0, valores[10])
+            self.perfil_funcionario_combobox.set(valores[11])
 
     def voltar_menu(self):
         
