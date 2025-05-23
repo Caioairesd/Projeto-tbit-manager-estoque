@@ -18,7 +18,7 @@ Este projeto foi desenvolvido como parte de uma **situação de aprendizagem** n
 
 - Python 3.14
 - MySql Banco de dados local)
-- Interface via `Tkinter`
+- Interface via `CustomTkinter`
 
 ## 📚 Pré-requisitos
 
