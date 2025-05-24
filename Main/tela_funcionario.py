@@ -28,8 +28,6 @@ class tela_funcionario_adm:
         self.right_frame = ctk.CTkFrame(self.root, width=600, height=700, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
         self.right_frame.place(x=50, y=160)# definir a expanção da frame
 
-
-
         # Labels com o texto e sem fundo
         ctk.CTkLabel(self.right_frame, text="Nome :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9').place(x=90, y=40)
         ctk.CTkLabel(self.right_frame, text="Data de Nascimento :",font=("Times New Roman", 20),fg_color="#2C3E50", text_color='#C9D1D9',).place(x=90, y=90)
@@ -88,7 +86,7 @@ class tela_funcionario_adm:
         ctk.CTkButton(self.right_frame, text="EXCLUIR",text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#2C3E50', width=90, height= 40,command=self.delete_funcionario).place(x=200, y=580)
         ctk.CTkButton(self.right_frame, text="EDITAR",text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#2C3E50', width=90, height= 40,command=self.update_funcionario).place(x=310, y=580)
         ctk.CTkButton(self.right_frame, text="BUSCAR",text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#2C3E50', width=50, height= 30,command=self.pesquisar_funcionario).place(x=300, y=650)
-        ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.voltar_menu).place(x=1700, y=900)
+        ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.voltar_menu).place(relx=0.95, rely=0.95, anchor='se')
 
 
     def registrar_funcionario(self):

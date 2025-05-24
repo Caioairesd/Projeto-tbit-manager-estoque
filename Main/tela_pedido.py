@@ -31,9 +31,8 @@ class tela_pedido:
         self.right_frame = ctk.CTkFrame(self.root, width=700, height=400, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
         self.right_frame.place(x=150, y=300)# definir a expanção da frame
 
-
         self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.voltar_menu)
-        self.voltar_menu_button.place(x=1700, y=900)
+        self.voltar_menu_button.place(relx=0.95, rely=0.95, anchor='se')
 
         self.fazer_pedido_button = ctk.CTkButton(self.root, text="Novo pedido",text_color='#C9D1D9', fg_color='#1B263B',bg_color='#2C3E50', width=40,height=35, command=self.fazer_pedido)
         self.fazer_pedido_button.place(x=580, y=470)
@@ -52,10 +51,8 @@ class tela_pedido:
         self.nome_cliente_combobox = ctk.CTkComboBox(self.root, values=self.listar_clientes(),width=140, height=30, fg_color='#1B263B', dropdown_hover_color='#1B263B', dropdown_text_color='#C9D1D9',dropdown_fg_color="#161B22", text_color="#C9D1D9", button_color="#1B263B", button_hover_color="#1B263B",border_width=0, bg_color='#1B263B')
         self.nome_cliente_combobox.place(x=580, y=350)
 
-
         self.forma_pag_combobox = ctk.CTkComboBox(self.root,values=["Cartão Débito", "Cartão Crédito", "PIX", "Boleto"],fg_color='#1B263B',width=125,height=30,dropdown_hover_color='#1B263B',dropdown_text_color='#C9D1D9',dropdown_fg_color="#161B22",text_color="#C9D1D9",button_color="#1B263B",button_hover_color="#1B263B",border_width=0,bg_color='#1B263B')
         self.forma_pag_combobox.place(x=420, y=530)
-
 
         self.quantidade_desejada = ctk.CTkEntry(self.root, placeholder_text="Quantidade de produto...", text_color='#C9D1D9', fg_color='#1B263B', bg_color='#2C3E50',width=200, height=30)
         self.quantidade_desejada.place(x=350, y=470)

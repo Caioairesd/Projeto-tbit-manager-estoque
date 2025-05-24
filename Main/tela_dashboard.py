@@ -29,7 +29,7 @@ class tela_dashboard:
     def criar_widgets(self):
         # Botão responsável por voltar ao menu 0073E6
         voltar_menu_button = ctk.CTkButton(self.root, text='VOLTAR', width=90, height=40,fg_color='#0073E6', command=self.voltar_menu)
-        voltar_menu_button.place(x=1770, y=1000)
+        voltar_menu_button.place(relx=0.95, rely=0.95, anchor='se')
         
         ''' # Botão responsável por atualizar o dashboard
         update_button = ctk.CTkButton(self.root, text='ATUALIZAR ', width=90, height=40,fg_color='#0073E6', command=self.voltar_menu)

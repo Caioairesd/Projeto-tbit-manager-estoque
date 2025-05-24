@@ -30,10 +30,10 @@ class tela_cliente:
         #Definir Titulo do arquivo
         self.label_text = ctk.CTkLabel(self.root, text="C L I E N T E ",font=("Garamond", 60), fg_color="#161B22", text_color='#58A6FF') # Cria um label para o texto
         self.label_text.place(x=780, y=60) # Posiciona o texto
-      
 
         self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.voltar_menu)
-        self.voltar_menu_button.place(x=1700, y=900)
+        self.voltar_menu_button.place(relx=0.95, rely=0.95, anchor='se')
+        
         #label cliente id
         self.label_text = ctk.CTkLabel(self.root, text="ID :",font=("arial",22), fg_color="#2C3E50", text_color='#C9D1D9') # Cria um label para o texto
         self.label_text.place(x=350, y=300) # Posiciona o texto

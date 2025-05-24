@@ -44,7 +44,7 @@ class tela_produto_adm:
         ctk.CTkButton(self.right_frame, text="Editar", command=self.alterar_no_banco, width=90,height= 40,fg_color='#1B263B',text_color='#C9D1D9', border_color='gray').place(x=160, y=400) # Botao para alterar 
         ctk.CTkButton(self.right_frame, text="Excluir", command=self.deletar_do_banco, width=90,height= 40,fg_color='#1B263B',text_color='#C9D1D9', border_color='gray').place(x=270, y=400) # Botao para deletar produto
         ctk.CTkButton(self.right_frame, text="Cancelar", command=self.cancelar_operacao, width=90,height= 40,fg_color='#1B263B',text_color='#C9D1D9', border_color='gray').place(x=380, y=400) # Botao para cancelar/voltar ao padrao
-        ctk.CTkButton(self.root,text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.voltar_menu).place(x=1700, y=900)
+        ctk.CTkButton(self.root,text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.voltar_menu).place(relx=0.95, rely=0.95, anchor='se')
         
 
         # Labels usados para identificar as caixas de texto e seus posicionamentos

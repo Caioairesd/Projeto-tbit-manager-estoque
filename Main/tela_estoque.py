@@ -29,7 +29,7 @@ class tela_estoque:
         self.titulo.place(relx=0.5, y=60, anchor="center")
 
         self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar', font=('Arial',13),text_color='#C9D1D9', fg_color= '#1B263B', bg_color= '#121B22', width=90, height=40, command=self.voltar_menu)
-        self.voltar_menu_button.place(x=1700, y=900)
+        self.voltar_menu_button.place(relx=0.95, rely=0.95, anchor='se')
 
         self.pesquisar_produto = ctk.CTkEntry(self.root, placeholder_text='buscar produto...',placeholder_text_color='#C9D1D9', text_color='#C9D1D9', fg_color='#1B263B', bg_color='#1B263B',width=200, height=30)
         self.pesquisar_produto.place(x=660, y=250)

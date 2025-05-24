@@ -29,13 +29,12 @@ class tela_reabastecimento:
 
         self.label_text = ctk.CTkLabel(self.root, text="R E A B A S T E C I M E N T O ",font=("Garamond", 60), fg_color="#141C29", text_color='#58A6FF') # Cria um label para o texto
         self.label_text.place(x=570, y=60) # Posiciona o texto
-      
 
         self.right_frame = ctk.CTkFrame(self.root, width=800, height=150, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
         self.right_frame.place(x=560, y=170)# definir a expanção da frame
 
         self.voltar_menu_button = ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.voltar_menu)
-        self.voltar_menu_button.place(x=1700, y=900)
+        self.voltar_menu_button.place(relx=0.95, rely=0.95, anchor='se')
 
         self.combobox_produtos = ctk.CTkComboBox(self.root,height=30,width=140,text_color='#C9D1D9',fg_color='#1B263B',border_color='gray',button_color='#1B263B',button_hover_color='#1B263B',dropdown_fg_color='#161B22',dropdown_text_color='#C9D1D9', dropdown_hover_color='#1B263B', border_width=0,                     bg_color='#1B263B',                 values=self.produtos_combobox()    )
        

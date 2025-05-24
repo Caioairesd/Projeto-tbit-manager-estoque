@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from tkinter import messagebox
 
 # Imports das classes que contém as telas
 from tela_fornecedor import tela_fornecedor_adm
@@ -13,50 +14,50 @@ from tela_dashboard import tela_dashboard
 class menu_admin:
     def __init__(self, root):
         self.root = root
-        self.root.title("Menu Principal - Administrador                                                                                                                                                                                                     TBit Manager by TerraBytes") 
+        self.root.title("Menu Principal - Administrador                                                                                                                             TBit Manager by TerraBytes") 
+        self.root.configure(fg_color='#161B22')                                                                                                                                                                                                   
         ctk.set_appearance_mode('dark')
-        
-        self.root.configure(fg_color='#161B22')
         
         largura = self.root.winfo_screenwidth()# Expandir tela largura
         altura = self.root.winfo_screenheight()# Expandir tela altura
         self.root.geometry(f"{largura}x{altura}+0+0")# definir expanção
 
         self.create_widget()
+
     def create_widget(self):
 
         self.titulo = ctk.CTkLabel(self.root, text='M E N U  P R I N C I P A L',font=("Garamond", 60), fg_color="#161B22", text_color='#58A6FF') # Cria um label para o usuario
-        self.titulo.place(x=630, y=60) # Posiciona o label 
+        self.titulo.place(relx=0.5, rely=0.1, anchor='center') # Posiciona o label 
         
-        self.right_frame = ctk.CTkFrame(self.root, width=400, height=400, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
-        self.right_frame.place(x=725, y=350)# definir a expanção da frame
+        self.button_frame = ctk.CTkFrame(self.root, width=400, height=400, fg_color="#2C3E50")# definir o tamanho e cor do fundo da frame
+        self.button_frame.place(relx=0.5, rely=0.5, anchor='center')# definir a expanção da frame
 
-        funcionario_button = ctk.CTkButton(self.root, text='Funcionario', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45 , fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_funcionario)
-        funcionario_button.place(x=760, y=400)
+        funcionario_button = ctk.CTkButton(self.button_frame, text='Funcionario', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45 , fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_funcionario)
+        funcionario_button.place(x=60, y=70)
         
-        fornecedor_button = ctk.CTkButton(self.root, text='Fornecedor', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45, fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_fornecedor_admin)
-        fornecedor_button.place(x=760, y=460)
+        fornecedor_button = ctk.CTkButton(self.button_frame, text='Fornecedor', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45, fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_fornecedor_admin)
+        fornecedor_button.place(x=60, y=140)
 
-        produto_button = ctk.CTkButton(self.root, text='Produtos', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45, fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_produto_admin)
-        produto_button.place(x=760, y=520)
+        produto_button = ctk.CTkButton(self.button_frame, text='Produtos', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45, fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_produto_admin)
+        produto_button.place(x=60, y=210)
 
-        cliente_button = ctk.CTkButton(self.root, text='Cliente', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45, fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_cliente)
-        cliente_button.place(x=760, y=580)
+        cliente_button = ctk.CTkButton(self.button_frame, text='Cliente', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45, fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_cliente)
+        cliente_button.place(x=60, y=280)
         
-        estoque_button = ctk.CTkButton(self.root, text='Estoque', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45, fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_estoque)
-        estoque_button.place(x=980, y=400)
+        estoque_button = ctk.CTkButton(self.button_frame, text='Estoque', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45, fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_estoque)
+        estoque_button.place(x=220, y=70)
 
-        pedido_button = ctk.CTkButton(self.root, text='Pedido', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45, fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_pedido)
-        pedido_button.place(x=980, y=460)
+        pedido_button = ctk.CTkButton(self.button_frame, text='Pedido', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45, fg_color= '#1B263B', bg_color= '#2C3E50',command=self.abrir_tela_pedido)
+        pedido_button.place(x=220, y=140)
 
-        reabastecimento_button = ctk.CTkButton(self.root, text='Reabastecimento',font=('Arial',13),text_color='#C9D1D9', width=70, fg_color= '#1B263B', bg_color= '#2C3E50',height= 45, command=self.abrir_tela_reabastecimento)
-        reabastecimento_button.place(x=980, y=520)
+        reabastecimento_button = ctk.CTkButton(self.button_frame, text='Reabastecimento',font=('Arial',13),text_color='#C9D1D9', width=70, fg_color= '#1B263B', bg_color= '#2C3E50',height= 45, command=self.abrir_tela_reabastecimento)
+        reabastecimento_button.place(x=220, y=210)
 
-        dashboard_button = ctk.CTkButton(self.root, text='Dashboard', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45,fg_color= '#1B263B', bg_color= '#2C3E50', command=self.abrir_tela_dashboard)
-        dashboard_button.place(x=980, y=580)
+        dashboard_button = ctk.CTkButton(self.button_frame, text='Dashboard', font=('Arial',17),text_color='#C9D1D9',width=110, height= 45,fg_color= '#1B263B', bg_color= '#2C3E50', command=self.abrir_tela_dashboard)
+        dashboard_button.place(x=220, y=280)
 
         logout_button = ctk.CTkButton(self.root, text='Voltar',font=('Arial',13),text_color='#C9D1D9', width=90, height= 40,fg_color= '#1B263B', bg_color= '#161B22', command=self.logout_admin)
-        logout_button.place(x=1700, y=900)
+        logout_button.place(relx=0.95, rely=0.95, anchor='se')
 
         
     # Classes responsáveis pelas transições de telas, atribuindo root
@@ -93,11 +94,14 @@ class menu_admin:
         self.root.withdraw()
         
     def logout_admin(self):
-        from main_menu import login_menu
-        root = ctk.CTk()
-        app = login_menu(root)
-        self.root.destroy()
-        root.mainloop()    
+        confirmacao = messagebox.askyesno("Confirmação", "Você deseja sair da conta e voltar ao menu de login?")
+        
+        if confirmacao == True:
+            from main_menu import login_menu
+            root = ctk.CTk()
+            app = login_menu(root)
+            self.root.destroy()
+            root.mainloop()    
 
 if __name__ == '__main__':
     root = ctk.CTk()
