@@ -1,0 +1,369 @@
+/* ===========================
+   RESET BÁSICO E ESTRUTURA
+=========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  html, body {
+    height: 100%;
+    background-color: #F0F4FF;
+    color: #1F2937;
+  }
+  
+  /* ===========================
+     BARRA DE NAVEGAÇÃO
+  =========================== */
+  .navbar {
+    background-color: #1E3A8A;
+    padding: 10px 0;
+  }
+  
+  .navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .navbar li {
+    margin: 0 15px;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+  }
+  
+  .navbar a:hover,
+  .navbar a.ativo {
+    background-color: #3B82F6;
+    border-radius: 4px;
+  }
+  
+  /* ===========================
+     PÁGINA INICIAL
+  =========================== */
+  .fundo-ilustrado {
+  
+    background-size: cover;
+    background-position: center;
+    min-height: calc(100vh - 120px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .conteudo-central {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  
+  .conteudo-central h1 {
+    font-size: 30px;
+    color: #1E3A8A;
+    margin-bottom: 20px;
+  }
+  
+  .conteudo-central p {
+    font-size: 20px;
+    color: #3B82F6;
+    font-style: italic;
+  }
+  
+  /* ===========================
+     FORMULÁRIO DE CADASTRO
+  =========================== */
+  .container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    margin: 0 auto;
+  }
+  
+  .titulo {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .titulo h1 {
+    font-size: 24px;
+    color: #1E3A8A;
+  }
+  
+  .titulo h2 {
+    font-size: 18px;
+    color: #3B82F6;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="date"],
+  input[type="tel"],
+  option {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+  
+  button {
+    padding: 8px;
+    border: none;
+    background-color: #3B82F6;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #2563EB;
+  }
+  
+  /* ===========================
+     MENSAGENS DE SUCESSO/ERRO
+  =========================== */
+  .sucesso, .erro {
+    margin-bottom: 20px;
+    padding: 12px 18px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: opacity 0.5s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sucesso {
+    background-color: #e6ffed;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+  }
+  
+  .erro {
+    background-color: #ffe6e6;
+    color: #c62828;
+    border: 1px solid #f5c6cb;
+  }
+  .mensagem {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .mensagem span.sucesso {
+    display: inline-block;
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+  }
+  
+  .mensagem span.erro {
+    display: inline-block;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+  }
+  
+  .mensagem-exclusao {
+    background-color: #e0f7fa;
+    color: #006064;
+    padding: 15px 20px;
+    margin: 20px auto;
+    max-width: 500px;
+    border: 2px solid #4dd0e1;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    animation: fadeIn 0.5s ease;
+  }
+  
+  .mensagem-exclusao.erro {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  
+  /* ===========================
+     VISUALIZAÇÃO DE FUNCIONÁRIO
+  =========================== */
+  .visualizar-funcionario {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    color: #1F2937;
+  }
+  
+  .visualizar-funcionario h1 {
+    color: #1E3A8A;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .visualizar-funcionario p {
+    font-size: 18px;
+    margin: 12px 0;
+  }
+  
+  .visualizar-funcionario img {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+  }
+  
+  .visualizar-funcionario p:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  
+  /* ===========================
+     LISTA DE FUNCIONÁRIOS
+  =========================== */
+  .lista-funcionarios {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    color: #1F2937;
+  }
+  
+  .lista-funcionarios h1 {
+    color: #1E3A8A;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .lista-funcionarios table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .lista-funcionarios th,
+  .lista-funcionarios td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .lista-funcionarios th {
+    background-color: #1E3A8A;
+    color: white;
+  }
+  
+  .lista-funcionarios tr:hover {
+    background-color: #F0F4FF;
+  }
+  
+  .lista-funcionarios img {
+    max-width: 80px;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+  }
+  
+  .lista-funcionarios a,
+  .lista-funcionarios button {
+    padding: 6px 10px;
+    margin: 2px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    color: white;
+    background-color: #3B82F6;
+    cursor: pointer;
+  }
+  
+  .lista-funcionarios a:hover,
+  .lista-funcionarios button:hover {
+    background-color: #2563EB;
+  }
+  
+  .lista-funcionarios form {
+    display: inline;
+  }
+  
+  /* ===========================
+     RODAPÉ FIXO
+  =========================== */
+  .rodape {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(64, 127, 209, 0.85);
+    color: #f1f1f1;
+    text-align: center;
+    padding: 12px 10px;
+    font-size: 16px;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+  
+  .rodape strong {
+    color: #f1f1f1;
+  }
+  
+  /* ===========================
+     AJUSTE DE ALTURA DA PÁGINA
+  =========================== */
+  .pagina-inicial-wrapper {
+    min-height: calc(100vh - 120px);
+    padding: 40px 20px 140px; /* espaço para o rodapé fixo */
+  }
+  
+  /*Para formularios curtos*/
+  .pagina-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 120px;
+  }
