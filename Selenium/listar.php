@@ -50,6 +50,7 @@ $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Usuario</th>
                 <th>Senha</th>
                 <th>Perfil</th>
+                <th>Ações</th>
             </tr>
             <?php foreach ($funcionarios as $funcionario): ?>
             <tr>

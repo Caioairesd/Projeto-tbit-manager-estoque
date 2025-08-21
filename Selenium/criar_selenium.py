@@ -8,22 +8,24 @@ driver = webdriver.Chrome(service=servico)
 
 try:
     # 1. Abre a página do app de estoque
-    driver.get("file:///C:/xampp/htdocs/Projeto-tbit-manager-estoque/Selenium/criar.php")
+    driver.get("http://localhost/Projeto-tbit-manager-estoque/Selenium/criar.php")
+
+    driver.implicitly_wait(3)
 
     # 2. Encontra os campos de input e preenche com os dados do produto
-    campo_nome = driver.find_element(By.ID, 'nome')
-    campo_data_n = driver.find_element(By.ID, 'data_nascimento')
-    campo_data_a = driver.find_element(By.ID, 'data_admissao')
-    campo_cpf = driver.find_element(By.ID, 'cpf')
-    campo_cidade = driver.find_element(By.ID, 'cidade')
-    campo_uf = driver.find_element(By.ID, 'uf')
-    campo_telefone = driver.find_element(By.ID, 'telefone')
-    campo_email = driver.find_element(By.ID, 'email')
-    campo_usuario = driver.find_element(By.ID, 'usuario')
-    campo_senha = driver.find_element(By.ID, 'senha')
-    campo_perfil = driver.find_element(By.ID, 'perfil')
+    campo_nome = driver.find_element(By.ID, "nome_completo")
+    campo_data_n = driver.find_element(By.ID, "data_nascimento")
+    campo_data_a = driver.find_element(By.ID, "data_admissao")
+    campo_cpf = driver.find_element(By.ID, "cpf")
+    campo_cidade = driver.find_element(By.ID, "cidade")
+    campo_uf = driver.find_element(By.ID, "uf")
+    campo_telefone = driver.find_element(By.ID, "telefone")
+    campo_email = driver.find_element(By.ID, "email")
+    campo_usuario = driver.find_element(By.ID, "usuario")
+    campo_senha = driver.find_element(By.ID, "senha")
+    campo_perfil = driver.find_element(By.ID, "perfil")
 
-    botao_cadastrar = driver.find_element(By.ID, 'cadastrar')
+    botao_cadastrar = driver.find_element(By.ID, "cadastrar")
 
     campo_nome.send_keys("Caio Aires")
     campo_data_n.send_keys("30/01/2008")
