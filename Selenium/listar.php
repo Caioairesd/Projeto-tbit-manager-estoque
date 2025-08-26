@@ -37,7 +37,7 @@ $funcionarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php if (isset($msg)) echo $msg; ?>
 
         <?php if ($funcionarios): ?>
-        <table border="1" cellpadding="10">
+        <table border="1" cellpadding="10" id="tabela_funcionarios" name="tabela_funcionarios">
             <tr>
                 <th>Nome</th>
                 <th>Data de Nascimento</th>

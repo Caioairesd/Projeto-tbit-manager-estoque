@@ -5,7 +5,7 @@ require_once 'includes/cabecalho.php';
 $msg = '';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $nome = $_POST['nome'];
+    $nome = $_POST['nome_completo'];
     $data_nascimento = $_POST['data_nascimento'];
     $data_admissao = $_POST['data_admissao'];
     $cpf = $_POST['cpf'];
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <form method="post" action="criar.php">
             <label for="nome">Nome completo:</label>
-            <input type="text" id="nome" name="nome" required>
+            <input type="text" id="nome_completo" name="nome_completo" required>
 
             <label for="data_nascimento">Data de Nascimento:</label>
             <input type="date" id="data_nascimento" name="data_nascimento" required>
@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <option>Funcionário</option>
             </select>
 
-            <button type="submit" name="cadastrar" id="cadastrar">Cadastrar</button>
+            <button type="submit" name="cadastrar_usuario" id="cadastrar_usuario">Cadastrar</button>
         </form>
     </div>
 </div>

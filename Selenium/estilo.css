@@ -29,7 +29,7 @@
   }
   
   .navbar li {
-    margin: 0 15px;
+    margin: 0 10px;
   }
   
   .navbar a {
@@ -91,7 +91,7 @@
   
   .titulo {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 7px;
   }
   
   .titulo h1 {
@@ -100,7 +100,7 @@
   }
   
   .titulo h2 {
-    font-size: 18px;
+    font-size: 15px;
     color: #3B82F6;
   }
   
@@ -120,10 +120,10 @@
   input[type="date"],
   input[type="tel"],
   option {
-    padding: 8px;
+    padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
   
   button {
