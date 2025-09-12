@@ -1,4 +1,8 @@
-CREATE TABLE funcionarios(
+CREATE IF NOT EXISTS DATABASE empresa;
+
+USE empresa;
+
+CREATE IF NOT EXISTS TABLE funcionarios(
 	id INT AUTO_INCREMENT NOT NULL,
     nome_completo VARCHAR(255) NOT NULL,
     data_nascimento DATE NOT NULL,
